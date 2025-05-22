@@ -15,16 +15,16 @@ class IncomePaymentApi extends Instance {
   }
 
   getIncomePayments = (params: IIncomeGetClientsPaymentsParams): Promise<IResponse<ISupplierPayments[]>> =>
-    this.get(Endpoints.incomePayment, { params });
+    this.get(Endpoints.StaffPaymentsMany, { params });
 
   addIncomePayment = (params: IIncomeAddEditPaymentParams): Promise<AxiosResponse> =>
-    this.post(Endpoints.incomePayment, params);
+    this.post(Endpoints.SupplierPaymentsOne, params);
 
   updateIncomePayment = (params: IIncomeAddEditPaymentParams): Promise<AxiosResponse> =>
-    this.patch(`${Endpoints.incomePayment}/${params?.id}`, params);
+    this.patch(`${Endpoints.SupplierPaymentsOne}`, params, { params: { id: params?.id } });
 
   deleteIncomePayment = (id: string): Promise<AxiosResponse> =>
-    this.delete(`${Endpoints.incomePayment}/${id}`);
+    this.delete(`${Endpoints.SupplierPaymentsOne}`, {params: {id}});
 }
 
 export const incomePaymentApi = new IncomePaymentApi(config);

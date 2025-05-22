@@ -6,6 +6,8 @@ import {addNotification} from '@/utils';
 import {regexPhoneNumber} from '@/utils/phoneFormat';
 import { IAddEditClientInfo, clientsInfoApi } from '@/api/clients';
 import { supplierInfoStore } from '@/stores/supplier';
+import { supplierInfoApi } from '@/api/supplier/supplier';
+import { IAddEditSupplier } from '@/api/supplier/types';
 
 export const AddEditModal = observer(() => {
   const [form] = Form.useForm();
@@ -15,7 +17,7 @@ export const AddEditModal = observer(() => {
   const {mutate: addNewSupplier} =
     useMutation({
       mutationKey: ['addNewSupplier'],
-      mutationFn: (params: any) => clientsInfoApi.addSupplier(params),
+      mutationFn: (params: IAddEditSupplier) => supplierInfoApi.addSuppliers(params),
       onSuccess: () => {
         queryClient.invalidateQueries({queryKey: ['getSuppliers']});
         handleModalClose();
@@ -29,7 +31,7 @@ export const AddEditModal = observer(() => {
   const {mutate: updateSupplier} =
     useMutation({
       mutationKey: ['updateSupplier'],
-      mutationFn: (params: IAddEditClientInfo) => clientsInfoApi.updateClient(params),
+      mutationFn: (params: IAddEditSupplier) => supplierInfoApi.updateSupplier(params),
       onSuccess: () => {
         queryClient.invalidateQueries({queryKey: ['getSuppliers']});
         handleModalClose();
@@ -40,7 +42,7 @@ export const AddEditModal = observer(() => {
       },
     });
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: IAddEditSupplier) => {
     const valueControl = {
       ...values,
       phone: `998${values?.phone}`,
@@ -95,7 +97,7 @@ export const AddEditModal = observer(() => {
         autoComplete="off"
       >
         <Form.Item
-          name="name"
+          name="fullname"
           label="Mijoz"
           rules={[{required: true}]}
         >

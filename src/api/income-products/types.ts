@@ -1,6 +1,6 @@
-import { ISupplierInfo } from "../clients";
 import { IProducts } from "../product/types"
 import { IStaffs } from "../staffs";
+import { ISupplierInfo } from "../supplier/types";
 import { IPagination, IPayment } from "../types";
 
 export interface IIncomeOrder {

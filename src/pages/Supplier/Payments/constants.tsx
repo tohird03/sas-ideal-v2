@@ -19,7 +19,7 @@ export const paymentsColumns: ColumnType<ISupplierPayments>[] = [
     dataIndex: 'client',
     title: 'Yetkazib beruvchi',
     align: 'center',
-    render: (value, record) => <SupplierNameLink supplier={record?.supplier} />,
+    render: (value, record) => <SupplierNameLink supplier={record?.user} />,
   },
   {
     key: 'cash',

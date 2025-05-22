@@ -19,6 +19,18 @@ export enum Endpoints {
   SupplierMany = '/supplier/many',
   SupplierOne = '/supplier/one',
 
+  SupplierPaymentsMany = '/supplier-payment/many',
+  SupplierPaymentsOne = '/supplier-payment/one',
+
+  ProductsMany = '/product/many',
+  ProductsOne = '/product/one',
+
+  StaffsMany = '/staff/many',
+  StaffOne = '/staff/one',
+
+  StaffPaymentsMany = '/staff-payment/many',
+  StaffPaymentsOne = '/staff-payment/one',
+
   //XATO
   RefreshToken = '/dashboard-auth/refresh',
 

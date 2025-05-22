@@ -1,7 +1,8 @@
 import {makeAutoObservable} from 'mobx';
-import {IClientDebtFilter, IGetSupplierInfoParams, ISupplierInfo} from '@/api/clients';
+import {IClientDebtFilter} from '@/api/clients';
 import {addNotification} from '@/utils';
 import { supplierInfoApi } from '@/api/supplier/supplier';
+import { IGetSupplierInfoParams, ISupplierDebtFilter, ISupplierInfo } from '@/api/supplier/types';
 
 class SupplierInfoStore {
   pageNumber = 1;
@@ -10,7 +11,7 @@ class SupplierInfoStore {
   isOpenAddEditSupplierModal = false;
   singleSupplierInfo: ISupplierInfo | null = null;
   debt: number | null = null;
-  debtType: IClientDebtFilter | null = null;
+  debtType: ISupplierDebtFilter | null = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -37,7 +38,7 @@ class SupplierInfoStore {
     this.debt = debt;
   };
 
-  setDebtType = (debtType: IClientDebtFilter | null) => {
+  setDebtType = (debtType: ISupplierDebtFilter | null) => {
     this.debtType = debtType;
   };
 

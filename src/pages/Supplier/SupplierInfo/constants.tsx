@@ -1,12 +1,12 @@
 import React from 'react';
 import {ColumnType} from 'antd/es/table';
-import {IClientDebtFilter, IClientsInfo, ISupplierInfo} from '@/api/clients';
 import {Action} from './Action';
 import { formatPhoneNumber } from '@/utils/phoneFormat';
 import { priceFormat } from '@/utils/priceFormat';
 import { dateFormatterWithStringMonth } from '@/utils/dateFormat';
 import { SupplierNameLink } from '@/pages/ActionComponents/SupplierNameLink';
 import { getFullDateFormat } from '@/utils/getDateFormat';
+import { ISupplierDebtFilter, ISupplierInfo } from '@/api/supplier/types';
 
 export const supplierColumns: ColumnType<ISupplierInfo>[] = [
   {
@@ -42,7 +42,7 @@ export const supplierColumns: ColumnType<ISupplierInfo>[] = [
     dataIndex: 'lastSale',
     title: 'Oxirgi xarid',
     align: 'center',
-    render: (value, record) => getFullDateFormat(record?.lastSale),
+    render: (value, record) => record?.lastArrivalDate ? getFullDateFormat(record?.lastArrivalDate) : null,
   },
   {
     key: 'action',
@@ -59,15 +59,15 @@ export const supplierDebtFilter = [
     label: 'Hamma mijozlar',
   },
   {
-    value: IClientDebtFilter.EQUAL,
+    value: ISupplierDebtFilter.EQUAL,
     label: '* ga teng bo\'lganlari',
   },
   {
-    value: IClientDebtFilter.LESS,
+    value: ISupplierDebtFilter.LESS,
     label: '* dan kam bo\'lganlari',
   },
   {
-    value: IClientDebtFilter.GREATER,
+    value: ISupplierDebtFilter.GREATER,
     label: '* dan yuqori bo\'lganlari',
   },
 ];

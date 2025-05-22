@@ -79,7 +79,7 @@ export const AddEditModal = observer(() => {
   const sellerOptions = useMemo(() => (
     sellerData?.data?.data.map((sellerData) => ({
       value: sellerData?.id,
-      label: `${sellerData?.name}`,
+      label: `${sellerData?.fullname}`,
     }))
   ), [sellerData]);
 

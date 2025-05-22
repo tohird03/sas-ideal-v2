@@ -114,7 +114,7 @@ export const PaymentModal = observer(() => {
     <Modal
       open={incomeProductsStore.isOpenIncomeOrderPaymentModal}
       title={`
-        ${incomeProductsStore.incomeOrderPayment?.supplier?.name}: Yetkazib beruvchiga qarz
+        ${incomeProductsStore.incomeOrderPayment?.supplier?.fullname}: Yetkazib beruvchiga qarz
         ${incomeProductsStore.incomeOrderPayment?.supplier?.debt || 0}`}
       onCancel={handleModalClose}
       cancelText="Bekor qilish"
@@ -154,7 +154,7 @@ export const PaymentModal = observer(() => {
             optionFilterProp="children"
             options={[{
               value: incomeProductsStore.incomeOrderPayment?.supplier?.id,
-              label: `${incomeProductsStore.incomeOrderPayment?.supplier?.name} ${incomeProductsStore.incomeOrderPayment?.supplier?.phone}`,
+              label: `${incomeProductsStore.incomeOrderPayment?.supplier?.fullname} ${incomeProductsStore.incomeOrderPayment?.supplier?.phone}`,
             }]}
             allowClear
           />

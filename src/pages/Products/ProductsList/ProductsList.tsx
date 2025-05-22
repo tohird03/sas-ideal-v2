@@ -18,8 +18,6 @@ import { authStore } from '@/stores/auth';
 const cn = classNames.bind(styles);
 
 export const ProductsList = observer(() => {
-  const isMobile = useMediaQuery('(max-width: 800px)');
-
   const { data: productsData, isLoading: loading } = useQuery({
     queryKey: [
       'getProducts',
@@ -54,7 +52,7 @@ export const ProductsList = observer(() => {
 
   const rowClassName = (record: IProducts) =>
     record.count < 0 ? 'error__row'
-      : record.count < record?.min_amount
+      : record.count < record?.minAmount
         ? 'warning__row' : '';
 
   return (

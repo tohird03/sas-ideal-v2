@@ -30,7 +30,7 @@ export const incomeOrdersColumns: ColumnType<IIncomeOrder>[] = [
     align: 'center',
     render: (value, record) => (
       <div>
-        <p style={{margin: 0, fontWeight: 'bold'}}>{record?.admin?.name}</p>
+        <p style={{margin: 0, fontWeight: 'bold'}}>{record?.admin?.fullname}</p>
       </div>
     ),
   },
@@ -123,7 +123,7 @@ export const ordersInfoColumns: ColumnType<IIncomeOrder>[] = [
     align: 'center',
     render: (value, record) => (
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '5px 0'}}>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.supplier?.name}</p>
+        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.supplier?.fullname}</p>
         <i>+{record?.supplier?.phone}</i>
       </div>
     ),
@@ -135,7 +135,7 @@ export const ordersInfoColumns: ColumnType<IIncomeOrder>[] = [
     align: 'center',
     render: (value, record) => (
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '5px 0'}}>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.admin?.name}</p>
+        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.admin?.fullname}</p>
         <i>+{record?.admin?.phone}</i>
       </div>
     ),

@@ -15,16 +15,16 @@ class StaffsPayments extends Instance {
   }
 
   getStaffsPayments = (params: IGetStaffsPaymentsParams): Promise<IResponse<IStaffsPayments[]>> =>
-    this.get(Endpoints.StaffsPayments, { params });
+    this.get(Endpoints.StaffPaymentsMany, { params });
 
   addStaffsPayment = (params: IAddEditStaffsPayment): Promise<AxiosResponse> =>
-    this.post(Endpoints.StaffsPayments, params);
+    this.post(Endpoints.StaffPaymentsOne, params);
 
   updateStaffsPayment = (params: IAddEditStaffsPayment): Promise<AxiosResponse> =>
-    this.patch(`${Endpoints.StaffsPayments}/${params?.id}`, params);
+    this.patch(`${Endpoints.StaffPaymentsOne}`, params, { params: { id: params?.id } });
 
   deleteStaffPayment = (id: string): Promise<AxiosResponse> =>
-    this.delete(`${Endpoints.StaffsPayments}/${id}`);
+    this.delete(`${Endpoints.StaffPaymentsOne}`, {params: {id}});
 }
 
 export const staffsPaymentsApi = new StaffsPayments(config);

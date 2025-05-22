@@ -2,7 +2,7 @@ import {IPagination} from '../types';
 
 export interface IStaffs {
   id: string;
-  name: string;
+  fullname: string;
   phone: string;
   permissions: IStaffPer[];
 }
@@ -13,7 +13,7 @@ export interface IGetStaffsParams extends IPagination {
 
 export interface IAddStaff {
   id?: string;
-  name: string;
+  fullname: string;
   phone: string;
   password: string;
   permissions: string[];
@@ -21,7 +21,7 @@ export interface IAddStaff {
 
 export interface IUpdateStaff {
   id?: string;
-  name: string;
+  fullname: string;
   phone: string;
   password: string;
   connectPermissions: string[];

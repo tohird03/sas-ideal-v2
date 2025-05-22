@@ -1,12 +1,12 @@
-import { IClientsInfo, ISupplierInfo } from "../clients"
 import { IOrder } from "../order/types"
+import { ISupplierInfo } from "../supplier/types";
 import { IPagination, IPaymentType } from "../types"
 
 export interface ISupplierPayments extends IPaymentType {
   id: string,
   createdAt: string,
   order: IOrder,
-  supplier: ISupplierInfo,
+  user: ISupplierInfo,
 }
 
 export interface IIncomeGetClientsPaymentsParams extends IPagination {

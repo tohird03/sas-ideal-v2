@@ -83,20 +83,20 @@ export const AddEditModal = observer(() => {
   const clientsOptions = useMemo(() => (
     clientsData?.data?.data.map((supplier) => ({
       value: supplier?.id,
-      label: `${supplier?.name}: +${supplier?.phone}`,
+      label: `${supplier?.fullname}: +${supplier?.phone}`,
     }))
   ), [clientsData]);
 
   useEffect(() => {
     if (supplierPaymentsStore.singlePayment) {
-      setSearchSupplier(supplierPaymentsStore?.singlePayment?.supplier?.phone);
+      setSearchSupplier(supplierPaymentsStore?.singlePayment?.user?.phone);
 
       form.setFieldsValue({
         ...supplierPaymentsStore.singlePayment,
-        supplierId: supplierPaymentsStore?.singlePayment?.supplier?.id,
+        userId: supplierPaymentsStore?.singlePayment?.user?.id,
       });
     } else if (supplierId) {
-      form.setFieldValue('supplierId', supplierId);
+      form.setFieldValue('userId', supplierId);
     }
   }, [supplierPaymentsStore.singlePayment, supplierId]);
 
@@ -120,7 +120,7 @@ export const AddEditModal = observer(() => {
         <Form.Item
           label="Yetkazib beruvchi"
           rules={[{ required: true }]}
-          name="supplierId"
+          name="userId"
         >
           <Select
             showSearch

@@ -15,7 +15,7 @@ import { ColumnType } from 'antd/es/table';
 import { incomeProductsApi } from '@/api/income-products';
 import { IAddEditIncomeOrder, IAddIncomeOrderForm, IAddIncomeOrderProducts, IIncomeOrderProductAdd, IIncomeProduct } from '@/api/income-products/types';
 import { singleSupplierStore, supplierInfoStore } from '@/stores/supplier';
-import { ISupplierInfo } from '@/api/clients';
+import { ISupplierInfo } from '@/api/supplier/types';
 
 const cn = classNames.bind(styles);
 
@@ -192,7 +192,7 @@ export const AddEditModal = observer(() => {
     const findProduct = productsData?.data?.data?.find(product => product?.id === productId);
 
     form.setFieldValue('cost', findProduct?.cost);
-    form.setFieldValue('selling_price', findProduct?.selling_price);
+    form.setFieldValue('selling_price', findProduct?.price);
 
     setIsOpenProductSelect(false);
     countInputRef.current?.focus();
@@ -205,7 +205,7 @@ export const AddEditModal = observer(() => {
   const supplierOptions = useMemo(() => (
     supplierData?.data?.data.map((supplier) => ({
       value: supplier?.id,
-      label: `${supplier?.name}: +${supplier?.phone}`,
+      label: `${supplier?.fullname}: +${supplier?.phone}`,
     }))
   ), [supplierData]);
 
@@ -612,7 +612,7 @@ export const AddEditModal = observer(() => {
                   </p>
                   <div className={cn('income-order__add-product-info')}>
                     <p
-                      style={{ backgroundColor: `${countColor(product?.count, product?.min_amount)}` }}
+                      style={{ backgroundColor: `${countColor(product?.count, product?.minAmount)}` }}
                       className={cn('income-order__add-product-count')}
                     >
                       {product?.count} dona

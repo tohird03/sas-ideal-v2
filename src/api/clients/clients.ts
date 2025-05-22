@@ -4,15 +4,12 @@ import { INetworkConfig, Instance } from '../instance';
 import { IResponse } from '../types';
 import {
   IAddEditClientInfo,
-  IAddSupplierInfo,
   IClientsInfo,
   IDeed,
   IGetClientDeedExcelParams,
   IGetClientDeedParams,
   IGetClientsInfoParams,
-  IGetSupplierInfoParams,
   ISupplierDeed,
-  ISupplierInfo,
 } from './types';
 
 const config: INetworkConfig = {
@@ -43,13 +40,6 @@ class ClientsInfoApi extends Instance {
 
   getClientDeed = (params: IGetClientDeedParams): Promise<IResponse<IDeed[]>> =>
     this.get(Endpoints.ClientsDeed, { params });
-
-
-  getSupplierInfo = (params: IGetSupplierInfoParams): Promise<IResponse<ISupplierInfo[]>> =>
-    this.get(Endpoints.Supplier, { params });
-
-  addSupplier = (params: IAddSupplierInfo): Promise<AxiosResponse> =>
-    this.post(Endpoints.Supplier, params);
 
   getSupplierDeed = (params: IGetClientDeedParams): Promise<IResponse<ISupplierDeed[]>> =>
     this.get(Endpoints.SupplierDeed, { params });

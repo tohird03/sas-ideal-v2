@@ -2,8 +2,7 @@ import { AxiosResponse } from 'axios';
 import { Endpoints, umsStages } from '../endpoints';
 import { INetworkConfig, Instance } from '../instance';
 import { IResponse } from '../types';
-import { IGetSupplierInfoParams, ISupplierInfo } from '../clients';
-import { IAddEditSupplier } from './types';
+import { IAddEditSupplier, IGetSupplierInfoParams, ISupplierInfo } from './types';
 
 const config: INetworkConfig = {
   baseURL: Endpoints.Base,

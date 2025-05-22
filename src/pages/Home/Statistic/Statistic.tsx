@@ -14,6 +14,7 @@ import { ROUTES } from '@/constants';
 import { clientsInfoStore } from '@/stores/clients';
 import { IClientDebtFilter } from '@/api/clients';
 import { supplierInfoStore } from '@/stores/supplier';
+import { ISupplierDebtFilter } from '@/api/supplier/types';
 
 const cn = classNames.bind(styles);
 const formatter = (value: number) => <CountUp duration={2} end={value} separator=" " />;
@@ -106,7 +107,7 @@ export const Statistic = observer(() => {
   };
 
   const handleClickSupplier = () => {
-    supplierInfoStore.setDebtType(IClientDebtFilter.GREATER);
+    supplierInfoStore.setDebtType(ISupplierDebtFilter.GREATER);
     supplierInfoStore.setPageSize(100);
     navigate(ROUTES.supplierInfo);
   };

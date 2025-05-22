@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
-import { Button, DatePicker, DatePickerProps, Input, Typography } from 'antd';
+import { Button, DatePicker, DatePickerProps, Input, Table, Typography } from 'antd';
 import classNames from 'classnames';
 import { DataTable } from '@/components/Datatable/datatable';
 import { getPaginationParams } from '@/utils/getPaginationParams';
@@ -13,14 +13,14 @@ import { paymentsColumns } from './constants';
 import { supplierPaymentsStore } from '@/stores/supplier';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { priceFormat } from '@/utils/priceFormat';
 
 const cn = classNames.bind(styles);
 
 export const SupplierPayments = observer(() => {
-  const isMobile = useMediaQuery('(max-width: 800px)');
   const { supplierId } = useParams();
 
-  const { data: clientsInfoData, isLoading: loading } = useQuery({
+  const { data: supplierPaymentsData, isLoading: loading } = useQuery({
     queryKey: [
       'getPayments',
       supplierPaymentsStore.pageNumber,
@@ -79,7 +79,7 @@ export const SupplierPayments = observer(() => {
         <Typography.Title level={3}>To&apos;langan qarzlar ro&apos;yxati</Typography.Title>
         <div className={cn('clients-payments__filter')}>
           <Input
-            placeholder="Mijozlarni qidirish"
+            placeholder="Yetkazib beruvchilarni qidirish"
             allowClear
             onChange={handleSearch}
             className={cn('clients-payments__search')}
@@ -108,19 +108,43 @@ export const SupplierPayments = observer(() => {
         </div>
       </div>
 
-      <DataTable
+      <Table
         columns={paymentsColumns}
-        data={clientsInfoData?.data?.data || []}
+        dataSource={supplierPaymentsData?.data?.data || []}
         loading={loading}
-        isMobile={isMobile}
         pagination={{
-          total: clientsInfoData?.data?.totalCount,
+          total: supplierPaymentsData?.data?.totalCount,
           current: supplierPaymentsStore?.pageNumber,
           pageSize: supplierPaymentsStore?.pageSize,
           showSizeChanger: true,
           onChange: handlePageChange,
-          ...getPaginationParams(clientsInfoData?.data?.totalCount),
+          ...getPaginationParams(supplierPaymentsData?.data?.totalCount),
         }}
+        summary={() => (
+          <Table.Summary.Row>
+            <Table.Summary.Cell colSpan={2} index={1} />
+            <Table.Summary.Cell index={2}>
+              <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                Jami: {priceFormat(supplierPaymentsData?.data?.calc?.totalCash)}
+              </div>
+            </Table.Summary.Cell>
+            <Table.Summary.Cell index={2}>
+              <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                Jami: {priceFormat(supplierPaymentsData?.data?.calc?.totalCard)}
+              </div>
+            </Table.Summary.Cell>
+            <Table.Summary.Cell index={2}>
+              <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                Jami: {priceFormat(supplierPaymentsData?.data?.calc?.totalTransfer)}
+              </div>
+            </Table.Summary.Cell>
+            <Table.Summary.Cell index={2}>
+              <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                Jami: {priceFormat(supplierPaymentsData?.data?.calc?.totalOther)}
+              </div>
+            </Table.Summary.Cell>
+          </Table.Summary.Row>
+        )}
       />
 
       {supplierPaymentsStore.isOpenAddEditPaymentModal && <AddEditModal />}

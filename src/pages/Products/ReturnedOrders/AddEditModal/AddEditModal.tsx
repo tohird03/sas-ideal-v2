@@ -156,7 +156,7 @@ export const AddEditModal = observer(() => {
   const handleChangeProduct = (productId: string) => {
     const findProduct = productsData?.data?.data?.find(product => product?.id === productId);
 
-    form.setFieldValue('price', findProduct?.selling_price);
+    form.setFieldValue('price', findProduct?.price);
 
     setIsOpenProductSelect(false);
     countInputRef.current?.focus();
@@ -508,10 +508,10 @@ export const AddEditModal = observer(() => {
                   </p>
                   <div className={cn('income-order__add-product-info')}>
                     <p className={cn('income-order__add-product-price')}>
-                      {product?.selling_price}
+                      {product?.price}
                     </p>
                     <p
-                      style={{ backgroundColor: `${countColor(product?.count, product?.min_amount)}` }}
+                      style={{ backgroundColor: `${countColor(product?.count, product?.minAmount)}` }}
                       className={cn('income-order__add-product-count')}
                     >
                       {product?.count} dona

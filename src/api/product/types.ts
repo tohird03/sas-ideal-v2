@@ -9,17 +9,13 @@ export interface IProducts {
   id: string;
   name: string;
   count: number;
-  min_amount: number;
+  minAmount: number;
   createdAt: string;
   // Sotib olingan narx
   cost: number;
   // Sotuvda sotiladigan narxi
-  selling_price: number;
-  // Kelishtirib berishning oxirgi narxi
-  wholesale_price: number;
-  // Foyda
-  avarage_cost: number;
-  lastSale: string;
+  price: number;
+  lastSellingDate: string;
 }
 
 export interface IAddEditProduct {

@@ -39,7 +39,7 @@ export const productsListColumn: ColumnType<IProducts>[] = [
     dataIndex: 'selling_price',
     title: 'Sotilish narxi',
     align: 'center',
-    render: (value, record) => record?.selling_price,
+    render: (value, record) => record?.price,
   },
   {
     key: 'totalPrice',
@@ -57,7 +57,7 @@ export const productsListColumn: ColumnType<IProducts>[] = [
     dataIndex: 'min_amount',
     title: 'Ogohlantirish',
     align: 'center',
-    render: (value, record) => `${record?.min_amount} dona`,
+    render: (value, record) => `${record?.minAmount} dona`,
   },
   {
     key: 'createdAt',
@@ -71,7 +71,7 @@ export const productsListColumn: ColumnType<IProducts>[] = [
     dataIndex: 'lastSale',
     title: 'Oxirgi sotuv',
     align: 'center',
-    render: (value, record) => getFullDateFormat(record?.lastSale),
+    render: (value, record) => record?.lastSellingDate ? getFullDateFormat(record?.lastSellingDate) : null,
   },
   {
     key: 'action',

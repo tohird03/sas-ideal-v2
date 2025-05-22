@@ -11,7 +11,7 @@ import { AddEditModal } from './AddEditModal';
 import styles from './supplier-info.scss';
 import { supplierColumns, supplierDebtFilter } from './constants';
 import { supplierInfoStore } from '@/stores/supplier';
-import { IClientDebtFilter, ISupplierInfo } from '@/api/clients';
+import { ISupplierDebtFilter, ISupplierInfo } from '@/api/supplier/types';
 
 const cn = classNames.bind(styles);
 
@@ -49,7 +49,7 @@ export const SupplierInfo = observer(() => {
     supplierInfoStore.setDebt(value);
   };
 
-  const handleDebtFilterChange = (value: IClientDebtFilter) => {
+  const handleDebtFilterChange = (value: ISupplierDebtFilter) => {
     supplierInfoStore.setDebtType(value);
   };
 

@@ -3,9 +3,10 @@ import {observer} from 'mobx-react';
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {Button, Popconfirm} from 'antd';
-import {clientsInfoApi, ISupplierInfo} from '@/api/clients';
 import {addNotification} from '@/utils';
 import { supplierInfoStore } from '@/stores/supplier';
+import { ISupplierInfo } from '@/api/supplier/types';
+import { supplierInfoApi } from '@/api/supplier/supplier';
 
 type Props = {
   supplier: ISupplierInfo;
@@ -17,7 +18,7 @@ export const Action: FC<Props> = observer(({supplier}) => {
   const {mutate: deleteSupplier} =
   useMutation({
     mutationKey: ['deleteSupplier'],
-    mutationFn: (id: string) => clientsInfoApi.deleteUser(id!),
+    mutationFn: (id: string) => supplierInfoApi.deleteSupplier(id!),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['getSuppliers']});
     },

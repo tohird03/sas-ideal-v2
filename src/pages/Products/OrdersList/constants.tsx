@@ -1,8 +1,6 @@
 import React from 'react';
 import { ColumnType } from 'antd/es/table';
-import { IClientsInfo, ISupplierInfo } from '@/api/clients';
 import { Action } from './Action';
-import { formatPhoneNumber } from '@/utils/phoneFormat';
 import { IOrder, IOrderProducts, ITotalOrderPaymentCalc } from '@/api/order/types';
 import { Tag } from 'antd';
 import { getFullDateFormat } from '@/utils/getDateFormat';

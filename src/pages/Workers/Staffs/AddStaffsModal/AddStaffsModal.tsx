@@ -68,7 +68,7 @@ export const AddStaffsModal = observer(() => {
       const disconnectPer = oldPer?.filter(newPer => !userPer?.includes(newPer));
 
       updateStaffs({
-        name: values?.name,
+        fullname: values?.fullname,
         password: values?.password,
         phone: `998${values?.phone}`,
         id: staffsStore?.singleStaff?.id!,

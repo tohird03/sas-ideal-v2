@@ -1,4 +1,4 @@
-import { IPagination } from "../types";
+import { IPagination } from '../types';
 
 export interface IGetSupplierInfoParams extends IPagination {
   search?: string;

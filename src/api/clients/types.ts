@@ -42,27 +42,6 @@ export interface IAddEditClientInfo {
   phone: string;
 }
 
-// SUPPLIER
-export interface IGetSupplierInfoParams extends IPagination {
-  search?: string;
-  debt?: number;
-  debtType?: IClientDebtFilter;
-}
-
-export interface ISupplierInfo {
-  id: string;
-  name: string;
-  phone: string;
-  lastSale: string;
-  debt: number;
-}
-
-export interface IAddSupplierInfo {
-  id?: string;
-  name: string;
-  phone: string;
-}
-
 export interface IDeedPayment extends IPayment {
   type: 'payment';
   description: string;
