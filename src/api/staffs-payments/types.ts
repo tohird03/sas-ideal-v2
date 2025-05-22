@@ -12,12 +12,12 @@ export interface IStaffsPayments {
   sum: string;
   description: string;
   createdAt: string;
-  employee: ISeller;
+  user: ISeller;
 }
 
 export interface IAddEditStaffsPayment {
   id?: string;
   sum: number;
   description: string;
-  employeeId: string
+  userId: string
 }

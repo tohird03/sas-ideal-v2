@@ -23,8 +23,8 @@ export const clientsColumns: ColumnType<IStaffsPayments>[] = [
     align: 'center',
     render: (value, record) => (
       <div>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.employee?.fullname}</p>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.employee?.phone}</p>
+        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.user?.fullname}</p>
+        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.user?.phone}</p>
       </div>
     ),
   },

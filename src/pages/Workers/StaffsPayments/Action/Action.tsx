@@ -37,22 +37,22 @@ export const Action: FC<Props> = observer(({ staffsPayment }) => {
 
   return (
     <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
-      {authStore?.staffInfo?.role === 'super_admin' && (
-        <>
-          <Button onClick={handleEditStaffsPayments} type="primary" icon={<EditOutlined />} />
-          <Popconfirm
-            title="Xodim hisobotini o'chirish"
-            description="Rostdan ham xodimni bu hisobotini o'chirishni xohlaysizmi?"
-            onConfirm={handleDelete}
-            okText="Ha"
-            okButtonProps={{ style: { background: 'red' } }}
-            cancelText="Yo'q"
-          >
-            <Button type="primary" icon={<DeleteOutlined />} danger />
-          </Popconfirm>
-        </>
-      )
-      }
+      {/* {authStore?.staffInfo?.role === 'super_admin' && ( */}
+      <>
+        <Button onClick={handleEditStaffsPayments} type="primary" icon={<EditOutlined />} />
+        <Popconfirm
+          title="Xodim hisobotini o'chirish"
+          description="Rostdan ham xodimni bu hisobotini o'chirishni xohlaysizmi?"
+          onConfirm={handleDelete}
+          okText="Ha"
+          okButtonProps={{ style: { background: 'red' } }}
+          cancelText="Yo'q"
+        >
+          <Button type="primary" icon={<DeleteOutlined />} danger />
+        </Popconfirm>
+      </>
+      {/* ) */}
+      {/* } */}
     </div>
   );
 });

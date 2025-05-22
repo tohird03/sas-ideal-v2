@@ -87,7 +87,7 @@ export const AddEditModal = observer(() => {
     if (staffsPaymentStore.singleStaffPayments) {
       form.setFieldsValue({
         ...staffsPaymentStore.singleStaffPayments,
-        employeeId: staffsPaymentStore.singleStaffPayments?.employee?.id,
+        userId: staffsPaymentStore.singleStaffPayments?.user?.id,
       });
     }
   }, [staffsPaymentStore.singleStaffPayments]);
@@ -110,7 +110,7 @@ export const AddEditModal = observer(() => {
         autoComplete="off"
       >
         <Form.Item
-          name="employeeId"
+          name="userId"
           label="Xodim"
           rules={[{required: true}]}
         >

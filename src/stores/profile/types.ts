@@ -9,6 +9,8 @@ export interface IPemissions {
   id: string;
   key: IStaffPerKey;
   name: string;
+  description: string;
+  actions: IPemissions[];
 }
 
 export type ChangePasswordFormType = {

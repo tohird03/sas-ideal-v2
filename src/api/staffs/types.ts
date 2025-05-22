@@ -4,7 +4,7 @@ export interface IStaffs {
   id: string;
   fullname: string;
   phone: string;
-  permissions: IStaffPer[];
+  actions: IStaffPer[];
 }
 
 export interface IGetStaffsParams extends IPagination {
@@ -16,7 +16,7 @@ export interface IAddStaff {
   fullname: string;
   phone: string;
   password: string;
-  permissions: string[];
+  actionsToConnect: string[];
 }
 
 export interface IUpdateStaff {
@@ -24,8 +24,8 @@ export interface IUpdateStaff {
   fullname: string;
   phone: string;
   password: string;
-  connectPermissions: string[];
-  disconnectPermissions: string[];
+  actionsToConnect: string[];
+  actionsToDisconnect: string[];
 }
 
 export interface IStaffPer {

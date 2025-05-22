@@ -31,6 +31,8 @@ export enum Endpoints {
   StaffPaymentsMany = '/staff-payment/many',
   StaffPaymentsOne = '/staff-payment/one',
 
+  PermissionsMany = '/permission/many',
+
   //XATO
   RefreshToken = '/dashboard-auth/refresh',
 

@@ -24,10 +24,10 @@ class StaffsApi extends Instance {
     this.patch(`${Endpoints.StaffOne}`, params, { params: { id: params?.id } });
 
   deleteStaff = (id: string): Promise<AxiosResponse> =>
-    this.delete(`${Endpoints.StaffOne}/${id}`);
+    this.delete(`${Endpoints.StaffOne}`, {params: {id}});
 
-  getSingleStaffs = (staffId: string): Promise<IStaffs> =>
-    this.get(`${Endpoints.StaffOne}/${staffId}`);
+  getSingleStaffs = (staffId: string): Promise<{data: IStaffs}> =>
+    this.get(`${Endpoints.StaffOne}`, {params: {id: staffId}});
 }
 
 export const staffsApi = new StaffsApi(config);
