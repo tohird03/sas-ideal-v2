@@ -33,6 +33,9 @@ export enum Endpoints {
 
   PermissionsMany = '/permission/many',
 
+  SellingMany = '/selling/many',
+  SellingOne = '/selling/one',
+
   //XATO
   RefreshToken = '/dashboard-auth/refresh',
 

@@ -26,13 +26,15 @@ class OrdersApi extends Instance {
   }
 
   getOrders = (params: IGetOrdersParams): Promise<IResponse<IOrder[], ITotalOrderPaymentCalc>> =>
-    this.get(Endpoints.productsOrder, { params });
+    this.get(Endpoints.SellingMany, { params });
 
+  addNewOrder = (params: IAddOrder): Promise<IOrder> =>
+    this.resPost(Endpoints.SellingOne, params);
+
+  // XATO
   getSingleOrder = (orderId: string): Promise<IOrder> =>
     this.get(`${Endpoints.productsOrder}/${orderId}`);
 
-  addNewOrder = (params: IAddOrder): Promise<IOrder> =>
-    this.resPost(Endpoints.productsOrder, params);
 
   updateOrder = (params: IUpdateOrder): Promise<AxiosResponse> =>
     this.patch(`${Endpoints.productsOrder}/${params?.id}`, params);
