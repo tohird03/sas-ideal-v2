@@ -20,7 +20,7 @@ export const PaymentModal = observer(() => {
   const [loadingPayment, setLoadingPayment] = useState(false);
 
   const today = new Date().toISOString().split('T')[0];
-  const checkDate = ordersStore.order?.sellingDate?.split('T')[0];
+  const checkDate = ordersStore.order?.date?.split('T')[0];
   const isToday = checkDate === today;
 
   const handleModalClose = () => {

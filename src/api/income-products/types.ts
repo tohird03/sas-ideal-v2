@@ -5,22 +5,23 @@ import { IPagination, IPayment } from "../types";
 
 export interface IIncomeOrder {
   id: string,
-  sum: number,
-  debt: number,
   accepted: boolean,
   supplier: ISupplierInfo,
-  admin: IStaffs,
+  staff: IStaffs,
   payment: IPayment;
-  incomingProducts: IIncomeProduct[];
+  products: IIncomeProduct[];
   createdAt: string;
-  sellingDate: string;
+  date: string;
+  totalPayment: number;
+  totalCost: number;
+  debt: number;
 }
 
 export interface IIncomeProduct {
   id: string,
   cost: number,
   count: number,
-  selling_price: number,
+  price: number,
   wholesale_price: number,
   product: IProducts;
 }
@@ -34,27 +35,27 @@ export interface IGetIncomeOrdersParams extends IPagination {
 
 
 export interface IAddIncomeOrderProducts {
-  product_id: string;
+  productId: string;
   count: number;
   cost: number;
-  selling_price: number;
+  price: number;
 }
 
 export interface IAddIncomeOrderForm extends IAddIncomeOrderProducts {
   supplierId: string;
-  sellingDate: string;
+  date: string;
 }
 
 export interface IAddEditIncomeOrder {
   supplierId: string;
   products: IAddIncomeOrderProducts[];
-  sellingDate: string;
+  date: string;
 }
 
 export interface IUpdateIncomeOrder {
   id: string;
   supplierId?: string;
-  sellingDate?: string;
+  date?: string;
 }
 
 export interface IIncomeOrderPayment {
@@ -64,12 +65,12 @@ export interface IIncomeOrderPayment {
 }
 
 export interface IIncomeOrderProductAdd extends IAddIncomeOrderProducts {
-  incomingOrderId: string;
+  arrivalId: string;
 }
 
 export interface IIncomeUpdateOrderProduct {
   id: string;
   count: number;
   cost: number;
-  selling_price: number;
+  price: number;
 }

@@ -17,6 +17,7 @@ import {
   IAddOrderProducts,
   IOrderProductAdd,
   IOrderProducts,
+  IOrderStatus,
 } from '@/api/order/types';
 import Table, { ColumnType } from 'antd/es/table';
 import { OrderStatus, OrderStatusColor } from '../constants';
@@ -89,9 +90,9 @@ export const AddEditModal = observer(() => {
     setCreateLoading(true);
 
     ordersApi.updateOrder({
-      accepted: true,
+      status: IOrderStatus.ACCEPTED,
       id: ordersStore?.order?.id!,
-      sendUser: ordersStore.isSendUser,
+      send: ordersStore.isSendUser,
       clientId: form.getFieldValue('clientId'),
     })
       .then(() => {
@@ -130,7 +131,7 @@ export const AddEditModal = observer(() => {
     setLoading(true);
 
     const addProducts: IAddOrderProducts = {
-      product_id: values?.product_id,
+      productId: values?.productId,
       count: values?.count,
       price: values?.price,
     };
@@ -138,22 +139,22 @@ export const AddEditModal = observer(() => {
     if (ordersStore?.order) {
       const addOrderProduct: IOrderProductAdd = {
         ...addProducts,
-        order_id: ordersStore?.order?.id,
+        sellingId: ordersStore?.order?.id,
       };
 
       ordersApi.updateOrder({
         id: ordersStore?.order?.id,
         clientId: values?.clientId,
-        sendUser: false,
+        send: false,
       })
         .catch(addNotification);
 
       ordersApi.orderProductAdd(addOrderProduct)
         .then(() => {
-          form.resetFields(['product_id', 'price', 'count']);
+          form.resetFields(['productId', 'price', 'count']);
           ordersStore.getSingleOrder(ordersStore.order?.id!)
             .finally(() => {
-              const fieldInstance = form.getFieldInstance('product_id');
+              const fieldInstance = form.getFieldInstance('productId');
 
               fieldInstance?.focus();
             });
@@ -172,21 +173,23 @@ export const AddEditModal = observer(() => {
 
     const createOrderData: IAddOrder = {
       clientId: values?.clientId,
+      date: values?.date,
+      send: false,
       products: [addProducts],
     };
 
     ordersApi.addNewOrder(createOrderData)
       .then(res => {
-        form.resetFields(['product_id', 'price', 'count']);
-        if (res?.id) {
-          ordersStore.getSingleOrder(res?.id!)
+        form.resetFields(['productId', 'price', 'count']);
+        if (res?.data?.id) {
+          ordersStore.getSingleOrder(res?.data?.id!)
             .finally(() => {
-              const fieldInstance = form.getFieldInstance('product_id');
+              const fieldInstance = form.getFieldInstance('productId');
 
               fieldInstance?.focus();
             });
         } else {
-          ordersStore.setOrder(res);
+          ordersStore.setOrder(res?.data);
         }
         queryClient.invalidateQueries({ queryKey: ['getOrders'] });
       })
@@ -259,7 +262,7 @@ export const AddEditModal = observer(() => {
         card: ordersStore.order?.payment?.card,
         transfer: ordersStore.order?.payment?.transfer,
         other: ordersStore.order?.payment?.other,
-        sellingDate: dayjs(ordersStore.order?.sellingDate),
+        date: dayjs(ordersStore.order?.date),
         clientId: ordersStore?.order?.client?.id,
       });
 
@@ -451,8 +454,8 @@ export const AddEditModal = observer(() => {
     if (ordersStore?.order?.id) {
       ordersApi.updateOrder({
         id: ordersStore?.order?.id!,
-        sellingDate: value?.toISOString(),
-        sendUser: ordersStore?.isSendUser,
+        date: value?.toISOString(),
+        send: ordersStore?.isSendUser,
       })
         .then(() => {
           queryClient.invalidateQueries({ queryKey: ['getOrders'] });
@@ -537,7 +540,7 @@ export const AddEditModal = observer(() => {
   const getNextFieldName = (currentFieldName: string) => {
     const fieldNames = [
       'clientId',
-      'product_id',
+      'productId',
       'price',
       'count',
     ];
@@ -583,9 +586,9 @@ export const AddEditModal = observer(() => {
           </div>
           <div>
             <Tag
-              color={OrderStatusColor[String(ordersStore?.order?.accepted || false)]}
+              color={OrderStatusColor[ordersStore?.order?.status!]}
             >
-              {OrderStatus[String(ordersStore?.order?.accepted || false)]}
+              {OrderStatus[ordersStore?.order?.status!]}
             </Tag>
             <Button
               type="primary"
@@ -607,7 +610,7 @@ export const AddEditModal = observer(() => {
       width="100vw"
       footer={
         <div>
-          {!ordersStore?.order?.accepted && (
+          {!ordersStore?.order?.status && (
             <Button
               type="primary"
               style={{ backgroundColor: '#ff7700' }}
@@ -663,7 +666,7 @@ export const AddEditModal = observer(() => {
         </div>
         <Form.Item
           label="Sotish sanasi"
-          name="sellingDate"
+          name="date"
           initialValue={dayjs()}
         >
           <DatePicker
@@ -677,7 +680,7 @@ export const AddEditModal = observer(() => {
           <Form.Item
             label="Mahsulot"
             rules={[{ required: true }]}
-            name="product_id"
+            name="productId"
             style={{ flex: 1, width: '100%' }}
           >
             <Select

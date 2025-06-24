@@ -52,7 +52,7 @@ export const deedColumns: ColumnType<ISupplierDeed>[] = [
     className: 'green-col',
     render: (value, record) => (
       record?.type === 'order'
-        ? priceFormat(record?.sum)
+        ? priceFormat(record?.totalPrice)
         : null
     ),
   },

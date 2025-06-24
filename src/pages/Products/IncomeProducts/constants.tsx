@@ -30,7 +30,7 @@ export const incomeOrdersColumns: ColumnType<IIncomeOrder>[] = [
     align: 'center',
     render: (value, record) => (
       <div>
-        <p style={{margin: 0, fontWeight: 'bold'}}>{record?.admin?.fullname}</p>
+        <p style={{margin: 0, fontWeight: 'bold'}}>{record?.staff?.fullname}</p>
       </div>
     ),
   },
@@ -48,7 +48,7 @@ export const incomeOrdersColumns: ColumnType<IIncomeOrder>[] = [
     title: 'Jami narxi',
     align: 'center',
     width: '150px',
-    render: (value, record) => priceFormat(record?.sum),
+    render: (value, record) => priceFormat(record?.totalCost),
   },
   {
     key: 'totalPay',
@@ -56,7 +56,7 @@ export const incomeOrdersColumns: ColumnType<IIncomeOrder>[] = [
     title: 'Jami to\'lov',
     align: 'center',
     width: '150px',
-    render: (value, record) => priceFormat(record?.payment?.totalPay),
+    render: (value, record) => priceFormat(record?.totalPayment),
   },
   {
     key: 'cash',
@@ -135,8 +135,8 @@ export const ordersInfoColumns: ColumnType<IIncomeOrder>[] = [
     align: 'center',
     render: (value, record) => (
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '5px 0'}}>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.admin?.fullname}</p>
-        <i>+{record?.admin?.phone}</i>
+        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.staff?.fullname}</p>
+        <i>+{record?.staff?.phone}</i>
       </div>
     ),
   },
@@ -154,7 +154,7 @@ export const ordersInfoColumns: ColumnType<IIncomeOrder>[] = [
     title: 'Jami narxi',
     align: 'center',
     width: '150px',
-    render: (value, record) => priceFormat(record?.sum),
+    render: (value, record) => priceFormat(record?.totalCost),
   },
 ];
 

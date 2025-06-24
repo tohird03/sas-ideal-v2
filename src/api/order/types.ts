@@ -1,18 +1,25 @@
-import { IClientsInfo, ISeller } from "../clients";
-import { IProducts } from "../product/types";
-import { IPagination, IPayment, IPaymentType } from "../types";
+import { IClientsInfo, ISeller } from '../clients';
+import { IProducts } from '../product/types';
+import { IPagination, IPayment, IPaymentType } from '../types';
 
 export interface IOrder {
   id: string;
   client: IClientsInfo;
-  seller: ISeller;
+  staff: ISeller;
   payment: IPayment;
   products: IOrderProducts[];
-  sum: number;
-  debt: number;
-  accepted: boolean;
-  sellingDate: string;
+  status: IOrderStatus;
+  date: string;
   articl: number;
+
+  debt: number;
+  totalPrice: number;
+  totalPayment: number;
+}
+
+export enum IOrderStatus {
+  ACCEPTED = 'accepted',
+  NOTACCEPTED = 'notaccepted',
 }
 
 export interface IGetOrdersParams extends IPagination {
@@ -20,45 +27,45 @@ export interface IGetOrdersParams extends IPagination {
   startDate?: Date;
   endDate?: Date;
   clientId?: string;
-  accepted?: string;
-  sellerId?: string;
-  type?: 'excel'
+  status?: IOrderStatus;
+  staffId?: string;
+  type?: 'excel';
 }
 
-
 export interface IOrderProducts {
-  id: string,
+  id: string;
   cost: number;
-  count: number,
+  count: number;
   price: number;
   avarage_cost: number;
   product: IProducts;
 }
 
 export interface IAddOrderProducts {
-  product_id: string;
+  productId: string;
   count: number;
   price: number;
 }
 
 export interface IAddOrderModalForm extends IAddOrderProducts {
   clientId: string;
-  sellingDate: string;
+  date: string;
 }
 
 export interface IAddOrder {
   clientId: string;
-  sellingDate?: string;
-  accepted?: boolean;
+  date: string;
+  send: boolean;
+  status?: IOrderStatus;
   products: IAddOrderProducts[];
 }
 
 export interface IUpdateOrder {
   id: string;
   clientId?: string;
-  sellingDate?: Date | string;
-  accepted?: boolean;
-  sendUser: boolean;
+  date?: Date | string;
+  status?: IOrderStatus;
+  send: boolean;
 }
 
 export interface IUploadOrderToExelParams extends IGetOrdersParams {
@@ -66,7 +73,7 @@ export interface IUploadOrderToExelParams extends IGetOrdersParams {
 }
 
 export interface IOrderProductAdd extends IAddOrderProducts {
-  order_id: string;
+  sellingId: string;
 }
 
 export interface IUpdateOrderProduct {
@@ -76,17 +83,17 @@ export interface IUpdateOrderProduct {
 }
 
 export interface IOrderStatistic {
-  todaySales: number,
-  weeklySales: number,
-  monthlySales: number,
-  ourDebt: DebtResponse,
-  fromDebt: DebtResponse,
-  weeklyChart: IOrderStatisticChart[],
+  todaySales: number;
+  weeklySales: number;
+  monthlySales: number;
+  ourDebt: DebtResponse;
+  fromDebt: DebtResponse;
+  weeklyChart: IOrderStatisticChart[];
 }
 
 export declare interface DebtResponse {
-  client: number,
-  supplier: number
+  client: number;
+  supplier: number;
 }
 
 export interface IOrderStatisticChart {
@@ -95,11 +102,11 @@ export interface IOrderStatisticChart {
 }
 
 export interface ITotalOrderPaymentCalc {
-  totalCard: number | null
-  totalCash: number |null
-  totalDebt: number | null
-  totalOther: number | null
-  totalPay: number | null
-  totalSum: number | null
-  totalTransfer: number | null
+  totalCard: number | null;
+  totalCash: number |null;
+  totalDebt: number | null;
+  totalOther: number | null;
+  totalPay: number | null;
+  totalSum: number | null;
+  totalTransfer: number | null;
 }

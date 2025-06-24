@@ -23,7 +23,7 @@ export const deedColumns: ColumnType<IDeed>[] = [
     width: '100px',
     render: (value, record) => (
       record?.type === 'order'
-        ? getFullDateFormat(record?.sellingDate)
+        ? getFullDateFormat(record?.date)
         : record?.type === 'payment'
           ? getFullDateFormat(record?.updatedAt)
           : record?.type === 'returned-order'
@@ -73,7 +73,7 @@ export const deedColumns: ColumnType<IDeed>[] = [
     className: 'green-col',
     render: (value, record) => (
       record?.type === 'order'
-        ? priceFormat(record?.sum)
+        ? priceFormat(record?.totalPrice)
         : null
     ),
   },

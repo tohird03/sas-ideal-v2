@@ -28,7 +28,7 @@ const countColor = (count: number, min_amount: number): string =>
 const getNextFieldName = (currentFieldName: string) => {
   const fieldNames = [
     'supplierId',
-    'product_id',
+    'productId',
     'price',
     'count',
   ];
@@ -115,24 +115,24 @@ export const AddEditModal = observer(() => {
     setLoading(true);
 
     const addProducts: IAddIncomeOrderProducts = {
-      product_id: values?.product_id,
+      productId: values?.productId,
       count: values?.count,
       cost: values?.cost,
-      selling_price: values?.selling_price,
+      price: values?.price,
     };
 
     if (incomeProductsStore?.incomeOrder) {
       const addOrderProduct: IIncomeOrderProductAdd = {
         ...addProducts,
-        incomingOrderId: incomeProductsStore?.incomeOrder?.id,
+        arrivalId: incomeProductsStore?.incomeOrder?.id,
       };
 
       incomeProductsApi.orderProductAdd(addOrderProduct)
         .then(() => {
-          form.resetFields(['product_id', 'cost', 'count', 'selling_price']);
+          form.resetFields(['productId', 'cost', 'count', 'price']);
           incomeProductsStore.getSingleIncomeOrder(incomeProductsStore?.incomeOrder?.id!)
             .finally(() => {
-              const fieldInstance = form.getFieldInstance('product_id');
+              const fieldInstance = form.getFieldInstance('productId');
 
               fieldInstance?.focus();
             });
@@ -148,22 +148,22 @@ export const AddEditModal = observer(() => {
 
     const createOrderData: IAddEditIncomeOrder = {
       supplierId: values?.supplierId,
-      sellingDate: values?.sellingDate,
+      date: values?.date,
       products: [addProducts],
     };
 
     incomeProductsApi.addNewIncomeOrder(createOrderData)
       .then(res => {
-        form.resetFields(['product_id', 'cost', 'count', 'selling_price']);
-        if (res?.id) {
-          incomeProductsStore.getSingleIncomeOrder(res?.id!)
+        form.resetFields(['productId', 'cost', 'count', 'price']);
+        if (res?.data?.id) {
+          incomeProductsStore.getSingleIncomeOrder(res?.data?.id!)
             .finally(() => {
-              const fieldInstance = form.getFieldInstance('product_id');
+              const fieldInstance = form.getFieldInstance('productId');
 
               fieldInstance?.focus();
             });
         } else {
-          incomeProductsStore.setIncomeOrder(res);
+          incomeProductsStore.setIncomeOrder(res?.data);
         }
         queryClient.invalidateQueries({ queryKey: ['getIncomeOrders'] });
       })
@@ -192,7 +192,7 @@ export const AddEditModal = observer(() => {
     const findProduct = productsData?.data?.data?.find(product => product?.id === productId);
 
     form.setFieldValue('cost', findProduct?.cost);
-    form.setFieldValue('selling_price', findProduct?.price);
+    form.setFieldValue('price', findProduct?.price);
 
     setIsOpenProductSelect(false);
     countInputRef.current?.focus();
@@ -219,7 +219,7 @@ export const AddEditModal = observer(() => {
         card: incomeProductsStore.incomeOrder?.payment?.card,
         transfer: incomeProductsStore.incomeOrder?.payment?.transfer,
         other: incomeProductsStore.incomeOrder?.payment?.other,
-        sellingDate: dayjs(incomeProductsStore.incomeOrder?.sellingDate),
+        date: dayjs(incomeProductsStore.incomeOrder?.date),
         supplierId: incomeProductsStore?.incomeOrder?.supplier?.id,
       });
     } else if (singleSupplierStore.activeClient?.id) {
@@ -253,16 +253,16 @@ export const AddEditModal = observer(() => {
   };
 
   const handleChangeSellingPrice = (value: number | null) => {
-    setIsUpdatingProduct({ ...isUpdatingProduct!, selling_price: value || 0 });
+    setIsUpdatingProduct({ ...isUpdatingProduct!, price: value || 0 });
   };
 
   const handleSaveAndUpdateOrderProduct = () => {
     if (isUpdatingProduct) {
-      incomeProductsApi.updateOrderProduct({
+      incomeProductsApi.updateIncomeOrderProduct({
         id: isUpdatingProduct?.id,
         cost: isUpdatingProduct?.cost,
         count: isUpdatingProduct?.count,
-        selling_price: isUpdatingProduct?.selling_price,
+        price: isUpdatingProduct?.price,
       })
         .then(res => {
           if (res) {
@@ -335,12 +335,12 @@ export const AddEditModal = observer(() => {
       render: (value, record) => (
         isUpdatingProduct?.id === record?.id ? (
           <InputNumber
-            defaultValue={record?.selling_price}
+            defaultValue={record?.price}
             placeholder="Sotish narxi"
             disabled={isUpdatingProduct?.id !== record?.id}
             onChange={handleChangeSellingPrice}
           />
-        ) : <span>{record?.selling_price}</span>
+        ) : <span>{record?.price}</span>
       ),
     },
     {
@@ -454,10 +454,10 @@ export const AddEditModal = observer(() => {
   };
 
   const handleChangePriceForm = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (!form.getFieldValue('selling_price')) {
+    if (!form.getFieldValue('price')) {
       form.setFields([
         {
-          name: 'selling_price',
+          name: 'price',
           errors: ['Mahsulot sotiladigan narxini kiriting!'],
         },
       ]);
@@ -481,8 +481,8 @@ export const AddEditModal = observer(() => {
   };
 
   const rowClassName = (record: IIncomeProduct) => {
-    if (incomeProductsStore?.incomeOrder?.incomingProducts) {
-      const isDuplicate = incomeProductsStore?.incomeOrder?.incomingProducts?.filter(product => product?.product?.id === record?.product?.id).length > 1;
+    if (incomeProductsStore?.incomeOrder?.products) {
+      const isDuplicate = incomeProductsStore?.incomeOrder?.products?.filter(product => product?.product?.id === record?.product?.id).length > 1;
 
       return isDuplicate ? 'warning__row' : '';
     }
@@ -570,7 +570,7 @@ export const AddEditModal = observer(() => {
         <Form.Item
           label="Sanasi"
           rules={[{ required: true }]}
-          name="sellingDate"
+          name="date"
           initialValue={dayjs()}
         >
           <DatePicker
@@ -582,7 +582,7 @@ export const AddEditModal = observer(() => {
         <Form.Item
           label="Mahsulot"
           rules={[{ required: true }]}
-          name="product_id"
+          name="productId"
         >
           <Select
             showSearch
@@ -651,7 +651,7 @@ export const AddEditModal = observer(() => {
         <Form.Item
           label="Sotish narxi"
           rules={[{ required: true }]}
-          name="selling_price"
+          name="price"
           initialValue={0}
         >
           <InputNumber
@@ -673,7 +673,7 @@ export const AddEditModal = observer(() => {
 
       <DataTable
         columns={addOrderProductsColumns}
-        data={incomeProductsStore?.incomeOrder?.incomingProducts || []}
+        data={incomeProductsStore?.incomeOrder?.products || []}
         isMobile={isMobile}
         pagination={false}
         scroll={{ y: 300 }}
@@ -682,7 +682,7 @@ export const AddEditModal = observer(() => {
 
       <div>
         <p style={{ textAlign: 'end', fontSize: '24px', fontWeight: 'bold' }}>Umumiy qiymati: {
-          priceFormat(incomeProductsStore?.incomeOrder?.incomingProducts?.reduce((prev, current) => prev + (current?.cost * current?.count), 0))
+          priceFormat(incomeProductsStore?.incomeOrder?.products?.reduce((prev, current) => prev + (current?.cost * current?.count), 0))
         }
         </p>
       </div>

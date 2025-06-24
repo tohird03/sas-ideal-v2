@@ -1,4 +1,5 @@
 import { IClientsInfo, ISeller } from "../clients";
+import { IOrderStatus } from "../order/types";
 import { IProducts } from "../product/types";
 import { IPagination } from "../types";
 
@@ -13,7 +14,7 @@ export interface IReturnedOrder extends IReturnedOrderPayments {
   id: string,
   sum: number,
   description: string,
-  accepted: boolean,
+  status: IOrderStatus,
   createdAt: string,
   client: IClientsInfo,
   returnedDate: string,
@@ -37,7 +38,7 @@ export interface IAddReturnedOrders {
 }
 
 export interface IAddReturnedOrderProducts {
-  product_id: string,
+  productId: string,
   count: number,
   price: number
 }

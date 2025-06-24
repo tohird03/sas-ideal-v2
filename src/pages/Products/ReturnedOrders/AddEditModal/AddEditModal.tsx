@@ -79,7 +79,7 @@ export const AddEditModal = observer(() => {
     setLoading(true);
 
     const addProducts: IAddReturnedOrderProducts = {
-      product_id: values?.product_id,
+      productId: values?.productId,
       count: values?.count,
       price: values?.price,
     };

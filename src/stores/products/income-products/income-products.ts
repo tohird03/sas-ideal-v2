@@ -28,11 +28,10 @@ class IncomeProductsStore {
       .then(res => res)
       .catch(addNotification);
 
-
   getSingleIncomeOrder = (orderId: string) =>
     incomeProductsApi.getSingleIncomeOrder(orderId)
       .then(res => {
-        this.setIncomeOrder(res);
+        this.setIncomeOrder(res?.data);
 
         return res;
       })

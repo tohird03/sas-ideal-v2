@@ -1,7 +1,7 @@
 import React from 'react';
 import { ColumnType } from 'antd/es/table';
 import { Action } from './Action';
-import { IOrder, IOrderProducts, ITotalOrderPaymentCalc } from '@/api/order/types';
+import { IOrder, IOrderProducts, IOrderStatus, ITotalOrderPaymentCalc } from '@/api/order/types';
 import { Tag } from 'antd';
 import { getFullDateFormat } from '@/utils/getDateFormat';
 import { priceFormat } from '@/utils/priceFormat';
@@ -31,9 +31,9 @@ export const ordersColumns: ColumnType<IOrder>[] = [
     align: 'center',
     render: (value, record) => (
       <Tag
-        color={OrderStatusColor[String(record?.accepted)]}
+        color={OrderStatusColor[record?.status]}
       >
-        {OrderStatus[String(record?.accepted)]}
+        {OrderStatus[record?.status]}
       </Tag>
     ),
   },
@@ -49,7 +49,7 @@ export const ordersColumns: ColumnType<IOrder>[] = [
     dataIndex: 'seller',
     title: 'Sotuvchi',
     align: 'center',
-    render: (value, record) => <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.seller?.fullname}</p>,
+    render: (value, record) => <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.staff?.fullname}</p>,
   },
   {
     key: 'totalPrice',
@@ -57,8 +57,8 @@ export const ordersColumns: ColumnType<IOrder>[] = [
     title: 'Jami narxi',
     align: 'center',
     width: '150px',
-    sorter: (a, b) => a?.sum - b?.sum,
-    render: (value, record) => priceFormat(record?.sum),
+    sorter: (a, b) => a?.totalPrice - b?.totalPrice,
+    render: (value, record) => priceFormat(record?.totalPrice),
   },
   {
     key: 'totalPay',
@@ -66,7 +66,7 @@ export const ordersColumns: ColumnType<IOrder>[] = [
     title: 'Jami to\'lov',
     align: 'center',
     width: '120px',
-    render: (value, record) => priceFormat(record?.payment?.totalPay),
+    render: (value, record) => priceFormat(record?.totalPayment),
   },
   {
     key: 'cash',
@@ -115,7 +115,7 @@ export const ordersColumns: ColumnType<IOrder>[] = [
     title: 'Sotilgan vaqti',
     align: 'center',
     width: '120px',
-    render: (value, record) => getFullDateFormat(record?.sellingDate),
+    render: (value, record) => getFullDateFormat(record?.date),
   },
   {
     key: 'action',
@@ -127,14 +127,14 @@ export const ordersColumns: ColumnType<IOrder>[] = [
 ];
 
 
-export const OrderStatus: Record<string, string> = {
-  true: 'Tasdiqlangan',
-  false: 'Tasdiqlanmagan',
+export const OrderStatus: Record<IOrderStatus, string> = {
+  [IOrderStatus.ACCEPTED]: 'Tasdiqlangan',
+  [IOrderStatus.NOTACCEPTED]: 'Tasdiqlanmagan',
 };
 
-export const OrderStatusColor: Record<string, string> = {
-  true: '#178c03',
-  false: '#ff7700',
+export const OrderStatusColor: Record<IOrderStatus, string> = {
+  [IOrderStatus.ACCEPTED]: '#178c03',
+  [IOrderStatus.NOTACCEPTED]: '#ff7700',
 };
 
 export const ordersInfoColumns: ColumnType<IOrder>[] = [
@@ -165,8 +165,8 @@ export const ordersInfoColumns: ColumnType<IOrder>[] = [
     align: 'center',
     render: (value, record) => (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '5px 0' }}>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.seller?.fullname}</p>
-        <i>+{record?.seller?.phone}</i>
+        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.staff?.fullname}</p>
+        <i>+{record?.staff?.phone}</i>
       </div>
     ),
   },
@@ -177,9 +177,9 @@ export const ordersInfoColumns: ColumnType<IOrder>[] = [
     align: 'center',
     render: (value, record) => (
       <Tag
-        color={OrderStatusColor[String(record?.accepted)]}
+        color={OrderStatusColor[record?.status]}
       >
-        {OrderStatus[String(record?.accepted)]}
+        {OrderStatus[record?.status]}
       </Tag>
     ),
   },
@@ -189,7 +189,7 @@ export const ordersInfoColumns: ColumnType<IOrder>[] = [
     title: 'Sotilgan vaqti',
     align: 'center',
     width: '150px',
-    render: (value, record) => getFullDateFormat(record?.sellingDate),
+    render: (value, record) => getFullDateFormat(record?.date),
   },
 ];
 
@@ -201,7 +201,7 @@ export const ordersInfoPaymentColumns: ColumnType<IOrder>[] = [
     title: 'Jami narxi',
     align: 'center',
     width: '150px',
-    render: (value, record) => priceFormat(record?.sum),
+    render: (value, record) => priceFormat(record?.totalPrice),
   },
   {
     key: 'totalPay',
@@ -209,7 +209,7 @@ export const ordersInfoPaymentColumns: ColumnType<IOrder>[] = [
     title: 'Jami to\'lov',
     align: 'center',
     width: '150px',
-    render: (value, record) => priceFormat(record?.payment?.totalPay),
+    render: (value, record) => priceFormat(record?.totalPayment),
   },
   {
     key: 'debt',
@@ -358,24 +358,24 @@ export const ordersTotalCalc: ColumnType<ITotalOrderPaymentCalc>[] = [
 
 export const FilterOrderStatusOptions = [
   {
-    value: 'true',
+    value: IOrderStatus.ACCEPTED,
     label: (
       <Tag
-        color={OrderStatusColor[String(true)]}
+        color={OrderStatusColor[IOrderStatus.ACCEPTED]}
         style={{width: '100%', fontSize: '14px'}}
       >
-        {OrderStatus[String(true)]}
+        {OrderStatus[IOrderStatus.ACCEPTED]}
       </Tag>
     ),
   },
   {
-    value: 'false',
+    value: IOrderStatus.NOTACCEPTED,
     label: (
       <Tag
-        color={OrderStatusColor[String(false)]}
+        color={OrderStatusColor[IOrderStatus.NOTACCEPTED]}
         style={{width: '100%', fontSize: '14px'}}
       >
-        {OrderStatus[String(false)]}
+        {OrderStatus[IOrderStatus.NOTACCEPTED]}
       </Tag>
     ),
   },

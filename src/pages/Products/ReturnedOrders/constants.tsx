@@ -37,9 +37,9 @@ export const returnedOrdersColumns: ColumnType<IReturnedOrder>[] = [
     align: 'center',
     render: (value, record) => (
       <Tag
-        color={OrderStatusColor[String(record?.accepted)]}
+        color={OrderStatusColor[record?.status!]}
       >
-        {OrderStatus[String(record?.accepted)]}
+        {OrderStatus[record?.status!]}
       </Tag>
     ),
   },

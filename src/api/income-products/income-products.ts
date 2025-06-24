@@ -17,25 +17,26 @@ class IncomeProductsApi extends Instance {
   }
 
   getIncomeOrder = (params: IGetIncomeOrdersParams): Promise<IResponse<IIncomeOrder[]>> =>
-    this.get(Endpoints.productsIncomeOrder, { params });
+    this.get(Endpoints.IncomeMany, { params });
 
-  addNewIncomeOrder = (params: IAddEditIncomeOrder): Promise<IIncomeOrder> =>
-    this.resPost(Endpoints.productsIncomeOrder, params);
+  addNewIncomeOrder = (params: IAddEditIncomeOrder): Promise<{ data: IIncomeOrder }> =>
+    this.resPost(Endpoints.IncomeOne, params);
+
+  getSingleIncomeOrder = (orderId: string): Promise<{ data: IIncomeOrder }> =>
+    this.get(Endpoints.IncomeOne, { params: { id: orderId } });
+
+  updateIncomeOrderProduct = (params: IIncomeUpdateOrderProduct): Promise<AxiosResponse> =>
+    this.patch(`${Endpoints.AddEditProductToArrival}`, params, { params: { id: params?.id } });
+
+  orderProductAdd = (params: IIncomeOrderProductAdd): Promise<AxiosResponse> =>
+    this.post(Endpoints.AddEditProductToArrival, params);
+  // XATO
 
   updateIncomeOrder = (params: IUpdateIncomeOrder): Promise<AxiosResponse> =>
     this.patch(`${Endpoints.productsIncomeOrder}/${params?.id}`, params);
 
   deleteIncomeOrder = (id: string): Promise<AxiosResponse> =>
     this.delete(`${Endpoints.productsIncomeOrder}/${id}`);
-
-  getSingleIncomeOrder = (orderId: string): Promise<IIncomeOrder> =>
-    this.get(`${Endpoints.productsIncomeOrder}/${orderId}`);
-
-  orderProductAdd = (params: IIncomeOrderProductAdd): Promise<AxiosResponse> =>
-    this.post(Endpoints.productsIncomeOrderProduct, params);
-
-  updateOrderProduct = (params: IIncomeUpdateOrderProduct): Promise<AxiosResponse> =>
-    this.patch(`${Endpoints.productsIncomeOrderProduct}/${params?.id}`, params);
 
   deleteOrderProduct = (productId: string): Promise<AxiosResponse> =>
     this.delete(`${Endpoints.productsIncomeOrderProduct}/${productId}`);

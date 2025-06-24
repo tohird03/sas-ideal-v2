@@ -105,7 +105,7 @@ export const PaymentModal = observer(() => {
       }
     }
 
-    const totalPriceCalc = incomeProductsStore?.incomeOrder?.incomingProducts?.reduce((prev, current) => prev + (current?.cost * current?.count), 0);
+    const totalPriceCalc = incomeProductsStore?.incomeOrder?.products?.reduce((prev, current) => prev + (current?.cost * current?.count), 0);
 
     setTotalPrice(totalPriceCalc || 0);
   }, [incomeProductsStore.incomeOrderPayment]);

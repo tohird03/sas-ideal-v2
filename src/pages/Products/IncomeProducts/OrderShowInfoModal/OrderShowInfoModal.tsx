@@ -64,7 +64,7 @@ export const OrderShowInfoModal = observer(() => {
       <div>
         <DataTable
           columns={ordersInfoProductsColumns}
-          data={incomeProductsStore?.singleIncomeOrder?.incomingProducts || []}
+          data={incomeProductsStore?.singleIncomeOrder?.products || []}
           isMobile={isMobile}
           pagination={false}
         />

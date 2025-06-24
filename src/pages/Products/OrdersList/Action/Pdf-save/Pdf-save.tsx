@@ -31,7 +31,7 @@ export const MyDocument = forwardRef<any, Props>(({ order }, ref) => (
           <View style={styles.titleInfo}>
             <View style={styles.title}>
               <Text style={styles.titleSpan}>Дата продажа:</Text>
-              <Text style={styles.titleSpanData}>{getFullDateFormat(order?.sellingDate)}</Text>
+              <Text style={styles.titleSpanData}>{getFullDateFormat(order?.date)}</Text>
             </View>
             <View style={styles.title}>
               <Text style={styles.titleSpan}>Харидор:</Text>
@@ -71,11 +71,11 @@ export const MyDocument = forwardRef<any, Props>(({ order }, ref) => (
         <View>
           <View style={styles.totalCalcTextWrapper}>
             <Text style={styles.totalCalcText}>Жами сумма:</Text>
-            <Text style={styles.totalCalcPriceText}>{order?.sum}</Text>
+            <Text style={styles.totalCalcPriceText}>{order?.totalPrice}</Text>
           </View>
           <View style={styles.totalCalcTextWrapper}>
             <Text style={styles.totalCalcText}>Тулов килинди:</Text>
-            <Text style={styles.totalCalcPriceText}>{order?.payment?.totalPay || 0}</Text>
+            <Text style={styles.totalCalcPriceText}>{order?.totalPayment || 0}</Text>
           </View>
         </View>
       </View>

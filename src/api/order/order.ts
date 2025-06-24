@@ -28,25 +28,25 @@ class OrdersApi extends Instance {
   getOrders = (params: IGetOrdersParams): Promise<IResponse<IOrder[], ITotalOrderPaymentCalc>> =>
     this.get(Endpoints.SellingMany, { params });
 
-  addNewOrder = (params: IAddOrder): Promise<IOrder> =>
+  addNewOrder = (params: IAddOrder): Promise<{ data: IOrder }> =>
     this.resPost(Endpoints.SellingOne, params);
 
-  // XATO
-  getSingleOrder = (orderId: string): Promise<IOrder> =>
-    this.get(`${Endpoints.productsOrder}/${orderId}`);
-
+  getSingleOrder = (orderId: string): Promise<{ data: IOrder }> =>
+    this.get(`${Endpoints.SellingOne}`, { params: { id: orderId } });
 
   updateOrder = (params: IUpdateOrder): Promise<AxiosResponse> =>
-    this.patch(`${Endpoints.productsOrder}/${params?.id}`, params);
+    this.patch(`${Endpoints.SellingOne}`, params, { params: { id: params?.id } });
+
+  orderProductAdd = (params: IOrderProductAdd): Promise<AxiosResponse> =>
+    this.post(Endpoints.AddEditProductToSelling, params);
+
+  updateOrderProduct = (params: IUpdateOrderProduct): Promise<AxiosResponse> =>
+    this.patch(`${Endpoints.AddEditProductToSelling}`, params, { params: { id: params?.id } });
+  // XATO
 
   deleteOrder = (id: string): Promise<AxiosResponse> =>
     this.delete(`${Endpoints.productsOrder}/${id}`);
 
-  orderProductAdd = (params: IOrderProductAdd): Promise<AxiosResponse> =>
-    this.post(Endpoints.productsOrderProduct, params);
-
-  updateOrderProduct = (params: IUpdateOrderProduct): Promise<AxiosResponse> =>
-    this.patch(`${Endpoints.productsOrderProduct}/${params?.id}`, params);
 
   deleteOrderProduct = (productId: string): Promise<AxiosResponse> =>
     this.delete(`${Endpoints.productsOrderProduct}/${productId}`);

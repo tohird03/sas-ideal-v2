@@ -4,7 +4,7 @@ import { DeleteOutlined, DownOutlined, DownloadOutlined, EditOutlined, EyeOutlin
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, Dropdown, Menu, Popconfirm, Tooltip } from 'antd';
 import { addNotification } from '@/utils';
-import { IOrder } from '@/api/order/types';
+import { IOrder, IOrderStatus } from '@/api/order/types';
 import { ordersStore } from '@/stores/products';
 import { ordersApi } from '@/api/order';
 import Item from 'antd/es/list/Item';
@@ -25,7 +25,7 @@ export const Action: FC<Props> = observer(({ orders }) => {
   const [downloadLoading, setDownLoadLoading] = useState(false);
 
   const today = new Date().toISOString().split('T')[0];
-  const checkDate = orders?.sellingDate.split('T')[0];
+  const checkDate = orders?.date?.split('T')[0];
   const isToday = checkDate === today;
 
   const { mutate: deleteOrder } =
@@ -59,7 +59,7 @@ export const Action: FC<Props> = observer(({ orders }) => {
         const a = document.createElement('a');
 
         a.href = url;
-        a.download = `${orders?.client?.fullname}, ${getFullDateFormat(orders?.sellingDate)}.xlsx`;
+        a.download = `${orders?.client?.fullname}, ${getFullDateFormat(orders?.date)}.xlsx`;
         a.click();
         URL.revokeObjectURL(url);
       })
@@ -167,7 +167,7 @@ export const Action: FC<Props> = observer(({ orders }) => {
       <Dropdown placement="bottomRight" overlay={menuSaveOptions} trigger={['click']}>
         <Button icon={<DownloadOutlined />} />
       </Dropdown>
-      {(!isToday || !orders?.accepted) && (
+      {(isToday || orders?.status === IOrderStatus.ACCEPTED) && (
         <Dropdown placement="bottomRight" overlay={menuOrderOptions} trigger={['click']}>
           <Button icon={<MoreOutlined />} />
         </Dropdown>

@@ -50,7 +50,7 @@ export const Action: FC<Props> = observer(({ order }) => {
         const a = document.createElement('a');
 
         a.href = url;
-        a.download = `${order?.supplier?.fullname}, ${getFullDateFormat(order?.sellingDate)}.xlsx`;
+        a.download = `${order?.supplier?.fullname}, ${getFullDateFormat(order?.date)}.xlsx`;
         a.click();
         URL.revokeObjectURL(url);
       })

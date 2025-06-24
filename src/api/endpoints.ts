@@ -1,4 +1,4 @@
-import {TStage} from './types';
+import { TStage } from './types';
 export const stage = process.env.REACT_APP_STAGE || 'dev';
 
 export enum Endpoints {
@@ -35,6 +35,11 @@ export enum Endpoints {
 
   SellingMany = '/selling/many',
   SellingOne = '/selling/one',
+  AddEditProductToSelling = '/product-mv/selling/one',
+
+  IncomeMany = '/arrival/many',
+  IncomeOne = '/arrival/one',
+  AddEditProductToArrival = '/product-mv/arrival/one',
 
   //XATO
   RefreshToken = '/dashboard-auth/refresh',

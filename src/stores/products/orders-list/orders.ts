@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { addNotification } from '@/utils';
-import { IAddOrder, IAddOrderProducts, IGetOrdersParams, IOrder } from '@/api/order/types';
+import { IAddOrder, IAddOrderProducts, IGetOrdersParams, IOrder, IOrderStatus } from '@/api/order/types';
 import { ordersApi } from '@/api/order';
 import dayjs from 'dayjs';
 import { IOrderPayment } from './types';
@@ -12,7 +12,7 @@ class OrdersStore {
   orderPayment: IOrderPayment | null = null;
   pageNumber = 1;
   pageSize = 100;
-  accepted: string | null = null;
+  accepted: IOrderStatus | null = null;
   search: string | null = null;
   sellerId: string | null = null;
   isOpenAddEditNewOrderModal = false;
@@ -44,7 +44,7 @@ class OrdersStore {
   getSingleOrder = (orderId: string) =>
     ordersApi.getSingleOrder(orderId)
       .then(res => {
-        this.setOrder(res);
+        this.setOrder(res?.data);
 
         return res;
       })
@@ -66,7 +66,7 @@ class OrdersStore {
     this.pageSize = pageSize;
   };
 
-  setAccepted = (accepted: string | null) => {
+  setAccepted = (accepted: IOrderStatus | null) => {
     this.accepted = accepted;
   };
 

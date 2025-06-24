@@ -22,6 +22,7 @@ import { AddEditModal as AddEditClientModal } from '@/pages/Clients/ClientsInfo/
 import { AddEditModal } from '../ProductsList/AddEditModal';
 import { dateFormat } from '@/utils/getDateFormat';
 import { staffsApi } from '@/api/staffs';
+import { IOrderStatus } from '@/api/order/types';
 
 const cn = classNames.bind(styles);
 
@@ -49,8 +50,8 @@ export const Orders = observer(() => {
         search: ordersStore.search!,
         startDate: ordersStore.startDate!,
         endDate: ordersStore.endDate!,
-        sellerId: ordersStore.sellerId!,
-        ...(ordersStore.accepted ? { accepted: ordersStore.accepted } : {}),
+        staffId: ordersStore.sellerId!,
+        status: ordersStore.accepted!,
         clientId,
       }),
   });
@@ -76,7 +77,8 @@ export const Orders = observer(() => {
       search: ordersStore.search!,
       startDate: ordersStore.startDate!,
       endDate: ordersStore.endDate!,
-      sellerId: ordersStore.sellerId!,
+      staffId: ordersStore.sellerId!,
+      status: ordersStore.accepted!,
       clientId,
     })
       .then(res => {
@@ -112,7 +114,7 @@ export const Orders = observer(() => {
     ordersStore.setEndDate(new Date(dateString));
   };
 
-  const handleChangeFilter = (value: string) => {
+  const handleChangeFilter = (value: IOrderStatus) => {
     if (value) {
       ordersStore.setAccepted(value);
 
