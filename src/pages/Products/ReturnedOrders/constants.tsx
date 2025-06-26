@@ -64,8 +64,8 @@ export const returnedOrdersColumns: ColumnType<IReturnedOrder>[] = [
     align: 'center',
     render: (value, record) => (
       <div>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.seller?.fullname}</p>
-        <i>+{record?.seller?.phone}</i>
+        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.staff?.fullname}</p>
+        <i>+{record?.staff?.phone}</i>
       </div>
     ),
   },

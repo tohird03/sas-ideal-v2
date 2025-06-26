@@ -222,11 +222,11 @@ export const AddEditModal = observer(() => {
         date: dayjs(incomeProductsStore.incomeOrder?.date),
         supplierId: incomeProductsStore?.incomeOrder?.supplier?.id,
       });
-    } else if (singleSupplierStore.activeClient?.id) {
-      setSearchClients(singleSupplierStore.activeClient?.phone);
-      form.setFieldValue('supplierId', singleSupplierStore.activeClient?.id);
+    } else if (singleSupplierStore.activeSupplier?.id) {
+      setSearchClients(singleSupplierStore.activeSupplier?.phone);
+      form.setFieldValue('supplierId', singleSupplierStore.activeSupplier?.id);
     }
-  }, [incomeProductsStore.incomeOrder, singleSupplierStore.activeClient]);
+  }, [incomeProductsStore.incomeOrder, singleSupplierStore.activeSupplier]);
 
   // TABLE ACTIONS
   const handleEditProduct = (orderProduct: IIncomeProduct) => {

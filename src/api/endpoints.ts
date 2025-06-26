@@ -41,6 +41,13 @@ export enum Endpoints {
   IncomeOne = '/arrival/one',
   AddEditProductToArrival = '/product-mv/arrival/one',
 
+  ReturnedOrderMany = '/returning/many',
+  ReturnedOrderOne = '/returning/one',
+  AddEditProductToReturning = '/product-mv/returning/one',
+
+  OrderStatistic = '/selling/total-stats',
+  OrderGraphStatistic = '/selling/period-stats',
+
   //XATO
   RefreshToken = '/dashboard-auth/refresh',
 

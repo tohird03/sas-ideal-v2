@@ -1,6 +1,6 @@
 import { IOrder } from '../order/types';
 import { IReturnedOrder } from '../returned-order/types';
-import {IPagination, IPayment} from '../types';
+import { IPagination, IPayment } from '../types';
 
 // CLIENT
 export interface IClientsInfo {
@@ -9,6 +9,26 @@ export interface IClientsInfo {
   phone: string;
   debt: number;
   lastSellingDate: string;
+  deedInfo: IClientDeedInfo;
+}
+
+export interface IClientDeedInfo {
+  totalDebit: number;
+  totalCredit: number;
+  debt: number;
+  deeds: IClientDeed[];
+}
+
+export interface IClientDeed {
+  type: IClientDeedType;
+  value: number;
+  date: string;
+  description: string;
+}
+
+export enum IClientDeedType {
+  DEBIT = 'debit',
+  KREDIT = 'credit',
 }
 
 export interface IUpdateUser {
@@ -40,37 +60,6 @@ export interface IAddEditClientInfo {
   id?: string;
   fullname: string;
   phone: string;
-}
-
-export interface IDeedPayment extends IPayment {
-  type: 'payment';
-  description: string;
-}
-
-export interface IDeedOrder extends IOrder {
-  type: 'order';
-  description: string;
-  createdAt?: string;
-}
-
-export interface IDeedReturnedOrder extends IReturnedOrder {
-  type: 'returned-order';
-  description: string;
-}
-
-export type IDeed = IDeedPayment | IDeedOrder | IDeedReturnedOrder;
-export type ISupplierDeed = IDeedPayment | IDeedOrder;
-
-export interface IGetClientDeedParams {
-  id: string;
-  startDate?: Date;
-  endDate?: Date;
-}
-
-export interface IGeSupplierDeedParams {
-  id: string;
-  startDate?: string;
-  endDate?: string;
 }
 
 export interface IGetClientDeedExcelParams {

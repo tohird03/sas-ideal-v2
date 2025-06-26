@@ -5,11 +5,8 @@ import { IResponse } from '../types';
 import {
   IAddEditClientInfo,
   IClientsInfo,
-  IDeed,
   IGetClientDeedExcelParams,
-  IGetClientDeedParams,
   IGetClientsInfoParams,
-  ISupplierDeed,
 } from './types';
 
 const config: INetworkConfig = {
@@ -32,20 +29,11 @@ class ClientsInfoApi extends Instance {
     this.patch(`${Endpoints.ClientOne}`, params, { params: { id: params?.id } });
 
   deleteClient = (id: string): Promise<AxiosResponse> =>
-    this.delete(`${Endpoints.ClientOne}`, {params: {id}});
+    this.delete(`${Endpoints.ClientOne}`, { params: { id } });
 
+  getSingleClient = (clientId: string): Promise<{data: IClientsInfo}> =>
+    this.get(Endpoints.ClientOne, { params: { id: clientId } });
   //XATO
-  getSingleClient = (clientId: string): Promise<IClientsInfo> =>
-    this.get(`${Endpoints.Users}/${clientId}`);
-
-  getClientDeed = (params: IGetClientDeedParams): Promise<IResponse<IDeed[]>> =>
-    this.get(Endpoints.ClientsDeed, { params });
-
-  getSupplierDeed = (params: IGetClientDeedParams): Promise<IResponse<ISupplierDeed[]>> =>
-    this.get(Endpoints.SupplierDeed, { params });
-
-  // UPDATE
-
   deleteUser = (id: string): Promise<AxiosResponse> =>
     this.delete(`${Endpoints.Users}/${id}`);
 

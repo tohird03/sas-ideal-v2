@@ -18,10 +18,30 @@ export interface ISupplierInfo {
   phone: string;
   debt: number;
   lastArrivalDate: string;
+  deedInfo: ISupplierDeedInfo;
 }
 
 export interface IAddEditSupplier {
   id?: string;
   fullname: string;
   phone: string;
+}
+
+export interface ISupplierDeedInfo {
+  totalDebit: number;
+  totalCredit: number;
+  debt: number;
+  deeds: ISupplierDeed[];
+}
+
+export interface ISupplierDeed {
+  type: ISupplierDeedType;
+  value: number;
+  date: string;
+  description: string;
+}
+
+export enum ISupplierDeedType {
+  DEBIT = 'debit',
+  KREDIT = 'credit',
 }

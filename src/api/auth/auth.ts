@@ -18,7 +18,7 @@ class AuthApi extends Instance {
   getSignIn = (params: ILoginForm): Promise<IResponse<ILoginResponse>> =>
     this.post(Endpoints.SignIn, params);
 
-  getUserProfile = (): Promise<IStaff> =>
+  getUserProfile = (): Promise<{data: IStaff}> =>
     this.get(Endpoints.UserProfile);
 
   refreshToken = (refreshToken: string): Promise<AxiosResponse> =>

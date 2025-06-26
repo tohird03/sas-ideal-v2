@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { clientsInfoApi, IClientsInfo, IGetClientDeedParams, IGetClientsInfoParams } from '@/api/clients';
+import { clientsInfoApi, IClientsInfo} from '@/api/clients';
 import { addNotification } from '@/utils';
 import { ISingleClientTabs } from './types';
 import { IClientsPayments, IGetClientsPaymentsParams } from '@/api/payment/types';
@@ -27,7 +27,7 @@ class SingleClientStore {
     clientsInfoApi.getSingleClient(clientId)
       .then(res => {
         if (res) {
-          this.setActiveClient(res);
+          this.setActiveClient(res?.data);
 
           return res;
         }
@@ -67,12 +67,6 @@ class SingleClientStore {
   setSinglePayment = (singlePayment: IClientsPayments | null) => {
     this.singlePayment = singlePayment;
   };
-
-  // DEED
-  getClientDeed = (params: IGetClientDeedParams) =>
-    clientsInfoApi.getClientDeed(params)
-      .then(res => res)
-      .catch(addNotification);
 
   setStartDate = (startDate: Date | null) => {
     this.startDate = startDate;

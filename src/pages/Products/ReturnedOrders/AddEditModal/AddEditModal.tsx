@@ -87,7 +87,7 @@ export const AddEditModal = observer(() => {
     if (returnedOrdersStore?.singleReturnedOrder?.id) {
       const addReturnedOrderProduct: IAddProductsToReturnedOrder = {
         ...addProducts,
-        order_id: returnedOrdersStore?.singleReturnedOrder?.id,
+        returningId: returnedOrdersStore?.singleReturnedOrder?.id,
       };
 
       // returnedOrderApi.updateReturnedOrder({
@@ -100,7 +100,7 @@ export const AddEditModal = observer(() => {
 
       returnedOrderApi.addProductToReturnedOrder(addReturnedOrderProduct)
         .then(() => {
-          form.resetFields(['product_id', 'price', 'count']);
+          form.resetFields(['productId', 'price', 'count']);
           returnedOrdersStore.getSingleOrder(returnedOrdersStore?.singleReturnedOrder?.id!);
           queryClient.invalidateQueries({ queryKey: ['getReturnedOrders'] });
         })
@@ -115,13 +115,14 @@ export const AddEditModal = observer(() => {
     const createReturnedOrderData: IAddReturnedOrders = {
       clientId: values?.clientId,
       products: [addProducts],
+      date: values?.date,
     };
 
     returnedOrderApi.addReturnedOrder(createReturnedOrderData)
       .then(res => {
-        form.resetFields(['product_id', 'price', 'count']);
-        if (res?.id) {
-          returnedOrdersStore.getSingleOrder(res?.id!);
+        form.resetFields(['productId', 'price', 'count']);
+        if (res?.data?.id) {
+          returnedOrdersStore.getSingleOrder(res?.data?.id!);
         }
         queryClient.invalidateQueries({ queryKey: ['getReturnedOrders'] });
       })
@@ -373,7 +374,7 @@ export const AddEditModal = observer(() => {
   const getNextFieldName = (currentFieldName: string) => {
     const fieldNames = [
       'clientId',
-      'product_id',
+      'productId',
       'price',
       'count',
     ];
@@ -404,6 +405,16 @@ export const AddEditModal = observer(() => {
       });
     }
   }, [returnedOrdersStore?.singleReturnedOrder]);
+
+  const rowClassName = (record: IOrderProducts) => {
+    if (returnedOrdersStore?.singleReturnedOrder?.products) {
+      const isDuplicate = returnedOrdersStore?.singleReturnedOrder?.products?.filter(product => product?.product?.id === record?.product?.id).length > 1;
+
+      return isDuplicate ? 'warning__row' : '';
+    }
+
+    return '';
+  };
 
   return (
     <Modal
@@ -465,9 +476,9 @@ export const AddEditModal = observer(() => {
           />
         </Form.Item>
         <Form.Item
-          label="Sotish sanasi"
+          label="Qaytaruv sanasi"
           rules={[{ required: true }]}
-          name="sellingDate"
+          name="date"
           initialValue={dayjs()}
         >
           <DatePicker
@@ -479,7 +490,7 @@ export const AddEditModal = observer(() => {
         <Form.Item
           label="Mahsulot"
           rules={[{ required: true }]}
-          name="product_id"
+          name="productId"
         >
           <Select
             showSearch
@@ -564,6 +575,7 @@ export const AddEditModal = observer(() => {
         isMobile={isMobile}
         pagination={false}
         scroll={{ y: 300 }}
+        rowClassName={rowClassName}
       />
 
       <div>

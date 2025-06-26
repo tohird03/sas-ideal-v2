@@ -24,7 +24,10 @@ class SupplierInfoApi extends Instance {
     this.patch(`${Endpoints.SupplierOne}`, params, { params: { id: params?.id } });
 
   deleteSupplier = (id: string): Promise<AxiosResponse> =>
-    this.delete(`${Endpoints.SupplierOne}`, {params: {id}});
+    this.delete(`${Endpoints.SupplierOne}`, { params: { id } });
+
+  getSingleSupplier = (supplierId: string): Promise<{ data: ISupplierInfo }> =>
+    this.get(Endpoints.SupplierOne, { params: { id: supplierId } });
 }
 
 export const supplierInfoApi = new SupplierInfoApi(config);

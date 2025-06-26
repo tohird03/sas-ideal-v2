@@ -18,7 +18,7 @@ export interface IReturnedOrder extends IReturnedOrderPayments {
   createdAt: string,
   client: IClientsInfo,
   returnedDate: string,
-  seller: ISeller,
+  staff: ISeller,
   products: IReturnedOrderProducts[]
 }
 
@@ -33,6 +33,7 @@ export interface IReturnedOrderProducts {
 
 export interface IAddReturnedOrders {
   clientId: string,
+  date: string,
   description?: string,
   products: IAddReturnedOrderProducts[];
 }
@@ -44,7 +45,7 @@ export interface IAddReturnedOrderProducts {
 }
 
 export interface IAddProductsToReturnedOrder extends IAddReturnedOrderProducts {
-  order_id?: string;
+  returningId?: string;
 }
 
 export interface IUpdateReturnedOrder extends IReturnedOrderPayments {

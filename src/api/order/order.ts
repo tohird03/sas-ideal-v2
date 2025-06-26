@@ -7,7 +7,6 @@ import {
   IGetOrdersParams,
   IOrder,
   IOrderProductAdd,
-  IOrderStatistic,
   ITotalOrderPaymentCalc,
   IUpdateOrder,
   IUpdateOrderProduct,
@@ -32,7 +31,7 @@ class OrdersApi extends Instance {
     this.resPost(Endpoints.SellingOne, params);
 
   getSingleOrder = (orderId: string): Promise<{ data: IOrder }> =>
-    this.get(`${Endpoints.SellingOne}`, { params: { id: orderId } });
+    this.get(Endpoints.SellingOne, { params: { id: orderId } });
 
   updateOrder = (params: IUpdateOrder): Promise<AxiosResponse> =>
     this.patch(`${Endpoints.SellingOne}`, params, { params: { id: params?.id } });
@@ -70,9 +69,6 @@ class OrdersApi extends Instance {
         'Accept': 'application/xlsx',
       },
     });
-
-  getOrdersStatistic = (): Promise<IOrderStatistic> =>
-    this.get(Endpoints.productsOrderStatistic);
 }
 
 export const ordersApi = new OrdersApi(config);

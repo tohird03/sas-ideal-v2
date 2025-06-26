@@ -39,7 +39,7 @@ class AuthStore {
       .then(res => {
         if (res) {
           // this.mainMenuItems = generateAllMenuItems(mainMenuList, res);
-          this.setStaffInfo(res);
+          this.setStaffInfo(res?.data);
         }
       })
       .catch(addNotification)

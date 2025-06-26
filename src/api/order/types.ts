@@ -82,25 +82,6 @@ export interface IUpdateOrderProduct {
   price: number;
 }
 
-export interface IOrderStatistic {
-  todaySales: number;
-  weeklySales: number;
-  monthlySales: number;
-  ourDebt: DebtResponse;
-  fromDebt: DebtResponse;
-  weeklyChart: IOrderStatisticChart[];
-}
-
-export declare interface DebtResponse {
-  client: number;
-  supplier: number;
-}
-
-export interface IOrderStatisticChart {
-  date: string;
-  sum: number;
-}
-
 export interface ITotalOrderPaymentCalc {
   totalCard: number | null;
   totalCash: number |null;

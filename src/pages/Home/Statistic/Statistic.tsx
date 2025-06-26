@@ -15,6 +15,8 @@ import { clientsInfoStore } from '@/stores/clients';
 import { IClientDebtFilter } from '@/api/clients';
 import { supplierInfoStore } from '@/stores/supplier';
 import { ISupplierDebtFilter } from '@/api/supplier/types';
+import { homeStore } from '@/stores/home/home';
+import { IOrderGraphStatisticType } from '@/api/statistic/types';
 
 const cn = classNames.bind(styles);
 const formatter = (value: number) => <CountUp duration={2} end={value} separator=" " />;
@@ -24,7 +26,12 @@ export const Statistic = observer(() => {
   const navigate = useNavigate();
   const { data: ordersStatisticData, isLoading: loading } = useQuery({
     queryKey: ['getOrdersStatistic'],
-    queryFn: () => ordersStore.getOrdersStatistic(),
+    queryFn: () => homeStore.getOrdersStatistic(),
+  });
+
+  const { data: ordersGraphStatisticData, isLoading: loadingGraph } = useQuery({
+    queryKey: ['getOrdersGraphStatistic'],
+    queryFn: () => homeStore.getOrdersGraphStatistic(IOrderGraphStatisticType.WEEK),
   });
 
   const chartOptions = {
@@ -57,7 +64,7 @@ export const Statistic = observer(() => {
         },
       },
       xaxis: {
-        categories: ordersStatisticData?.weeklyChart?.map(value => dateFormat(value?.date)),
+        categories: ordersGraphStatisticData?.map(value => dateFormat(value?.date)),
       },
       yaxis: {
         tickAmount: 10,
@@ -79,7 +86,7 @@ export const Statistic = observer(() => {
     series: [
       {
         name: 'Sotuv',
-        data: ordersStatisticData?.weeklyChart?.map(value => value?.sum || 0) || [],
+        data: ordersGraphStatisticData?.map(value => value?.sum || 0) || [],
       },
     ],
   };
@@ -122,21 +129,21 @@ export const Statistic = observer(() => {
               <CalendarOutlined style={{ fontSize: '40px', color: '#f18024', marginBottom: 5 }} />
               <p className={cn('statistic__top-card-info')}>Bugun</p>
               <p className={cn('statistic__top-card-value')}>
-                {formatter(ordersStatisticData?.todaySales || 0)}
+                {formatter(ordersStatisticData?.daily || 0)}
               </p>
             </Card>
             <Card onClick={handleClickTodayWeek} className={cn('statistic__top-card')}>
               <CalendarOutlined style={{ fontSize: '40px', color: '#f18024', marginBottom: 5 }} />
               <p className={cn('statistic__top-card-info')}>Shu hafta</p>
               <p className={cn('statistic__top-card-value')}>
-                {formatter(ordersStatisticData?.weeklySales || 0)}
+                {formatter(ordersStatisticData?.weekly || 0)}
               </p>
             </Card>
             <Card onClick={handleClickMonth} className={cn('statistic__top-card')}>
               <CalendarOutlined style={{ fontSize: '40px', color: '#f18024', marginBottom: 5 }} />
               <p className={cn('statistic__top-card-info')}>Shu oy</p>
               <p className={cn('statistic__top-card-value')}>
-                {formatter(ordersStatisticData?.monthlySales || 0)}
+                {formatter(ordersStatisticData?.monthly || 0)}
               </p>
             </Card>
           </div>
@@ -148,13 +155,13 @@ export const Statistic = observer(() => {
               <div>
                 <p className={cn('statistic__top-card-info')}>Bizga qarz</p>
                 <p className={cn('statistic__top-card-value')}>
-                  {formatter(ordersStatisticData?.fromDebt?.client || 0)}
+                  {formatter(ordersStatisticData?.client?.theirDebt || 0)}
                 </p>
               </div>
               <div>
                 <p className={cn('statistic__top-card-info')}>Bizning qarz</p>
                 <p className={cn('statistic__top-card-value')}>
-                  {formatter(ordersStatisticData?.ourDebt?.client || 0)}
+                  {formatter(ordersStatisticData?.client?.ourDebt || 0)}
                 </p>
               </div>
             </div>
@@ -167,13 +174,13 @@ export const Statistic = observer(() => {
               <div>
                 <p className={cn('statistic__top-card-info')}>Bizning qarz</p>
                 <p className={cn('statistic__top-card-value')}>
-                  {formatter(ordersStatisticData?.ourDebt?.supplier || 0)}
+                  {formatter(ordersStatisticData?.supplier?.ourDebt || 0)}
                 </p>
               </div>
               <div>
                 <p className={cn('statistic__top-card-info')}>Bizga qarz</p>
                 <p className={cn('statistic__top-card-value')}>
-                  {formatter(ordersStatisticData?.fromDebt?.supplier || 0)}
+                  {formatter(ordersStatisticData?.supplier?.theirDebt || 0)}
                 </p>
               </div>
             </div>

@@ -29,7 +29,7 @@ class ReturnedOrdersStore {
   getSingleOrder = (orderId: string) =>
     returnedOrderApi.getSingleReturnedOrder(orderId)
       .then(res => {
-        this.setSingleReturnedOrder(res);
+        this.setSingleReturnedOrder(res?.data);
 
         return res;
       })

@@ -167,7 +167,7 @@ export const Action: FC<Props> = observer(({ orders }) => {
       <Dropdown placement="bottomRight" overlay={menuSaveOptions} trigger={['click']}>
         <Button icon={<DownloadOutlined />} />
       </Dropdown>
-      {(isToday || orders?.status === IOrderStatus.ACCEPTED) && (
+      {(isToday || orders?.status === IOrderStatus.NOTACCEPTED) && (
         <Dropdown placement="bottomRight" overlay={menuOrderOptions} trigger={['click']}>
           <Button icon={<MoreOutlined />} />
         </Dropdown>

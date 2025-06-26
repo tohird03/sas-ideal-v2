@@ -7,7 +7,7 @@ import { useMediaQuery } from '@/utils/mediaQuery';
 import { deedColumns } from './constants';
 import { useParams } from 'react-router-dom';
 import styles from './deed.scss';
-import { singleSupplierStore } from '@/stores/supplier';
+import { singleSupplierStore, supplierInfoStore } from '@/stores/supplier';
 import { DownloadOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { clientsInfoApi } from '@/api/clients';
@@ -21,16 +21,6 @@ export const Deed = observer(() => {
   const { supplierId } = useParams();
   const [downloadLoadingDeed, setDownLoadLoadingDeed] = useState(false);
   const [downloadLoadingDeedProduct, setDownLoadLoadingDeedProduct] = useState(false);
-
-  const { data: supplierDeedData, isLoading: loading } = useQuery({
-    queryKey: ['getSupplierDeed', supplierId, singleSupplierStore.startDate, singleSupplierStore.endDate],
-    queryFn: () =>
-      singleSupplierStore.getSupplierDeed({
-        id: supplierId!,
-        startDate: singleSupplierStore?.startDate!,
-        endDate: singleSupplierStore?.endDate!,
-      }),
-  });
 
   const handleStartDateChange: DatePickerProps['onChange'] = (date, dateString) => {
     if (!dateString) {
@@ -132,8 +122,7 @@ export const Deed = observer(() => {
 
       <Table
         columns={deedColumns}
-        dataSource={supplierDeedData?.data?.data || []}
-        loading={loading}
+        dataSource={singleSupplierStore?.activeSupplier?.deedInfo?.deeds || []}
         bordered
         summary={(pageData) => (
           <>
@@ -142,12 +131,14 @@ export const Deed = observer(() => {
                 Jami
               </Table.Summary.Cell>
               <Table.Summary.Cell index={2}>
-                {/* @ts-ignore */}
-                <div style={{ textAlign: 'center' }}>{priceFormat(supplierDeedData?.totalDebt)}</div>
+                <div style={{ textAlign: 'center' }}>
+                  {priceFormat(singleSupplierStore?.activeSupplier?.deedInfo?.totalDebit)}
+                </div>
               </Table.Summary.Cell>
               <Table.Summary.Cell index={2}>
-                {/* @ts-ignore */}
-                <div style={{ textAlign: 'center' }}>{priceFormat(supplierDeedData?.totalCredit)}</div>
+                <div style={{ textAlign: 'center' }}>
+                  {priceFormat(singleSupplierStore?.activeSupplier?.deedInfo?.totalCredit)}
+                </div>
               </Table.Summary.Cell>
             </Table.Summary.Row>
             <Table.Summary.Row>
@@ -156,8 +147,7 @@ export const Deed = observer(() => {
               </Table.Summary.Cell>
               <Table.Summary.Cell colSpan={2} index={2}>
                 <div style={{ textAlign: 'center' }}>
-                  {/* @ts-ignore */}
-                  {priceFormat((supplierDeedData?.totalDebt || 0) - (supplierDeedData?.totalCredit || 0))}
+                  {priceFormat(singleSupplierStore?.activeSupplier?.deedInfo?.debt)}
                 </div>
               </Table.Summary.Cell>
             </Table.Summary.Row>

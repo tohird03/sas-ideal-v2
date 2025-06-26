@@ -36,11 +36,6 @@ class OrdersStore {
       .then(res => res)
       .catch(addNotification);
 
-  getOrdersStatistic = () =>
-    ordersApi.getOrdersStatistic()
-      .then(res => res)
-      .catch(addNotification);
-
   getSingleOrder = (orderId: string) =>
     ordersApi.getSingleOrder(orderId)
       .then(res => {

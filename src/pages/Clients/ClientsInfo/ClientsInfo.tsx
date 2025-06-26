@@ -15,6 +15,7 @@ import { IClientDebtFilter, IClientsInfo, clientsInfoApi } from '@/api/clients';
 import { addNotification } from '@/utils';
 import { priceFormat } from '@/utils/priceFormat';
 import { ordersStore } from '@/stores/products';
+import { homeStore } from '@/stores/home/home';
 
 const cn = classNames.bind(styles);
 
@@ -43,7 +44,7 @@ export const ClientsInfo = observer(() => {
 
   const { data: ordersStatisticData } = useQuery({
     queryKey: ['getOrdersStatistic'],
-    queryFn: () => ordersStore.getOrdersStatistic(),
+    queryFn: () => homeStore.getOrdersStatistic(),
   });
 
   const handleAddNewClient = () => {
@@ -105,7 +106,7 @@ export const ClientsInfo = observer(() => {
         <Typography.Title level={3}>Mijozlar</Typography.Title>
         <div className={cn('client-info__filter')}>
           <Typography.Title level={3}>
-            Jami qarz: {priceFormat(ordersStatisticData?.fromDebt?.client)}
+            Jami qarz: {priceFormat(ordersStatisticData?.client?.theirDebt)}
           </Typography.Title>
           <Input
             placeholder="Mijozlarni qidirish"

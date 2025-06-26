@@ -22,17 +22,6 @@ export const Deed = observer(() => {
   const [downloadLoadingDeed, setDownLoadLoadingDeed] = useState(false);
   const [downloadLoadingDeedProduct, setDownLoadLoadingDeedProduct] = useState(false);
 
-
-  const { data: clientDeedData, isLoading: loading } = useQuery({
-    queryKey: ['getDeed', clientId, singleClientStore.startDate, singleClientStore.endDate],
-    queryFn: () =>
-      singleClientStore.getClientDeed({
-        id: clientId!,
-        startDate: singleClientStore?.startDate!,
-        endDate: singleClientStore?.endDate!,
-      }),
-  });
-
   const handleStartDateChange: DatePickerProps['onChange'] = (date, dateString) => {
     if (!dateString) {
       singleClientStore.setStartDate(null);
@@ -133,8 +122,7 @@ export const Deed = observer(() => {
 
       <Table
         columns={deedColumns}
-        dataSource={clientDeedData?.data?.data || []}
-        loading={loading}
+        dataSource={singleClientStore?.activeClient?.deedInfo?.deeds || []}
         bordered
         summary={(pageData) => (
           <>
@@ -143,12 +131,10 @@ export const Deed = observer(() => {
                 Jami
               </Table.Summary.Cell>
               <Table.Summary.Cell index={2}>
-                {/* @ts-ignore */}
-                <div style={{ textAlign: 'center' }}>{priceFormat(clientDeedData?.totalDebt)}</div>
+                <div style={{ textAlign: 'center' }}>{priceFormat(singleClientStore?.activeClient?.deedInfo?.totalDebit)}</div>
               </Table.Summary.Cell>
               <Table.Summary.Cell index={2}>
-                {/* @ts-ignore */}
-                <div style={{ textAlign: 'center' }}>{priceFormat(clientDeedData?.totalCredit)}</div>
+                <div style={{ textAlign: 'center' }}>{priceFormat(singleClientStore?.activeClient?.deedInfo?.totalCredit)}</div>
               </Table.Summary.Cell>
             </Table.Summary.Row>
             <Table.Summary.Row>
@@ -157,8 +143,7 @@ export const Deed = observer(() => {
               </Table.Summary.Cell>
               <Table.Summary.Cell colSpan={2} index={2}>
                 <div style={{ textAlign: 'center' }}>
-                  {/* @ts-ignore */}
-                  {priceFormat((clientDeedData?.totalDebt || 0) - (clientDeedData?.totalCredit || 0))}
+                  {priceFormat((singleClientStore?.activeClient?.deedInfo?.debt))}
                 </div>
               </Table.Summary.Cell>
             </Table.Summary.Row>

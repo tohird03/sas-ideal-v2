@@ -1,12 +1,13 @@
 import { makeAutoObservable } from 'mobx';
-import { clientsInfoApi, IClientsInfo, IGetClientDeedParams, IGetClientsInfoParams } from '@/api/clients';
 import { addNotification } from '@/utils';
 import { ISingleSupplierTabs } from './types';
 import { IClientsPayments, IGetClientsPaymentsParams } from '@/api/payment/types';
 import { clientsPaymentApi } from '@/api/payment/payment';
+import { supplierInfoApi } from '@/api/supplier/supplier';
+import { ISupplierInfo } from '@/api/supplier/types';
 
 class SingleSupplierStore {
-  activeClient: IClientsInfo | null = null;
+  activeSupplier: ISupplierInfo | null = null;
   activeTabs: ISingleSupplierTabs = ISingleSupplierTabs.ORDER;
   #today = new Date();
 
@@ -23,19 +24,19 @@ class SingleSupplierStore {
     makeAutoObservable(this);
   }
 
-  getSingleClient = (clientId: string) =>
-    clientsInfoApi.getSingleClient(clientId)
+  getSingleSupplier = (clientId: string) =>
+    supplierInfoApi.getSingleSupplier(clientId)
       .then(res => {
         if (res) {
-          this.setActiveClient(res);
+          this.setActiveSupplier(res?.data);
 
           return res;
         }
       })
       .catch(addNotification);
 
-  setActiveClient = (activeClient: IClientsInfo | null) => {
-    this.activeClient = activeClient;
+  setActiveSupplier = (activeSupplier: ISupplierInfo | null) => {
+    this.activeSupplier = activeSupplier;
   };
 
   setActiveTabs = (activeTabs: ISingleSupplierTabs) => {
@@ -68,12 +69,6 @@ class SingleSupplierStore {
     this.singlePayment = singlePayment;
   };
 
-  // DEED
-  getSupplierDeed = (params: IGetClientDeedParams) =>
-    clientsInfoApi.getSupplierDeed(params)
-      .then(res => res)
-      .catch(addNotification);
-
   setStartDate = (startDate: Date | null) => {
     this.startDate = startDate;
   };
@@ -83,7 +78,7 @@ class SingleSupplierStore {
   };
 
   reset() {
-    this.activeClient = null;
+    this.activeSupplier = null;
     this.activeTabs = ISingleSupplierTabs.ORDER;
   }
 }

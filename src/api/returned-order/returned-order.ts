@@ -22,13 +22,21 @@ class ReturnedOrderApi extends Instance {
   }
 
   getReturnedOrders = (params: IGetReturnedOrdersParams): Promise<IResponse<IReturnedOrder[]>> =>
-    this.get(Endpoints.returnedOrder, { params });
+    this.get(Endpoints.ReturnedOrderMany, { params });
 
-  addReturnedOrder = (params: IAddReturnedOrders): Promise<IReturnedOrder> =>
-    this.resPost(Endpoints.returnedOrder, params);
+  addReturnedOrder = (params: IAddReturnedOrders): Promise<{ data: IReturnedOrder }> =>
+    this.resPost(Endpoints.ReturnedOrderOne, params);
 
-  getSingleReturnedOrder = (orderId: string): Promise<IReturnedOrder> =>
-    this.get(`${Endpoints.returnedOrder}/${orderId}`);
+  getSingleReturnedOrder = (orderId: string): Promise<{ data: IReturnedOrder }> =>
+    this.get(Endpoints.ReturnedOrderOne, { params: { id: orderId } });
+
+  addProductToReturnedOrder = (params: IAddProductsToReturnedOrder): Promise<AxiosResponse> =>
+    this.post(Endpoints.AddEditProductToReturning, params);
+
+  updateProductFromReturnedOrder = (params: IUpdateProductFromReturnedOrders): Promise<AxiosResponse> =>
+    this.patch(Endpoints.AddEditProductToReturning, params, { params: { id: params?.id } });
+
+  // XATO
 
   updateReturnedOrder = (params: IUpdateReturnedOrder): Promise<AxiosResponse> =>
     this.patch(`${Endpoints.returnedOrder}/${params?.id}`, params);
@@ -36,14 +44,10 @@ class ReturnedOrderApi extends Instance {
   deleteReturnedOrder = (id: string): Promise<AxiosResponse> =>
     this.delete(`${Endpoints.returnedOrder}/${id}`);
 
-  addProductToReturnedOrder = (params: IAddProductsToReturnedOrder): Promise<AxiosResponse> =>
-    this.post(Endpoints.returnedProduct, params);
 
   deleteProductFromReturnedOrder = (id: string): Promise<AxiosResponse> =>
     this.delete(`${Endpoints.returnedProduct}/${id}`);
 
-  updateProductFromReturnedOrder = (params: IUpdateProductFromReturnedOrders): Promise<AxiosResponse> =>
-    this.patch(`${Endpoints.returnedProduct}/${params?.id}`, params);
 
   getAllUploadReturnedOrderToExel = (params: IGetReturnedOrdersParams): Promise<any> =>
     this.get(`${Endpoints.productsReturnedOrderExel}`, {

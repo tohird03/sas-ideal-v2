@@ -3,10 +3,10 @@ import { ColumnType } from 'antd/es/table';
 import { priceFormat } from '@/utils/priceFormat';
 import { IClientsPayments } from '@/api/payment/types';
 import { getFullDateFormat } from '@/utils/getDateFormat';
-import { IDeed } from '@/api/clients';
+import { IClientDeed, IClientDeedType} from '@/api/clients';
 import { ArrowRightOutlined } from '@ant-design/icons';
 
-export const deedColumns: ColumnType<IDeed>[] = [
+export const deedColumns: ColumnType<IClientDeed>[] = [
   {
     key: 'index',
     dataIndex: 'index',
@@ -21,48 +21,40 @@ export const deedColumns: ColumnType<IDeed>[] = [
     title: 'Vaqti',
     align: 'center',
     width: '100px',
-    render: (value, record) => (
-      record?.type === 'order'
-        ? getFullDateFormat(record?.date)
-        : record?.type === 'payment'
-          ? getFullDateFormat(record?.updatedAt)
-          : record?.type === 'returned-order'
-            ? getFullDateFormat(record?.returnedDate)
-            : ''
-    ),
+    render: (value, record) => getFullDateFormat(record?.date),
   },
   {
     key: 'type',
     dataIndex: 'type',
     title: 'Harakat turi',
     width: '250px',
-    render: (value, record) => (
-      <>
-        {
-          record?.type === 'order'
-            ? 'Sotuv'
-            : record?.type === 'payment'
-              ? 'To\'lov'
-              : record?.type === 'returned-order'
-                ? 'Qaytaruv'
-                : ''
-        }
-        {<ArrowRightOutlined />}
-        <p
-          style={{ margin: 0, color: 'blue', display: 'inline' }}
-        >
-          №: {
-            record?.type === 'order'
-              ? record?.articl
-              : record?.type === 'payment'
-                ? record?.id
-                : record?.type === 'returned-order'
-                  ? record?.id
-                  : ''
-          }
-        </p>
-      </>
-    ),
+    // render: (value, record) => (
+    //   <>
+    //     {
+    //       record?.type === 'order'
+    //         ? 'Sotuv'
+    //         : record?.type === 'payment'
+    //           ? 'To\'lov'
+    //           : record?.type === 'returned-order'
+    //             ? 'Qaytaruv'
+    //             : ''
+    //     }
+    //     {<ArrowRightOutlined />}
+    //     <p
+    //       style={{ margin: 0, color: 'blue', display: 'inline' }}
+    //     >
+    //       №: {
+    //         record?.type === 'order'
+    //           ? record?.articl
+    //           : record?.type === 'payment'
+    //             ? record?.id
+    //             : record?.type === 'returned-order'
+    //               ? record?.id
+    //               : ''
+    //       }
+    //     </p>
+    //   </>
+    // ),
   },
   {
     key: 'debt',
@@ -72,8 +64,8 @@ export const deedColumns: ColumnType<IDeed>[] = [
     width: '50px',
     className: 'green-col',
     render: (value, record) => (
-      record?.type === 'order'
-        ? priceFormat(record?.totalPrice)
+      record?.type === IClientDeedType.DEBIT
+        ? priceFormat(record?.value)
         : null
     ),
   },
@@ -85,11 +77,9 @@ export const deedColumns: ColumnType<IDeed>[] = [
     width: '50px',
     className: 'red-col',
     render: (value, record) => (
-      record?.type === 'payment'
-        ? priceFormat(record?.totalPay)
-        : record?.type === 'returned-order'
-          ? priceFormat((record?.fromClient || 0))
-          : null
+      record?.type === IClientDeedType.KREDIT
+        ? priceFormat(record?.value)
+        : null
     ),
   },
   {

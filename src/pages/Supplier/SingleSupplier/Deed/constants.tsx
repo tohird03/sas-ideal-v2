@@ -2,8 +2,8 @@ import React from 'react';
 import { ColumnType } from 'antd/es/table';
 import { priceFormat } from '@/utils/priceFormat';
 import { getFullDateFormat } from '@/utils/getDateFormat';
-import { ISupplierDeed } from '@/api/clients';
 import { ArrowRightOutlined } from '@ant-design/icons';
+import { ISupplierDeed, ISupplierDeedType } from '@/api/supplier/types';
 
 export const deedColumns: ColumnType<ISupplierDeed>[] = [
   {
@@ -20,28 +20,24 @@ export const deedColumns: ColumnType<ISupplierDeed>[] = [
     title: 'Vaqti',
     align: 'center',
     width: '100px',
-    render: (value, record) => (
-      record?.type === 'order'
-        ? getFullDateFormat(record?.createdAt!)
-        : getFullDateFormat(record?.updatedAt)
-    ),
+    render: (value, record) => getFullDateFormat(record?.date),
   },
   {
     key: 'type',
     dataIndex: 'type',
     title: 'Harakat turi',
     width: '250px',
-    render: (value, record) => (
-      <>
-        {record?.type === 'order' ? 'Tushirish' : 'Qarzga to\'lov'}
-        {<ArrowRightOutlined />}
-        <p
-          style={{ margin: 0, color: 'blue', display: 'inline' }}
-        >
-          №: {record?.type === 'order' ? record?.articl : record?.id}
-        </p>
-      </>
-    ),
+    // render: (value, record) => (
+    //   <>
+    //     {record?.type === 'order' ? 'Tushirish' : 'Qarzga to\'lov'}
+    //     {<ArrowRightOutlined />}
+    //     <p
+    //       style={{ margin: 0, color: 'blue', display: 'inline' }}
+    //     >
+    //       №: {record?.type === 'order' ? record?.articl : record?.id}
+    //     </p>
+    //   </>
+    // ),
   },
   {
     key: 'debt',
@@ -51,8 +47,8 @@ export const deedColumns: ColumnType<ISupplierDeed>[] = [
     width: '50px',
     className: 'green-col',
     render: (value, record) => (
-      record?.type === 'order'
-        ? priceFormat(record?.totalPrice)
+      record?.type === ISupplierDeedType.DEBIT
+        ? priceFormat(record?.value)
         : null
     ),
   },
@@ -64,8 +60,8 @@ export const deedColumns: ColumnType<ISupplierDeed>[] = [
     width: '50px',
     className: 'red-col',
     render: (value, record) => (
-      record?.type === 'payment'
-        ? priceFormat(record?.totalPay)
+      record?.type === ISupplierDeedType.KREDIT
+        ? priceFormat(record?.value)
         : null
     ),
   },

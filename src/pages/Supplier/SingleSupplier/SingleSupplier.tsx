@@ -19,7 +19,7 @@ export const SingleSupplier = observer(() => {
 
   useEffect(() => {
     if (supplierId) {
-      singleSupplierStore.getSingleClient(supplierId);
+      singleSupplierStore.getSingleSupplier(supplierId);
     }
   }, [supplierId]);
 
@@ -41,7 +41,7 @@ export const SingleSupplier = observer(() => {
           className={cn('single-client__title')}
           level={3}
         >
-          Yetkazib beruvchiga qarz: {singleSupplierStore?.activeClient?.debt}
+          Yetkazib beruvchiga qarz: {singleSupplierStore?.activeSupplier?.debt}
         </Typography.Title>
       </div>
 
