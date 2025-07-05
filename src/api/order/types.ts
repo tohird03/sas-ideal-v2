@@ -83,11 +83,11 @@ export interface IUpdateOrderProduct {
 }
 
 export interface ITotalOrderPaymentCalc {
-  totalCard: number | null;
-  totalCash: number |null;
+  totalPrice: number | null;
+  totalPayment: number | null;
+  totalCardPayment: number | null;
+  totalCashPayment: number |null;
+  totalOtherPayment: number | null;
+  totalTransferPayment: number | null;
   totalDebt: number | null;
-  totalOther: number | null;
-  totalPay: number | null;
-  totalSum: number | null;
-  totalTransfer: number | null;
 }

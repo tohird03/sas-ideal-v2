@@ -30,6 +30,26 @@ class IncomeProductsApi extends Instance {
 
   orderProductAdd = (params: IIncomeOrderProductAdd): Promise<AxiosResponse> =>
     this.post(Endpoints.AddEditProductToArrival, params);
+
+  getAllUploadIncomeOrderToExel = (params: IGetIncomeOrdersParams): Promise<any> =>
+    this.get(Endpoints.IncomeOrderAllExcel, {
+      params,
+      responseType: 'arraybuffer',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/xlsx',
+      },
+    });
+
+  getUploadIncomeOrderToExel = (incomeOrder: string): Promise<any> =>
+    this.get(Endpoints.IncomeOrderOneExcel, {
+      params: { id: incomeOrder },
+      responseType: 'arraybuffer',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/xlsx',
+      },
+    });
   // XATO
 
   updateIncomeOrder = (params: IUpdateIncomeOrder): Promise<AxiosResponse> =>
@@ -40,25 +60,6 @@ class IncomeProductsApi extends Instance {
 
   deleteOrderProduct = (productId: string): Promise<AxiosResponse> =>
     this.delete(`${Endpoints.productsIncomeOrderProduct}/${productId}`);
-
-  getAllUploadIncomeOrderToExel = (params: IGetIncomeOrdersParams): Promise<any> =>
-    this.get(`${Endpoints.productsIncomeOrderExel}`, {
-      params,
-      responseType: 'arraybuffer',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/xlsx',
-      },
-    });
-
-  getUploadIncomeOrderToExel = (orderId: string): Promise<any> =>
-    this.get(`${Endpoints.productsIncomeOrderExel}/${orderId}`, {
-      responseType: 'arraybuffer',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/xlsx',
-      },
-    });
 
 }
 

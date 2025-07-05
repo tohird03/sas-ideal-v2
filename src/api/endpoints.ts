@@ -48,6 +48,14 @@ export enum Endpoints {
   OrderStatistic = '/selling/total-stats',
   OrderGraphStatistic = '/selling/period-stats',
 
+  OrderAllExcel = '/selling/excel-download/many',
+  OrderOneExcel = '/selling/excel-download/one',
+  IncomeOrderAllExcel = '/arrival/excel-download/many',
+  IncomeOrderOneExcel = '/arrival/excel-download/one',
+  ReturnedAllExcel = '/returning/excel-download/many',
+  ReturnedOneExcel = '/returning/excel-download/one',
+  ClientPayentExcel = '/client-payment/excel-download/many',
+
   //XATO
   RefreshToken = '/dashboard-auth/refresh',
 

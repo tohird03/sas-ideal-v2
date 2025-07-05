@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
 import { observer } from 'mobx-react';
 import { Calendar, Card } from 'antd';
@@ -17,11 +17,21 @@ import { supplierInfoStore } from '@/stores/supplier';
 import { ISupplierDebtFilter } from '@/api/supplier/types';
 import { homeStore } from '@/stores/home/home';
 import { IOrderGraphStatisticType } from '@/api/statistic/types';
+import { ApexOptions } from 'apexcharts';
 
 const cn = classNames.bind(styles);
 const formatter = (value: number) => <CountUp duration={2} end={value} separator=" " />;
 
+const graphTypes = [
+  IOrderGraphStatisticType.DAY,
+  IOrderGraphStatisticType.WEEK,
+  IOrderGraphStatisticType.MONTH,
+  IOrderGraphStatisticType.YEAR,
+];
+
 export const Statistic = observer(() => {
+  const [timeRangeIndex, setTimeRangeIndex] = useState(1); // 0 - DAILY
+  const timeRange = graphTypes[timeRangeIndex];
 
   const navigate = useNavigate();
   const { data: ordersStatisticData, isLoading: loading } = useQuery({
@@ -30,8 +40,8 @@ export const Statistic = observer(() => {
   });
 
   const { data: ordersGraphStatisticData, isLoading: loadingGraph } = useQuery({
-    queryKey: ['getOrdersGraphStatistic'],
-    queryFn: () => homeStore.getOrdersGraphStatistic(IOrderGraphStatisticType.WEEK),
+    queryKey: ['getOrdersGraphStatistic', timeRange],
+    queryFn: () => homeStore.getOrdersGraphStatistic(timeRange),
   });
 
   const chartOptions = {
@@ -64,7 +74,7 @@ export const Statistic = observer(() => {
         },
       },
       xaxis: {
-        categories: ordersGraphStatisticData?.map(value => dateFormat(value?.date)),
+        categories: ordersGraphStatisticData?.map(value => value?.date),
       },
       yaxis: {
         tickAmount: 10,
@@ -83,6 +93,17 @@ export const Statistic = observer(() => {
       },
       colors: ['#f18024'],
     },
+    noData: {
+      text: loadingGraph ? 'Yuklanmoqda...' : 'Maʼlumot yoʻq',
+      align: 'center',
+      verticalAlign: 'middle',
+      offsetX: 0,
+      offsetY: 0,
+      style: {
+        color: '#999',
+        fontSize: '16px',
+      },
+    },
     series: [
       {
         name: 'Sotuv',
@@ -90,6 +111,24 @@ export const Statistic = observer(() => {
       },
     ],
   };
+
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (e.deltaY < 0) {
+        setTimeRangeIndex(prev => Math.min(prev + 1, graphTypes.length - 1));
+      } else if (e.deltaY > 0) {
+        setTimeRangeIndex(prev => Math.max(prev - 1, 0));
+      }
+    };
+
+    const chartDiv = document.getElementById('scrollable-chart');
+
+    chartDiv?.addEventListener('wheel', handleWheel);
+
+    return () => {
+      chartDiv?.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
 
   const handleClickTodayOrder = () => {
     navigate(ROUTES.productsOrder);
@@ -188,13 +227,15 @@ export const Statistic = observer(() => {
         </div>
       </div>
       <Card>
-        <h1>Bir haftalik sotuv</h1>
-        <Chart
-          options={chartOptions.options}
-          series={chartOptions.series}
-          type="area"
-          height={350}
-        />
+        <div id="scrollable-chart">
+          <h1>Oraliq: {['Bugungi', 'Shu hafta', 'Shu oy', 'Shu yil'][timeRangeIndex]}</h1>
+          <Chart
+            options={chartOptions.options}
+            series={chartOptions.series}
+            type="area"
+            height={350}
+          />
+        </div>
       </Card>
     </div>
   );

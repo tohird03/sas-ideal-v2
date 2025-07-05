@@ -36,6 +36,26 @@ class ReturnedOrderApi extends Instance {
   updateProductFromReturnedOrder = (params: IUpdateProductFromReturnedOrders): Promise<AxiosResponse> =>
     this.patch(Endpoints.AddEditProductToReturning, params, { params: { id: params?.id } });
 
+  getAllUploadReturnedOrderToExel = (params: IGetReturnedOrdersParams): Promise<any> =>
+    this.get(`${Endpoints.ReturnedAllExcel}`, {
+      params,
+      responseType: 'arraybuffer',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/xlsx',
+      },
+    });
+
+  getUploadReturnedOrderToExel = (returnedOrderId: string): Promise<any> =>
+    this.get(Endpoints.ReturnedOneExcel, {
+      params: { id: returnedOrderId },
+      responseType: 'arraybuffer',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/xlsx',
+      },
+    });
+
   // XATO
 
   updateReturnedOrder = (params: IUpdateReturnedOrder): Promise<AxiosResponse> =>
@@ -48,25 +68,6 @@ class ReturnedOrderApi extends Instance {
   deleteProductFromReturnedOrder = (id: string): Promise<AxiosResponse> =>
     this.delete(`${Endpoints.returnedProduct}/${id}`);
 
-
-  getAllUploadReturnedOrderToExel = (params: IGetReturnedOrdersParams): Promise<any> =>
-    this.get(`${Endpoints.productsReturnedOrderExel}`, {
-      params,
-      responseType: 'arraybuffer',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/xlsx',
-      },
-    });
-
-  getUploadReturnedOrderToExel = (orderId: string): Promise<any> =>
-    this.get(`${Endpoints.productsReturnedOrderExel}/${orderId}`, {
-      responseType: 'arraybuffer',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/xlsx',
-      },
-    });
 }
 
 export const returnedOrderApi = new ReturnedOrderApi(config);

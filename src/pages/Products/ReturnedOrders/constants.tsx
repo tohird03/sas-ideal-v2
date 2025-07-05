@@ -28,7 +28,7 @@ export const returnedOrdersColumns: ColumnType<IReturnedOrder>[] = [
     dataIndex: 'sum',
     title: 'Jami narxi',
     align: 'center',
-    render: (value, record) => priceFormat(record?.sum),
+    render: (value, record) => priceFormat(record?.totalPrice),
   },
   {
     key: 'status',

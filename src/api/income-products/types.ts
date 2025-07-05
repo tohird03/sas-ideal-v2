@@ -74,3 +74,14 @@ export interface IIncomeUpdateOrderProduct {
   cost: number;
   price: number;
 }
+
+
+export interface ITotalIncomeOrderPaymentCalc {
+  totalCost: number | null;
+  totalPayment: number | null;
+  totalCardPayment: number | null;
+  totalCashPayment: number |null;
+  totalOtherPayment: number | null;
+  totalTransferPayment: number | null;
+  totalDebt: number | null;
+}

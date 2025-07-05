@@ -41,17 +41,9 @@ class OrdersApi extends Instance {
 
   updateOrderProduct = (params: IUpdateOrderProduct): Promise<AxiosResponse> =>
     this.patch(`${Endpoints.AddEditProductToSelling}`, params, { params: { id: params?.id } });
-  // XATO
-
-  deleteOrder = (id: string): Promise<AxiosResponse> =>
-    this.delete(`${Endpoints.productsOrder}/${id}`);
-
-
-  deleteOrderProduct = (productId: string): Promise<AxiosResponse> =>
-    this.delete(`${Endpoints.productsOrderProduct}/${productId}`);
 
   getAllUploadOrderToExel = (params: IGetOrdersParams): Promise<any> =>
-    this.get(`${Endpoints.productsOrderExel}`, {
+    this.get(`${Endpoints.OrderAllExcel}`, {
       params,
       responseType: 'arraybuffer',
       headers: {
@@ -61,14 +53,23 @@ class OrdersApi extends Instance {
     });
 
   getUploadOrderToExel = (params: IUploadOrderToExelParams): Promise<any> =>
-    this.get(`${Endpoints.productsOrderExel}/${params?.orderId}`, {
-      params,
+    this.get(`${Endpoints.OrderOneExcel}`, {
+      params: { id: params?.orderId },
       responseType: 'arraybuffer',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/xlsx',
       },
     });
+
+  // XATO
+  deleteOrder = (id: string): Promise<AxiosResponse> =>
+    this.delete(`${Endpoints.productsOrder}/${id}`);
+
+
+  deleteOrderProduct = (productId: string): Promise<AxiosResponse> =>
+    this.delete(`${Endpoints.productsOrderProduct}/${productId}`);
+
 }
 
 export const ordersApi = new OrdersApi(config);

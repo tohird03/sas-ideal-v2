@@ -1,7 +1,7 @@
 import React from 'react';
 import { ColumnType } from 'antd/es/table';
 import { Action } from './Action';
-import { IIncomeOrder, IIncomeProduct } from '@/api/income-products/types';
+import { IIncomeOrder, IIncomeProduct, ITotalIncomeOrderPaymentCalc } from '@/api/income-products/types';
 import { priceFormat } from '@/utils/priceFormat';
 import { SupplierNameLink } from '@/pages/ActionComponents/SupplierNameLink';
 import { PaymentStatus } from './PaymentStatus';
@@ -250,5 +250,64 @@ export const ordersInfoProductsColumns: ColumnType<IIncomeProduct>[] = [
     align: 'center',
     width: '150px',
     render: (value, record) => priceFormat(record?.count * record?.cost),
+  },
+];
+
+export const incomeOrdersTotalCalc: ColumnType<ITotalIncomeOrderPaymentCalc>[] = [
+  {
+    key: 'totalCost',
+    dataIndex: 'totalCost',
+    title: 'Jami narxi',
+    align: 'center',
+    width: '150px',
+    render: (value, record) => priceFormat(record?.totalCost),
+  },
+  {
+    key: 'totalPay',
+    dataIndex: 'totalPay',
+    title: 'Jami to\'lov',
+    align: 'center',
+    width: '150px',
+    render: (value, record) => priceFormat(record?.totalPayment),
+  },
+  {
+    key: 'cash',
+    dataIndex: 'cash',
+    title: 'Jami - Naqd to\'lov',
+    align: 'center',
+    width: '150px',
+    render: (value, record) => priceFormat(record?.totalCashPayment),
+  },
+  {
+    key: 'card',
+    dataIndex: 'card',
+    title: 'Jami - Bank kartasi orqali to\'lov',
+    align: 'center',
+    width: '150px',
+    render: (value, record) => priceFormat(record?.totalCardPayment),
+  },
+  {
+    key: 'transfer',
+    dataIndex: 'transfer',
+    title: 'Jami - Bank o\'tkazmasi orqali to\'lov',
+    align: 'center',
+    width: '150px',
+    render: (value, record) => priceFormat(record?.totalTransferPayment),
+  },
+  {
+    key: 'other',
+    dataIndex: 'other',
+    title: 'Jami - Boshqa usullar bilan to\'lov',
+    align: 'center',
+    width: '150px',
+    render: (value, record) => priceFormat(record?.totalOtherPayment),
+  },
+  {
+    key: 'debt',
+    dataIndex: 'debt',
+    title: 'Jami - Qarzga',
+    align: 'center',
+    width: '150px',
+    render: (value, record) => priceFormat(record?.totalDebt),
   },
 ];

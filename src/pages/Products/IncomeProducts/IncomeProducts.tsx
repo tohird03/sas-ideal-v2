@@ -9,7 +9,7 @@ import { getPaginationParams } from '@/utils/getPaginationParams';
 import { useMediaQuery } from '@/utils/mediaQuery';
 import { AddEditModal } from './AddEditModal';
 import styles from './income-products.scss';
-import { incomeOrdersColumns } from './constants';
+import { incomeOrdersColumns, incomeOrdersTotalCalc } from './constants';
 import { incomeProductsStore } from '@/stores/products';
 import { OrderShowInfoModal } from './OrderShowInfoModal';
 import { PaymentModal } from './PaymentModal';
@@ -162,6 +162,18 @@ export const IncomeProducts = observer(() => {
           ...getPaginationParams(incomeOrdersData?.data?.totalCount),
         }}
       />
+
+      <div>
+        <DataTable
+          columns={incomeOrdersTotalCalc}
+          data={[incomeOrdersData?.data?.calc || {}]}
+          isMobile
+          loading={loading}
+          cardStyle={{ width: '500px' }}
+          className="total-calc"
+          loadingLength={1}
+        />
+      </div>
 
       {incomeProductsStore.isOpenAddEditIncomeProductsModal && <AddEditModal />}
       {incomeProductsStore.isOpenShowIncomeOrderModal && <OrderShowInfoModal />}

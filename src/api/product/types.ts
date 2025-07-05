@@ -30,7 +30,14 @@ export interface IAddEditProduct {
 }
 
 export interface IProductTotalCalc {
-  totalProductCount: number,
-  totalProductCost: number,
-  totalProductPrice: number,
+  calcPage: {
+    totalPrice: number,
+    totalCost: number,
+    totalCount: number,
+  },
+  calcTotal: {
+    totalPrice: number,
+    totalCost: number,
+    totalCount: number,
+  }
 }

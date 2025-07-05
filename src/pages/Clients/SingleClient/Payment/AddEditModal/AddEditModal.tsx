@@ -96,7 +96,7 @@ export const AddEditModal = observer(() => {
   useEffect(() => {
     if (singleClientStore?.activeClient) {
       setSearchClients(singleClientStore?.activeClient?.phone!);
-      form.setFieldValue('clientId', singleClientStore?.activeClient?.id);
+      form.setFieldValue('userId', singleClientStore?.activeClient?.id);
 
       if (singleClientStore.singlePayment) {
         form.setFieldsValue(singleClientStore.singlePayment);
@@ -134,7 +134,7 @@ export const AddEditModal = observer(() => {
         <Form.Item
           label="Mijoz"
           rules={[{ required: true }]}
-          name="clientId"
+          name="userId"
         >
           <Select
             showSearch

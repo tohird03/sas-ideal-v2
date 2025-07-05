@@ -96,19 +96,19 @@ export const ProductsList = observer(() => {
             <Table.Summary.Cell index={2}>
               <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
                 Umumiy:
-                <p style={{ margin: '0', fontWeight: 'bold' }}>{productsData?.data?.calc?.totalProductCount}</p>
+                <p style={{ margin: '0', fontWeight: 'bold' }}>{productsData?.data?.calc?.calcTotal?.totalCount}</p>
               </div>
             </Table.Summary.Cell>
             <Table.Summary.Cell index={2}>
               <div style={{ textAlign: 'center', fontWeight: 'bold', maxWidth: '150px', margin: '0 auto' }}>
                 Umumiy sotib olingan narxi:
-                <p style={{ margin: '0', fontWeight: 'bold' }}>{priceFormat(productsData?.data?.calc?.totalProductCost)}</p>
+                <p style={{ margin: '0', fontWeight: 'bold' }}>{priceFormat(productsData?.data?.calc?.calcTotal?.totalCost)}</p>
               </div>
             </Table.Summary.Cell>
             <Table.Summary.Cell index={3}>
               <div style={{ textAlign: 'center', fontWeight: 'bold', maxWidth: '150px', margin: '0 auto' }}>
                 Umumiy sotilish narxi:
-                <p style={{ margin: '0', fontWeight: 'bold' }}>{priceFormat(productsData?.data?.calc?.totalProductPrice)}</p>
+                <p style={{ margin: '0', fontWeight: 'bold' }}>{priceFormat(productsData?.data?.calc?.calcTotal?.totalPrice)}</p>
               </div>
             </Table.Summary.Cell>
             {authStore?.staffInfo?.role === 'super_admin' && (

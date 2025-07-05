@@ -12,14 +12,15 @@ export interface IGetReturnedOrdersParams extends IPagination {
 
 export interface IReturnedOrder extends IReturnedOrderPayments {
   id: string,
-  sum: number,
   description: string,
   status: IOrderStatus,
   createdAt: string,
   client: IClientsInfo,
   returnedDate: string,
   staff: ISeller,
-  products: IReturnedOrderProducts[]
+  products: IReturnedOrderProducts[],
+
+  totalPrice: number;
 }
 
 export interface IReturnedOrderProducts {
