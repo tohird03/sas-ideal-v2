@@ -36,7 +36,7 @@ export const Action: FC<Props> = observer(({ orders }) => {
         queryClient.invalidateQueries({ queryKey: ['getOrders'] });
 
         if (clientId) {
-          singleClientStore.getSingleClient(clientId!);
+          singleClientStore.getSingleClient({id: clientId});
         }
       },
       onError: addNotification,

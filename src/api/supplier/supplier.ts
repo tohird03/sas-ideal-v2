@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { Endpoints, umsStages } from '../endpoints';
 import { INetworkConfig, Instance } from '../instance';
 import { IResponse } from '../types';
-import { IAddEditSupplier, IGetSupplierInfoParams, ISupplierInfo } from './types';
+import { IAddEditSupplier, IGetSingleSupplierParams, IGetSupplierInfoParams, ISupplierInfo } from './types';
 
 const config: INetworkConfig = {
   baseURL: Endpoints.Base,
@@ -26,8 +26,18 @@ class SupplierInfoApi extends Instance {
   deleteSupplier = (id: string): Promise<AxiosResponse> =>
     this.delete(`${Endpoints.SupplierOne}`, { params: { id } });
 
-  getSingleSupplier = (supplierId: string): Promise<{ data: ISupplierInfo }> =>
-    this.get(Endpoints.SupplierOne, { params: { id: supplierId } });
+  getSingleSupplier = (params: IGetSingleSupplierParams): Promise<{ data: ISupplierInfo }> =>
+    this.get(Endpoints.SupplierOne, { params });
+
+  getUploadSupplier = (params: IGetSupplierInfoParams): Promise<any> =>
+    this.get(Endpoints.UploadSupplier, {
+      params,
+      responseType: 'arraybuffer',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/xlsx',
+      },
+    });
 }
 
 export const supplierInfoApi = new SupplierInfoApi(config);

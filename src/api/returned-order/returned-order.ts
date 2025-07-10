@@ -30,6 +30,9 @@ class ReturnedOrderApi extends Instance {
   getSingleReturnedOrder = (orderId: string): Promise<{ data: IReturnedOrder }> =>
     this.get(Endpoints.ReturnedOrderOne, { params: { id: orderId } });
 
+  updateReturnedOrder = (params: IUpdateReturnedOrder): Promise<AxiosResponse> =>
+    this.patch(Endpoints.ReturnedOrderOne, params, { params: { id: params?.id } });
+
   addProductToReturnedOrder = (params: IAddProductsToReturnedOrder): Promise<AxiosResponse> =>
     this.post(Endpoints.AddEditProductToReturning, params);
 
@@ -55,11 +58,8 @@ class ReturnedOrderApi extends Instance {
         'Accept': 'application/xlsx',
       },
     });
-
   // XATO
 
-  updateReturnedOrder = (params: IUpdateReturnedOrder): Promise<AxiosResponse> =>
-    this.patch(`${Endpoints.returnedOrder}/${params?.id}`, params);
 
   deleteReturnedOrder = (id: string): Promise<AxiosResponse> =>
     this.delete(`${Endpoints.returnedOrder}/${id}`);

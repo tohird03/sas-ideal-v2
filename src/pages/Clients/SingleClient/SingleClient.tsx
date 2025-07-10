@@ -19,9 +19,13 @@ export const SingleClient = observer(() => {
 
   useEffect(() => {
     if (clientId) {
-      singleClientStore.getSingleClient(clientId);
+      singleClientStore.getSingleClient({
+        id: clientId,
+        deedEndDate: singleClientStore.endDate!,
+        deedStartDate: singleClientStore.startDate!,
+      });
     }
-  }, [clientId]);
+  }, [clientId, singleClientStore.endDate, singleClientStore.startDate]);
 
   useEffect(() => () => {
     singleClientStore.reset();

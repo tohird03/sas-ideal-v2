@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
-import { PlusCircleOutlined } from '@ant-design/icons';
+import { DownloadOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
-import { Button, Input, InputNumber, Select, Typography } from 'antd';
+import { Button, Input, InputNumber, Select, Tooltip, Typography } from 'antd';
 import classNames from 'classnames';
 import { DataTable } from '@/components/Datatable/datatable';
 import { getPaginationParams } from '@/utils/getPaginationParams';
@@ -12,11 +12,14 @@ import styles from './supplier-info.scss';
 import { supplierColumns, supplierDebtFilter } from './constants';
 import { supplierInfoStore } from '@/stores/supplier';
 import { ISupplierDebtFilter, ISupplierInfo } from '@/api/supplier/types';
+import { supplierInfoApi } from '@/api/supplier/supplier';
+import { addNotification } from '@/utils';
 
 const cn = classNames.bind(styles);
 
 export const SupplierInfo = observer(() => {
   const isMobile = useMediaQuery('(max-width: 800px)');
+  const [downloadLoading, setDownLoadLoading] = useState(false);
 
   const { data: supplierData, isLoading: loading } = useQuery({
     queryKey: [
@@ -58,6 +61,28 @@ export const SupplierInfo = observer(() => {
     supplierInfoStore.setPageSize(pageSize!);
   };
 
+  const handleDownloadExcel = () => {
+    setDownLoadLoading(true);
+    supplierInfoApi.getUploadSupplier({
+      pageNumber: supplierInfoStore.pageNumber,
+      pageSize: supplierInfoStore.pageSize,
+      search: supplierInfoStore.search!,
+    })
+      .then(res => {
+        const url = URL.createObjectURL(new Blob([res]));
+        const a = document.createElement('a');
+
+        a.href = url;
+        a.download = 'yetkazib beruvchilar.xlsx';
+        a.click();
+        URL.revokeObjectURL(url);
+      })
+      .catch(addNotification)
+      .finally(() => {
+        setDownLoadLoading(false);
+      });
+  };
+
   const rowClassName = (record: ISupplierInfo) =>
     record.debt > 0 ? 'info__row'
       : record.debt < 0
@@ -93,6 +118,16 @@ export const SupplierInfo = observer(() => {
               />
             }
           />
+          <Tooltip placement="top" title="Excelda yuklash">
+            <Button
+              onClick={handleDownloadExcel}
+              type="primary"
+              icon={<DownloadOutlined />}
+              loading={downloadLoading}
+            >
+              Exelda Yuklash
+            </Button>
+          </Tooltip>
           <Button
             onClick={handleAddNewSupplier}
             type="primary"

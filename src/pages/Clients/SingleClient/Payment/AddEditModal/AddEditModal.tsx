@@ -42,7 +42,7 @@ export const AddEditModal = observer(() => {
           addNotification('To\'lov muvaffaqiyatli tahrirlandi!');
           queryClient.invalidateQueries({ queryKey: ['getPayments'] });
           if (clientId) {
-            singleClientStore.getSingleClient(clientId!);
+            singleClientStore.getSingleClient({id: clientId});
           }
           handleModalClose();
         })
@@ -59,7 +59,7 @@ export const AddEditModal = observer(() => {
         addNotification('To\'lov muvaffaqiyatli qo\'shildi!');
         queryClient.invalidateQueries({ queryKey: ['getPayments'] });
         if (clientId) {
-          singleClientStore.getSingleClient(clientId!);
+          singleClientStore.getSingleClient({id: clientId});
         }
         handleModalClose();
       })

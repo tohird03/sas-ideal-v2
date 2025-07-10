@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, InputNumber, Modal, Select } from 'antd';
+import { Button, Form, Input, InputNumber, Modal, Select, message } from 'antd';
 import { observer } from 'mobx-react';
 import { priceFormat } from '@/utils/priceFormat';
 import { IPaymentType } from '@/api/types';
@@ -8,12 +8,21 @@ import { useQueryClient } from '@tanstack/react-query';
 import { incomeProductsStore } from '@/stores/products';
 import { IIncomeAddEditPaymentParams } from '@/api/payment-income/types';
 import { incomePaymentApi } from '@/api/payment-income';
+import { incomeProductsApi } from '@/api/income-products';
+import { singleSupplierStore } from '@/stores/supplier';
+import { useParams } from 'react-router-dom';
 
 export const PaymentModal = observer(() => {
   const [form] = Form.useForm();
   const queryClient = useQueryClient();
   const [totalPayment, setTotalPayment] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
+  const { supplierId } = useParams();
+  const [loadingPayment, setLoadingPayment] = useState(false);
+
+  const today = new Date().toISOString().split('T')[0];
+  const checkDate = incomeProductsStore.incomeOrder?.date?.split('T')[0];
+  const isToday = checkDate === today;
 
   const handleModalClose = () => {
     incomeProductsStore.setIncomeOrderPayment(null);
@@ -28,32 +37,32 @@ export const PaymentModal = observer(() => {
   };
 
   const handleSubmitPayment = (values: IPaymentType) => {
-    const orderPaymentData: IIncomeAddEditPaymentParams = {
-      ...values,
-      orderId: incomeProductsStore.incomeOrderPayment?.orderId,
-      supplierId: incomeProductsStore.incomeOrderPayment?.supplier?.id!,
-    };
-
-    if (incomeProductsStore.incomeOrderPayment?.payment) {
-      incomePaymentApi.updateIncomePayment({
-        ...orderPaymentData,
-        id: incomeProductsStore.incomeOrderPayment?.payment?.id,
-      })
-        .then(() => {
-          queryClient.invalidateQueries({ queryKey: ['getIncomeOrders'] });
-          handleModalClose();
-        })
-        .catch(addNotification);
+    if (!isToday) {
+      message.info('Oldingi to\'lovni o\'zgartirolmaysiz!');
 
       return;
     }
 
-    incomePaymentApi.addIncomePayment(orderPaymentData)
+    setLoadingPayment(true);
+
+    incomeProductsApi.updateIncomeOrder({
+      id: incomeProductsStore?.incomeOrder?.id!,
+      supplierId: form.getFieldValue('supplierId'),
+      payment: values,
+    })
       .then(() => {
-        queryClient.invalidateQueries({ queryKey: ['getOrders'] });
+        queryClient.invalidateQueries({ queryKey: ['getIncomeOrders'] });
+        if (supplierId) {
+          singleSupplierStore.getSingleSupplier({
+            id: supplierId,
+          });
+        }
         handleModalClose();
       })
-      .catch(addNotification);
+      .catch(addNotification)
+      .finally(() => {
+        setLoadingPayment(false);
+      });
   };
 
   const handleValuesChange = (_: any, allValues: any) => {
@@ -71,6 +80,8 @@ export const PaymentModal = observer(() => {
     const { cash = 0, card = 0, transfer = 0, other = 0 } = allValues;
 
     const totalEntered = cash + card + transfer + other;
+
+    console.log(totalEntered);
 
     const remainingAmount = totalPrice - totalEntered;
 
@@ -96,7 +107,7 @@ export const PaymentModal = observer(() => {
           transfer,
           other,
           description,
-          clientId: incomeProductsStore.incomeOrderPayment?.supplier?.id,
+          supplierId: incomeProductsStore.incomeOrderPayment?.supplier?.id,
         });
 
         const totalPayCalc = cash + card + transfer + other;
@@ -129,6 +140,7 @@ export const PaymentModal = observer(() => {
         <Button
           onClick={handleSavePayment}
           type="primary"
+          loading={loadingPayment}
         >
           Maqullash
         </Button>

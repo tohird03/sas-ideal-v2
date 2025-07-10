@@ -12,6 +12,12 @@ export interface IClientsInfo {
   deedInfo: IClientDeedInfo;
 }
 
+export interface IGetSingleClientParams {
+  deedStartDate?: Date;
+  deedEndDate?: Date;
+  id: string;
+}
+
 export interface IClientDeedInfo {
   totalDebit: number;
   totalCredit: number;
@@ -24,11 +30,18 @@ export interface IClientDeed {
   value: number;
   date: string;
   description: string;
+  action: IClientDeedAction;
 }
 
 export enum IClientDeedType {
   DEBIT = 'debit',
   KREDIT = 'credit',
+}
+
+export enum IClientDeedAction {
+  SELLING = 'selling',
+  RETURNING = 'returning',
+  PAYMENT = 'payment',
 }
 
 export interface IUpdateUser {

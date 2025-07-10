@@ -1,7 +1,7 @@
 import { IProducts } from "../product/types"
 import { IStaffs } from "../staffs";
 import { ISupplierInfo } from "../supplier/types";
-import { IPagination, IPayment } from "../types";
+import { IPagination, IPayment, IPaymentType } from "../types";
 
 export interface IIncomeOrder {
   id: string,
@@ -56,6 +56,7 @@ export interface IUpdateIncomeOrder {
   id: string;
   supplierId?: string;
   date?: string;
+  payment?: IPaymentType;
 }
 
 export interface IIncomeOrderPayment {

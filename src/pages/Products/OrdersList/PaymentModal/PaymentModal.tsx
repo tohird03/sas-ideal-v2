@@ -10,6 +10,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { singleClientStore } from '@/stores/clients';
 import { useParams } from 'react-router-dom';
 import { clientsPaymentApi } from '@/api/payment/payment';
+import { ordersApi } from '@/api/order';
+import { IOrderStatus } from '@/api/order/types';
 
 export const PaymentModal = observer(() => {
   const [form] = Form.useForm();
@@ -36,47 +38,25 @@ export const PaymentModal = observer(() => {
   };
 
   const handleSubmitPayment = (values: IPaymentType) => {
-    setLoadingPayment(true);
-    const orderPaymentData: IAddEditPaymentParams = {
-      ...values,
-      orderId: ordersStore.orderPayment?.orderId,
-      userId: ordersStore.orderPayment?.client?.id!,
-      sendUser: ordersStore?.isSendUser,
-    };
 
-    if (ordersStore.orderPayment?.payment) {
-      if (!isToday) {
-        message.info('Oldingi to\'lovni o\'zgartirolmaysiz!');
-
-        return;
-      }
-
-      clientsPaymentApi.updatePayment({
-        ...orderPaymentData,
-        id: ordersStore.orderPayment?.payment?.id,
-      })
-        .then(res => {
-          queryClient.invalidateQueries({ queryKey: ['getOrders'] });
-          addNotification('To\'lov muvaffaqiyatli o\'zgartirildi');
-          if (clientId) {
-            singleClientStore.getSingleClient(clientId);
-          }
-          handleModalClose();
-        })
-        .catch(addNotification)
-        .finally(() => {
-          setLoadingPayment(false);
-        });
+    if (!isToday) {
+      message.info('Oldingi to\'lovni o\'zgartirolmaysiz!');
 
       return;
     }
 
-    clientsPaymentApi.addPayment(orderPaymentData)
-      .then(res => {
+    setLoadingPayment(true);
+
+    ordersApi.updateOrder({
+      id: ordersStore?.order?.id!,
+      send: ordersStore.isSendUser,
+      clientId: form.getFieldValue('clientId'),
+      payment: values,
+    })
+      .then(() => {
         queryClient.invalidateQueries({ queryKey: ['getOrders'] });
-        addNotification('To\'lov muvaffaqiyatli amalga oshirildi');
         if (clientId) {
-          singleClientStore.getSingleClient(clientId!);
+          singleClientStore.getSingleClient({id: clientId});
         }
         handleModalClose();
       })

@@ -4,7 +4,7 @@ import { ISingleSupplierTabs } from './types';
 import { IClientsPayments, IGetClientsPaymentsParams } from '@/api/payment/types';
 import { clientsPaymentApi } from '@/api/payment/payment';
 import { supplierInfoApi } from '@/api/supplier/supplier';
-import { ISupplierInfo } from '@/api/supplier/types';
+import { IGetSingleSupplierParams, ISupplierInfo } from '@/api/supplier/types';
 
 class SingleSupplierStore {
   activeSupplier: ISupplierInfo | null = null;
@@ -24,8 +24,8 @@ class SingleSupplierStore {
     makeAutoObservable(this);
   }
 
-  getSingleSupplier = (clientId: string) =>
-    supplierInfoApi.getSingleSupplier(clientId)
+  getSingleSupplier = (params: IGetSingleSupplierParams) =>
+    supplierInfoApi.getSingleSupplier(params)
       .then(res => {
         if (res) {
           this.setActiveSupplier(res?.data);

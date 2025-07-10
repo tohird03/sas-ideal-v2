@@ -54,7 +54,9 @@ export enum Endpoints {
   IncomeOrderOneExcel = '/arrival/excel-download/one',
   ReturnedAllExcel = '/returning/excel-download/many',
   ReturnedOneExcel = '/returning/excel-download/one',
-  ClientPayentExcel = '/client-payment/excel-download/many',
+  ClientPaymentExcel = '/client-payment/excel-download/many',
+  UploadClient = '/client/excel-download/many',
+  UploadSupplier = '/supplier/excel-download/many',
 
   //XATO
   RefreshToken = '/dashboard-auth/refresh',
@@ -71,7 +73,6 @@ export enum Endpoints {
   Supplier = '/user/supplier',
   ClientDeedExcelUpload = '/user/client/deed/upload',
   SupplierDeedExcelUpload = '/user/supplier/deed/upload',
-  UploadClient = '/user/client/debtors',
 
   // PRODUCTS
   products = '/product',

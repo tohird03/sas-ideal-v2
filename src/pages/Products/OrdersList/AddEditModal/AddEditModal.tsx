@@ -98,7 +98,7 @@ export const AddEditModal = observer(() => {
       .then(() => {
         queryClient.invalidateQueries({ queryKey: ['getOrders'] });
         if (clientId) {
-          singleClientStore.getSingleClient(clientId!);
+          singleClientStore.getSingleClient({id: clientId});
         }
         handleModalClose();
       })
@@ -164,7 +164,7 @@ export const AddEditModal = observer(() => {
         .finally(() => {
           setLoading(false);
           if (clientId) {
-            singleClientStore.getSingleClient(clientId!);
+            singleClientStore.getSingleClient({id: clientId});
           }
         });
 
@@ -197,7 +197,7 @@ export const AddEditModal = observer(() => {
       .finally(() => {
         setLoading(false);
         if (clientId) {
-          singleClientStore.getSingleClient(clientId!);
+          singleClientStore.getSingleClient({id: clientId});
         }
       });
   };
@@ -287,14 +287,14 @@ export const AddEditModal = observer(() => {
           .finally(() => {
             setLoading(false);
             if (clientId) {
-              singleClientStore.getSingleClient(clientId!);
+              singleClientStore.getSingleClient({id: clientId});
             }
           });
       })
       .catch(addNotification)
       .finally(() => {
         if (clientId) {
-          singleClientStore.getSingleClient(clientId!);
+          singleClientStore.getSingleClient({id: clientId});
         }
       });
   };
@@ -330,7 +330,7 @@ export const AddEditModal = observer(() => {
         .catch(addNotification)
         .finally(() => {
           if (clientId) {
-            singleClientStore.getSingleClient(clientId!);
+            singleClientStore.getSingleClient({id: clientId});
           }
         });
     }
@@ -460,7 +460,7 @@ export const AddEditModal = observer(() => {
         .then(() => {
           queryClient.invalidateQueries({ queryKey: ['getOrders'] });
           if (clientId) {
-            singleClientStore.getSingleClient(clientId!);
+            singleClientStore.getSingleClient({id: clientId});
           }
           handleModalClose();
         })

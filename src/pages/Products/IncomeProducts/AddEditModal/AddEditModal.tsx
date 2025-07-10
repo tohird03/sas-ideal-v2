@@ -86,14 +86,7 @@ export const AddEditModal = observer(() => {
 
   // SUBMIT FORMS
   const handleSaveAccepted = () => {
-    incomeProductsApi.updateIncomeOrder({
-      id: incomeProductsStore?.incomeOrder?.id!,
-    })
-      .then(() => {
-        queryClient.invalidateQueries({ queryKey: ['getIncomeOrders'] });
-        handleModalClose();
-      })
-      .catch(addNotification);
+    handleModalClose();
   };
 
   const handleCreateOrUpdateOrder = () => {
@@ -499,7 +492,7 @@ export const AddEditModal = observer(() => {
             {
               incomeProductsStore?.incomeOrder?.id
                 ? 'Tushurilgan mahsulotlarni tahrirlash'
-                : 'Yangi mahsulot tushurish sotuv'
+                : 'Yangi mahsulot tushurish'
             }
             <p style={{ margin: 0 }}>{selectedSupplier && `Yetkazib beruvchiga qarz: ${priceFormat(selectedSupplier?.debt)}`}</p>
             {incomeProductsStore?.incomeOrder?.id && (

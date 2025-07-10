@@ -21,6 +21,12 @@ export interface ISupplierInfo {
   deedInfo: ISupplierDeedInfo;
 }
 
+export interface IGetSingleSupplierParams {
+  id: string;
+  deedStartDate?: Date;
+  deedEndDate?: Date;
+}
+
 export interface IAddEditSupplier {
   id?: string;
   fullname: string;
@@ -39,9 +45,15 @@ export interface ISupplierDeed {
   value: number;
   date: string;
   description: string;
+  action: ISupplierDeedAction;
 }
 
 export enum ISupplierDeedType {
   DEBIT = 'debit',
   KREDIT = 'credit',
+}
+
+export enum ISupplierDeedAction {
+  PAYMENT = 'payment',
+  ARRIVAL = 'arrival',
 }

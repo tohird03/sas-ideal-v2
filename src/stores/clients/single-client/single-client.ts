@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { clientsInfoApi, IClientsInfo} from '@/api/clients';
+import { clientsInfoApi, IClientsInfo, IGetSingleClientParams} from '@/api/clients';
 import { addNotification } from '@/utils';
 import { ISingleClientTabs } from './types';
 import { IClientsPayments, IGetClientsPaymentsParams } from '@/api/payment/types';
@@ -23,8 +23,8 @@ class SingleClientStore {
     makeAutoObservable(this);
   }
 
-  getSingleClient = (clientId: string) =>
-    clientsInfoApi.getSingleClient(clientId)
+  getSingleClient = (params: IGetSingleClientParams) =>
+    clientsInfoApi.getSingleClient(params)
       .then(res => {
         if (res) {
           this.setActiveClient(res?.data);

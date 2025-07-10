@@ -50,11 +50,11 @@ class IncomeProductsApi extends Instance {
         'Accept': 'application/xlsx',
       },
     });
-  // XATO
 
   updateIncomeOrder = (params: IUpdateIncomeOrder): Promise<AxiosResponse> =>
-    this.patch(`${Endpoints.productsIncomeOrder}/${params?.id}`, params);
+    this.patch(Endpoints.IncomeOne, params, { params: { id: params?.id } });
 
+  // XATO
   deleteIncomeOrder = (id: string): Promise<AxiosResponse> =>
     this.delete(`${Endpoints.productsIncomeOrder}/${id}`);
 

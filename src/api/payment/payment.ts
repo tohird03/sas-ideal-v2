@@ -27,7 +27,7 @@ class ClientsPaymentApi extends Instance {
     this.delete(`${Endpoints.ClientsPaymentsOne}`, {params: {id}});
 
   getUploadPayments = (params: IGetClientsPaymentsParams): Promise<any> =>
-    this.get(Endpoints.ClientPayentExcel, {
+    this.get(Endpoints.ClientPaymentExcel, {
       params,
       responseType: 'arraybuffer',
       headers: {

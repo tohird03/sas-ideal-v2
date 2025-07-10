@@ -3,8 +3,9 @@ import { ColumnType } from 'antd/es/table';
 import { priceFormat } from '@/utils/priceFormat';
 import { IClientsPayments } from '@/api/payment/types';
 import { getFullDateFormat } from '@/utils/getDateFormat';
-import { IClientDeed, IClientDeedType} from '@/api/clients';
+import { IClientDeed, IClientDeedAction, IClientDeedType} from '@/api/clients';
 import { ArrowRightOutlined } from '@ant-design/icons';
+import { Tag } from 'antd';
 
 export const deedColumns: ColumnType<IClientDeed>[] = [
   {
@@ -27,41 +28,15 @@ export const deedColumns: ColumnType<IClientDeed>[] = [
     key: 'type',
     dataIndex: 'type',
     title: 'Harakat turi',
-    width: '250px',
-    // render: (value, record) => (
-    //   <>
-    //     {
-    //       record?.type === 'order'
-    //         ? 'Sotuv'
-    //         : record?.type === 'payment'
-    //           ? 'To\'lov'
-    //           : record?.type === 'returned-order'
-    //             ? 'Qaytaruv'
-    //             : ''
-    //     }
-    //     {<ArrowRightOutlined />}
-    //     <p
-    //       style={{ margin: 0, color: 'blue', display: 'inline' }}
-    //     >
-    //       №: {
-    //         record?.type === 'order'
-    //           ? record?.articl
-    //           : record?.type === 'payment'
-    //             ? record?.id
-    //             : record?.type === 'returned-order'
-    //               ? record?.id
-    //               : ''
-    //       }
-    //     </p>
-    //   </>
-    // ),
+    width: '50px',
+    render: (value, record) => <Tag color={clientDeedActionColor[record?.action]}>{clientDeedAction[record?.action]}</Tag>,
   },
   {
     key: 'debt',
     dataIndex: 'debt',
     title: 'Дебит',
     align: 'center',
-    width: '50px',
+    width: '100px',
     className: 'green-col',
     render: (value, record) => (
       record?.type === IClientDeedType.DEBIT
@@ -74,7 +49,7 @@ export const deedColumns: ColumnType<IClientDeed>[] = [
     dataIndex: 'data',
     title: 'Кредит',
     align: 'center',
-    width: '50px',
+    width: '100px',
     className: 'red-col',
     render: (value, record) => (
       record?.type === IClientDeedType.KREDIT
@@ -87,7 +62,20 @@ export const deedColumns: ColumnType<IClientDeed>[] = [
     dataIndex: 'description',
     title: 'Ma\'lumot',
     align: 'center',
-    width: '50px',
+    width: '200px',
     render: (value, record) => <span>{record?.description}</span>,
   },
 ];
+
+
+const clientDeedAction: Record<IClientDeedAction, string> = {
+  [IClientDeedAction.SELLING]: 'Sotuv',
+  [IClientDeedAction.RETURNING]: 'Qaytaruv',
+  [IClientDeedAction.PAYMENT]: 'To\'lov',
+};
+
+const clientDeedActionColor: Record<IClientDeedAction, string> = {
+  [IClientDeedAction.SELLING]: '#52c41a',
+  [IClientDeedAction.RETURNING]: '#faad14',
+  [IClientDeedAction.PAYMENT]: '#1890ff',
+};

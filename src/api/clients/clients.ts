@@ -7,6 +7,7 @@ import {
   IClientsInfo,
   IGetClientDeedExcelParams,
   IGetClientsInfoParams,
+  IGetSingleClientParams,
 } from './types';
 
 const config: INetworkConfig = {
@@ -31,8 +32,19 @@ class ClientsInfoApi extends Instance {
   deleteClient = (id: string): Promise<AxiosResponse> =>
     this.delete(`${Endpoints.ClientOne}`, { params: { id } });
 
-  getSingleClient = (clientId: string): Promise<{data: IClientsInfo}> =>
-    this.get(Endpoints.ClientOne, { params: { id: clientId } });
+  getSingleClient = (params: IGetSingleClientParams): Promise<{ data: IClientsInfo }> =>
+    this.get(Endpoints.ClientOne, { params });
+
+  getUploadClients = (params: IGetClientsInfoParams): Promise<any> =>
+    this.get(Endpoints.UploadClient, {
+      params,
+      responseType: 'arraybuffer',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/xlsx',
+      },
+    });
+
   //XATO
   deleteUser = (id: string): Promise<AxiosResponse> =>
     this.delete(`${Endpoints.Users}/${id}`);
@@ -49,16 +61,6 @@ class ClientsInfoApi extends Instance {
 
   getUploadSupplierDeedToExel = (params: IGetClientDeedExcelParams): Promise<any> =>
     this.get(`${Endpoints.SupplierDeedExcelUpload}`, {
-      params,
-      responseType: 'arraybuffer',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/xlsx',
-      },
-    });
-
-  getUploadClients = (params: IGetClientsInfoParams): Promise<any> =>
-    this.get(`${Endpoints.UploadClient}`, {
       params,
       responseType: 'arraybuffer',
       headers: {

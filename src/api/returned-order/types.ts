@@ -10,7 +10,7 @@ export interface IGetReturnedOrdersParams extends IPagination {
   endDate?: Date;
 }
 
-export interface IReturnedOrder extends IReturnedOrderPayments {
+export interface IReturnedOrder {
   id: string,
   description: string,
   status: IOrderStatus,
@@ -19,8 +19,8 @@ export interface IReturnedOrder extends IReturnedOrderPayments {
   returnedDate: string,
   staff: ISeller,
   products: IReturnedOrderProducts[],
-
   totalPrice: number;
+  payment: IReturnedOrderPayments;
 }
 
 export interface IReturnedOrderProducts {
@@ -49,10 +49,11 @@ export interface IAddProductsToReturnedOrder extends IAddReturnedOrderProducts {
   returningId?: string;
 }
 
-export interface IUpdateReturnedOrder extends IReturnedOrderPayments {
+export interface IUpdateReturnedOrder {
   id: string,
-  accepted?: boolean,
+  clientId?: string,
   description?: string,
+  payment?: IReturnedOrderPayments,
 }
 
 export interface IUpdateProductFromReturnedOrders {
@@ -62,6 +63,6 @@ export interface IUpdateProductFromReturnedOrders {
 }
 
 export interface IReturnedOrderPayments {
-  cashPayment?: number,
-  fromClient?: number,
+  cash?: number,
+  fromBalance?: number,
 }

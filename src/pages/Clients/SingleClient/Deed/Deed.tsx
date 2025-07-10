@@ -17,7 +17,6 @@ import { priceFormat } from '@/utils/priceFormat';
 const cn = classNames.bind(styles);
 
 export const Deed = observer(() => {
-  const isMobile = useMediaQuery('(max-width: 800px)');
   const { clientId } = useParams();
   const [downloadLoadingDeed, setDownLoadLoadingDeed] = useState(false);
   const [downloadLoadingDeedProduct, setDownLoadLoadingDeedProduct] = useState(false);

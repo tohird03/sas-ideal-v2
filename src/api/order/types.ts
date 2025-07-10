@@ -66,6 +66,7 @@ export interface IUpdateOrder {
   date?: Date | string;
   status?: IOrderStatus;
   send: boolean;
+  payment?: IPaymentType;
 }
 
 export interface IUploadOrderToExelParams extends IGetOrdersParams {

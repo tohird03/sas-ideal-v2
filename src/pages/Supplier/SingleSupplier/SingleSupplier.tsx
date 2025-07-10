@@ -19,9 +19,13 @@ export const SingleSupplier = observer(() => {
 
   useEffect(() => {
     if (supplierId) {
-      singleSupplierStore.getSingleSupplier(supplierId);
+      singleSupplierStore.getSingleSupplier({
+        id: supplierId,
+        deedEndDate: singleSupplierStore?.endDate!,
+        deedStartDate: singleSupplierStore?.startDate!,
+      });
     }
-  }, [supplierId]);
+  }, [supplierId, singleSupplierStore?.endDate, singleSupplierStore?.startDate]);
 
   useEffect(() => () => {
     singleSupplierStore.reset();

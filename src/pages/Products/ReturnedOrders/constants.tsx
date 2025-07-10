@@ -48,14 +48,14 @@ export const returnedOrdersColumns: ColumnType<IReturnedOrder>[] = [
     dataIndex: 'fromClient',
     title: 'Mijozning hisobidan',
     align: 'center',
-    render: (value, record) => priceFormat(record?.fromClient),
+    render: (value, record) => priceFormat(record?.payment?.fromBalance),
   },
   {
     key: 'cash',
     dataIndex: 'cash',
     title: 'Naqd to\'lov',
     align: 'center',
-    render: (value, record) => priceFormat(record?.cashPayment),
+    render: (value, record) => priceFormat(record?.payment?.cash),
   },
   {
     key: 'seller',

@@ -7,6 +7,7 @@ import { priceFormat } from '@/utils/priceFormat';
 import { IIncomeAddEditPaymentParams } from '@/api/payment-income/types';
 import { returnedOrdersStore } from '@/stores/products';
 import { returnedOrderApi } from '@/api/returned-order/returned-order';
+import { IReturnedOrderPayments } from '@/api/returned-order/types';
 
 export const PaymentModal = observer(() => {
   const [form] = Form.useForm();
@@ -14,26 +15,25 @@ export const PaymentModal = observer(() => {
   const [loading, setLoading] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const handleSubmit = (values: IIncomeAddEditPaymentParams) => {
+  const handleSubmit = (values: IReturnedOrderPayments) => {
     setLoading(true);
 
-    if (returnedOrdersStore?.singleReturnedOrder?.id) {
-      returnedOrderApi.updateReturnedOrder({
-        ...values,
-        accepted: true,
-        id: returnedOrdersStore?.singleReturnedOrder?.id!,
+    returnedOrderApi.updateReturnedOrder({
+      payment: {
+        cash: values?.cash || 0,
+        fromBalance: values?.fromBalance || 0,
+      },
+      id: returnedOrdersStore?.singleReturnedOrder?.id!,
+    })
+      .then(() => {
+        addNotification('Qaytuv tasdiqlandi');
+        queryClient.invalidateQueries({ queryKey: ['getReturnedOrders'] });
+        handleModalClose();
       })
-        .then(() => {
-          addNotification('Qaytuv tasdiqlandi');
-          queryClient.invalidateQueries({ queryKey: ['getReturnedOrders'] });
-          returnedOrdersStore.getSingleOrder(returnedOrdersStore?.singleReturnedOrder?.id!);
-          handleModalClose();
-        })
-        .catch(addNotification)
-        .finally(() => {
-          setLoading(false);
-        });
-    }
+      .catch(addNotification)
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const handleModalClose = () => {
@@ -48,13 +48,13 @@ export const PaymentModal = observer(() => {
   };
 
   const handleClickClientDebt = () => {
-    form.setFieldValue('cashPayment', 0);
-    form.setFieldValue('fromClient', totalPrice);
+    form.setFieldValue('cash', 0);
+    form.setFieldValue('fromBalance', totalPrice);
   };
 
   const handleClickCashDebt = () => {
-    form.setFieldValue('cashPayment', totalPrice);
-    form.setFieldValue('fromClient', 0);
+    form.setFieldValue('cash', totalPrice);
+    form.setFieldValue('fromBalance', 0);
   };
 
   useEffect(() => {
@@ -68,8 +68,8 @@ export const PaymentModal = observer(() => {
       const totalPriceCalc = returnedOrdersStore.singleReturnedOrder?.products?.reduce((prev, curr) => prev + (curr?.price * curr?.count), 0);
 
       setTotalPrice(totalPriceCalc);
-      if (!returnedOrdersStore.singlePayment?.cashPayment && !returnedOrdersStore.singlePayment?.fromClient) {
-        form.setFieldValue('cashPayment', totalPriceCalc);
+      if (!returnedOrdersStore.singlePayment?.cash && !returnedOrdersStore.singlePayment?.fromBalance) {
+        form.setFieldValue('cash', totalPriceCalc);
       }
     }
   }, [returnedOrdersStore?.singleReturnedOrder]);
@@ -93,7 +93,7 @@ export const PaymentModal = observer(() => {
       >
         <Form.Item
           label="Mijozning hisobidan ayirish"
-          name="fromClient"
+          name="fromBalance"
           initialValue={0}
         >
           <InputNumber
@@ -112,7 +112,7 @@ export const PaymentModal = observer(() => {
         </Form.Item>
         <Form.Item
           label="Naqd to'lov"
-          name="cashPayment"
+          name="cash"
           initialValue={0}
         >
           <InputNumber

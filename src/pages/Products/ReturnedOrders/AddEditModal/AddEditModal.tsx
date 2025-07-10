@@ -63,8 +63,8 @@ export const AddEditModal = observer(() => {
   const handleOpenPaymentModal = () => {
     if (returnedOrdersStore?.singleReturnedOrder?.id) {
       returnedOrdersStore.setSinglePayment({
-        cashPayment: returnedOrdersStore?.singleReturnedOrder?.cashPayment,
-        fromClient: returnedOrdersStore?.singleReturnedOrder?.fromClient,
+        cash: returnedOrdersStore?.singleReturnedOrder?.payment?.cash,
+        fromBalance: returnedOrdersStore?.singleReturnedOrder?.payment?.fromBalance,
       });
       returnedOrdersStore.setIsOpenPaymentModal(true);
     }
