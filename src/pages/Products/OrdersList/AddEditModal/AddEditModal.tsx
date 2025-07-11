@@ -203,6 +203,7 @@ export const AddEditModal = observer(() => {
   };
 
   const handleModalClose = () => {
+    queryClient.invalidateQueries({ queryKey: ['getOrders'] });
     ordersStore.setSingleOrder(null);
     ordersStore.setOrder(null);
     ordersStore.setIsSendUser(false);

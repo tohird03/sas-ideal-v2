@@ -25,11 +25,20 @@ class IncomeProductsApi extends Instance {
   getSingleIncomeOrder = (orderId: string): Promise<{ data: IIncomeOrder }> =>
     this.get(Endpoints.IncomeOne, { params: { id: orderId } });
 
+  updateIncomeOrder = (params: IUpdateIncomeOrder): Promise<AxiosResponse> =>
+    this.patch(Endpoints.IncomeOne, params, { params: { id: params?.id } });
+
+  deleteIncomeOrder = (id: string): Promise<AxiosResponse> =>
+    this.delete(Endpoints.IncomeOne, { params: { id } });
+
   updateIncomeOrderProduct = (params: IIncomeUpdateOrderProduct): Promise<AxiosResponse> =>
     this.patch(`${Endpoints.AddEditProductToArrival}`, params, { params: { id: params?.id } });
 
   orderProductAdd = (params: IIncomeOrderProductAdd): Promise<AxiosResponse> =>
     this.post(Endpoints.AddEditProductToArrival, params);
+
+  deleteOrderProduct = (productId: string): Promise<AxiosResponse> =>
+    this.delete(Endpoints.ProductMv, { params: { id: productId } });
 
   getAllUploadIncomeOrderToExel = (params: IGetIncomeOrdersParams): Promise<any> =>
     this.get(Endpoints.IncomeOrderAllExcel, {
@@ -50,17 +59,6 @@ class IncomeProductsApi extends Instance {
         'Accept': 'application/xlsx',
       },
     });
-
-  updateIncomeOrder = (params: IUpdateIncomeOrder): Promise<AxiosResponse> =>
-    this.patch(Endpoints.IncomeOne, params, { params: { id: params?.id } });
-
-  // XATO
-  deleteIncomeOrder = (id: string): Promise<AxiosResponse> =>
-    this.delete(`${Endpoints.productsIncomeOrder}/${id}`);
-
-  deleteOrderProduct = (productId: string): Promise<AxiosResponse> =>
-    this.delete(`${Endpoints.productsIncomeOrderProduct}/${productId}`);
-
 }
 
 export const incomeProductsApi = new IncomeProductsApi(config);

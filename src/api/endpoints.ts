@@ -58,6 +58,8 @@ export enum Endpoints {
   UploadClient = '/client/excel-download/many',
   UploadSupplier = '/supplier/excel-download/many',
 
+  ProductMv = '/product-mv/one',
+
   //XATO
   RefreshToken = '/dashboard-auth/refresh',
 

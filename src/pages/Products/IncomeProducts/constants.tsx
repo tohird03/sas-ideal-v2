@@ -149,8 +149,8 @@ export const ordersInfoColumns: ColumnType<IIncomeOrder>[] = [
     render: (value, record) => getFullDateFormat(record?.createdAt),
   },
   {
-    key: 'totalPrice',
-    dataIndex: 'totalPrice',
+    key: 'totalCost',
+    dataIndex: 'totalCost',
     title: 'Jami narxi',
     align: 'center',
     width: '150px',
@@ -238,7 +238,7 @@ export const ordersInfoProductsColumns: ColumnType<IIncomeProduct>[] = [
   {
     key: 'cost',
     dataIndex: 'cost',
-    title: 'Sotish narxi',
+    title: 'Sotib olish narxi',
     align: 'center',
     width: '150px',
     render: (value, record) => priceFormat(record?.cost),
