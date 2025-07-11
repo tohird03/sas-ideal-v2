@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { observer } from 'mobx-react';
-import { PlusCircleOutlined } from '@ant-design/icons';
+import { DownloadOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
-import { Button, DatePicker, DatePickerProps, Input, Select, Table, Typography } from 'antd';
+import { Button, DatePicker, DatePickerProps, Input, Select, Table, Tooltip, Typography } from 'antd';
 import classNames from 'classnames';
 import { DataTable } from '@/components/Datatable/datatable';
 import { getPaginationParams } from '@/utils/getPaginationParams';
@@ -14,11 +14,14 @@ import { staffsPaymentStore } from '@/stores/workers/staffs-payments';
 import dayjs from 'dayjs';
 import { staffsApi } from '@/api/staffs';
 import { priceFormat } from '@/utils/priceFormat';
+import { addNotification } from '@/utils';
+import { dateFormat } from '@/utils/getDateFormat';
+import { staffsPaymentsApi } from '@/api/staffs-payments/staffs-payments';
 
 const cn = classNames.bind(styles);
 
 export const StaffsPayments = observer(() => {
-  const isMobile = useMediaQuery('(max-width: 800px)');
+  const [downloadLoading, setDownLoadLoading] = useState(false);
 
   const { data: clientsInfoData, isLoading: loading } = useQuery({
     queryKey: [
@@ -33,7 +36,7 @@ export const StaffsPayments = observer(() => {
       staffsPaymentStore.getStaffsPayments({
         pageNumber: staffsPaymentStore.pageNumber,
         pageSize: staffsPaymentStore.pageSize,
-        sellerId: staffsPaymentStore.sellerId!,
+        staffId: staffsPaymentStore.sellerId!,
         startDate: staffsPaymentStore.startDate!,
         endDate: staffsPaymentStore.endDate!,
       }),
@@ -81,6 +84,30 @@ export const StaffsPayments = observer(() => {
     staffsPaymentStore.setPageSize(pageSize!);
   };
 
+  const handleDownloadExcel = () => {
+    setDownLoadLoading(true);
+    staffsPaymentsApi.getAllUploadStaffPaymentExel({
+      pageNumber: staffsPaymentStore.pageNumber,
+      pageSize: staffsPaymentStore.pageSize,
+      staffId: staffsPaymentStore.sellerId!,
+      startDate: staffsPaymentStore.startDate!,
+      endDate: staffsPaymentStore.endDate!,
+    })
+      .then(res => {
+        const url = URL.createObjectURL(new Blob([res]));
+        const a = document.createElement('a');
+
+        a.href = url;
+        a.download = `${dateFormat(String(staffsPaymentStore.startDate!))}--${dateFormat(String(staffsPaymentStore.endDate!))}.xlsx`;
+        a.click();
+        URL.revokeObjectURL(url);
+      })
+      .catch(addNotification)
+      .finally(() => {
+        setDownLoadLoading(false);
+      });
+  };
+
   const sellerOptions = useMemo(() => (
     sellerData?.data?.data.map((sellerData) => ({
       value: sellerData?.id,
@@ -119,6 +146,16 @@ export const StaffsPayments = observer(() => {
             defaultValue={dayjs(staffsPaymentStore.endDate)}
             allowClear={false}
           />
+          <Tooltip placement="top" title="Excelda yuklash">
+            <Button
+              onClick={handleDownloadExcel}
+              type="primary"
+              icon={<DownloadOutlined />}
+              loading={downloadLoading}
+            >
+              Exelda Yuklash
+            </Button>
+          </Tooltip>
           <Button
             onClick={handleAddNewClient}
             type="primary"

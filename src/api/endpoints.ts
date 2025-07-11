@@ -44,6 +44,7 @@ export enum Endpoints {
   ReturnedOrderMany = '/returning/many',
   ReturnedOrderOne = '/returning/one',
   AddEditProductToReturning = '/product-mv/returning/one',
+  ProductMv = '/product-mv/one',
 
   OrderStatistic = '/selling/total-stats',
   OrderGraphStatistic = '/selling/period-stats',
@@ -57,8 +58,7 @@ export enum Endpoints {
   ClientPaymentExcel = '/client-payment/excel-download/many',
   UploadClient = '/client/excel-download/many',
   UploadSupplier = '/supplier/excel-download/many',
-
-  ProductMv = '/product-mv/one',
+  StaffPaymentExcel = '/staff-payment/excel-download/many',
 
   //XATO
   RefreshToken = '/dashboard-auth/refresh',

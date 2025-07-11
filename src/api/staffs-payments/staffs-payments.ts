@@ -24,7 +24,17 @@ class StaffsPayments extends Instance {
     this.patch(`${Endpoints.StaffPaymentsOne}`, params, { params: { id: params?.id } });
 
   deleteStaffPayment = (id: string): Promise<AxiosResponse> =>
-    this.delete(`${Endpoints.StaffPaymentsOne}`, {params: {id}});
+    this.delete(`${Endpoints.StaffPaymentsOne}`, { params: { id } });
+
+  getAllUploadStaffPaymentExel = (params: IGetStaffsPaymentsParams): Promise<any> =>
+    this.get(Endpoints.StaffPaymentExcel, {
+      params,
+      responseType: 'arraybuffer',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/xlsx',
+      },
+    });
 }
 
 export const staffsPaymentsApi = new StaffsPayments(config);
