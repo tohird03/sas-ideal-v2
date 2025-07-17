@@ -10,6 +10,9 @@ export interface IClientsInfo {
   debt: number;
   lastSellingDate: string;
   deedInfo: IClientDeedInfo;
+  telegram?: {
+    isActive: boolean;
+  };
 }
 
 export interface IGetSingleClientParams {

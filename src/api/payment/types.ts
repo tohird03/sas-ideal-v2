@@ -14,7 +14,7 @@ export interface IGetClientsPaymentsParams extends IPagination {
   search?: string;
   startDate?: Date;
   endDate?: Date;
-  clientId?: string;
+  userId?: string;
   sellerId?: string;
 }
 

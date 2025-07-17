@@ -6,6 +6,7 @@ import { formatPhoneNumber } from '@/utils/phoneFormat';
 import { priceFormat } from '@/utils/priceFormat';
 import { ClientNameLink } from '@/pages/ActionComponents/ClientNameLink';
 import { getFullDateFormat } from '@/utils/getDateFormat';
+import { Tag } from 'antd';
 
 export const clientsColumns: ColumnType<IClientsInfo>[] = [
   {
@@ -36,6 +37,17 @@ export const clientsColumns: ColumnType<IClientsInfo>[] = [
     align: 'center',
     render: (value, record) => priceFormat(record?.debt),
     sorter: (a, b) => a?.debt - b?.debt,
+  },
+  {
+    key: 'isActiveBot',
+    dataIndex: 'isActiveBot',
+    title: 'Telegram bot',
+    align: 'center',
+    render: (value, record) => (
+      <Tag color={record?.telegram?.isActive ? '#228B22' : '#FF7F50'}>
+        {record?.telegram?.isActive ? 'Active' : 'NoActive' }
+      </Tag>
+    ),
   },
   {
     key: 'lastSale',
