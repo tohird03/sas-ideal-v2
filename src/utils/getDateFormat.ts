@@ -24,7 +24,6 @@ dayjs.extend(timezone);
 // Convert UTC timestamp to Asia/Tashkent timezone
 export const getTimeZoneDateWithTz = (date: string) => dayjs(date).tz('Asia/Tashkent').toISOString();
 
-
 export const getStartAndEndDate = (startDateCount: number) => {
   const today = new Date();
   const oneWeekAgo = new Date();
