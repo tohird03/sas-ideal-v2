@@ -1,7 +1,7 @@
 import axios, {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {Endpoints} from '@/api/endpoints';
 import {IResponse} from '@/api/types';
-import {stores} from '@/stores';
+import {resetStores, stores} from '@/stores';
 import {INetworkConfig, TMethod} from './types';
 
 export class Instance {
@@ -33,6 +33,11 @@ export class Instance {
   handleResponse = <T>(response: AxiosResponse<IResponse<T>>) => response;
 
   private handleResponseError = (error: AxiosError) => {
+    if (error?.response?.status === 401) {
+      resetStores();
+      window.localStorage.clear();
+    }
+
     throw error;
   };
 

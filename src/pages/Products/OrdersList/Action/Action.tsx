@@ -25,7 +25,7 @@ export const Action: FC<Props> = observer(({ orders }) => {
   const [downloadLoading, setDownLoadLoading] = useState(false);
 
   const today = new Date().toISOString().split('T')[0];
-  const checkDate = orders?.date?.split('T')[0];
+  const checkDate = orders?.date?.split('T')[0]?.split(' ')[0];
   const isToday = checkDate === today;
 
   const { mutate: deleteOrder } =
