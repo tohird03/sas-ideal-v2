@@ -1,10 +1,8 @@
 import React from 'react';
 import { ColumnType } from 'antd/es/table';
 import { priceFormat } from '@/utils/priceFormat';
-import { IClientsPayments } from '@/api/payment/types';
 import { getFullDateFormat } from '@/utils/getDateFormat';
 import { IClientDeed, IClientDeedAction, IClientDeedType} from '@/api/clients';
-import { ArrowRightOutlined } from '@ant-design/icons';
 import { Tag } from 'antd';
 
 export const deedColumns: ColumnType<IClientDeed>[] = [
@@ -66,7 +64,6 @@ export const deedColumns: ColumnType<IClientDeed>[] = [
     render: (value, record) => <span>{record?.description}</span>,
   },
 ];
-
 
 const clientDeedAction: Record<IClientDeedAction, string> = {
   [IClientDeedAction.SELLING]: 'Sotuv',

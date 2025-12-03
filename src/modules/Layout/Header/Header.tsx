@@ -8,6 +8,7 @@ import { Avatar, Button, Dropdown, Layout as AntdLayout, MenuProps, Typography }
 import { ROUTES } from '@/constants';
 import { useStores } from '@/stores';
 import { LogOut } from '../LogOut/LogOut';
+import { CloseDay } from '../CloseDay';
 
 type Props = {
   collapsed: boolean;
@@ -36,6 +37,10 @@ export const Header = observer(({ collapsed, onCollapsedClick, isMobile }: Props
     {
       key: '1',
       label: <LogOut />,
+    },
+    {
+      key: '2',
+      label: <CloseDay />,
     },
   ];
 

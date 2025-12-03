@@ -14,6 +14,7 @@ import {
   ProductsList,
   ReturnedOrders,
   SingleClient,
+  SingleProduct,
   SingleSupplier,
   Staffs,
   StaffsPayments,
@@ -94,6 +95,10 @@ export const Router = ({isAuth}: Props) => useRoutes([
           {
             element: <Suspense fallback={<Loading />}><ReturnedOrders /></Suspense>,
             path: ROUTES.productsReturnedOrder,
+          },
+          {
+            element: <Suspense fallback={<Loading />}><SingleProduct /></Suspense>,
+            path: ROUTES.singleProduct,
           },
           // SETTING ROUTES
           {

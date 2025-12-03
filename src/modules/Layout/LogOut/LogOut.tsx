@@ -4,7 +4,7 @@ import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {observer} from 'mobx-react';
 import {LogoutOutlined} from '@ant-design/icons';
-import {Modal, Typography} from 'antd';
+import {Button, Modal, Typography} from 'antd';
 import {useLocalStorage} from 'usehooks-ts';
 import {ROUTES} from '@/constants';
 import {resetStores} from '@/stores';
@@ -34,8 +34,7 @@ export const LogOut: React.FC = observer(() => {
   return (
     <div>
       <span onClick={showModal} className="logout">
-        <Typography.Text className="logout__title">{logOutDictionary.exit}</Typography.Text>
-        <LogoutOutlined className="exit" />
+        <Button style={{width: '100%'}} type="primary">Chiqish</Button>
       </span>
       <Modal
         title={logOutDictionary.exit}

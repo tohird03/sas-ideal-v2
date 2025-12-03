@@ -56,3 +56,6 @@ export const Orders = lazy(() =>
 
 export const ReturnedOrders = lazy(() =>
   import('@/pages/Products').then(({ReturnedOrders}) => ({default: ReturnedOrders})).catch(handleCatchChunkError));
+
+export const SingleProduct = lazy(() =>
+  import('@/pages/Products').then(({SingleProduct}) => ({default: SingleProduct})).catch(handleCatchChunkError));

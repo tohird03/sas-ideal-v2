@@ -1,3 +1,4 @@
+import { IStaff } from "@/stores/profile/types";
 import { IPagination } from "../types";
 
 export interface IGetProductsParams extends IPagination {
@@ -40,4 +41,20 @@ export interface IProductTotalCalc {
     totalCost: number,
     totalCount: number,
   }
+}
+
+export interface IGetSingleProductParams {
+  productId: string;
+}
+
+export interface IGetSingleProducts {
+  products: ISingleProductStory[];
+}
+
+export interface ISingleProductStory {
+  count: number;
+  type: 'selling' | 'arrival' | 'returning';
+  product?: IProducts;
+  staff?: IStaff;
+  id: string;
 }

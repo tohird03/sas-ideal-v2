@@ -1,7 +1,5 @@
 import {useEffect, useState} from 'react';
 import {useLocalStorage} from 'usehooks-ts';
-import {mainMenuList} from '@/modules/Layout/constants';
-import {generateAllMenuItems} from '@/modules/Layout/utils';
 import {useStores} from '@/stores';
 import {TokenType} from '@/stores/auth';
 
@@ -10,7 +8,8 @@ export const useBootstrap = () => {
   const [isInitiated, setIsInitiated] = useState(true);
   const [accessToken] = useLocalStorage<TokenType['accessToken']>('accessToken', '');
 
-  const getProfile = async () => {
+  const getInfosApp = async () => {
+    authStore.getCloseDayType();
     authStore.getProfile();
   };
 
@@ -19,8 +18,7 @@ export const useBootstrap = () => {
       authStore.setIsAuth(true);
       await authStore.setToken({accessToken});
 
-      await getProfile();
-
+      await getInfosApp();
     }
   };
 

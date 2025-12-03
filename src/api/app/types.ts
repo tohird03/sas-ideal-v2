@@ -22,3 +22,7 @@ export enum IRolesCheck {
   SuperAdmin = 'super-admin',
   ProductManager = 'product-manager',
 }
+
+export interface ICloseDayType {
+  is: boolean;
+}

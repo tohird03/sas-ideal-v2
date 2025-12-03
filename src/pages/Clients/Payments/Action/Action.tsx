@@ -16,7 +16,7 @@ export const Action: FC<Props> = observer(({ clientPayment }) => {
   const queryClient = useQueryClient();
 
   const today = new Date().toISOString().split('T')[0];
-  const checkDate = clientPayment?.createdAt.split('T')[0];
+  const checkDate = clientPayment?.createdAt.split('T')[0]?.split(' ')[0];
   const isToday = checkDate === today;
 
   const { mutate: deletePayment } =

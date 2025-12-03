@@ -3,6 +3,7 @@ export const stage = process.env.REACT_APP_STAGE || 'dev';
 
 export enum Endpoints {
   Base = '',
+  CloseDay = '/common/day-close',
 
   // SETTINGS
   SignIn = '/auth/sign-in',
@@ -24,6 +25,7 @@ export enum Endpoints {
 
   ProductsMany = '/product/many',
   ProductsOne = '/product/one',
+  ProductSingleStatus = '/product-mv/many-product-stats',
 
   StaffsMany = '/staff/many',
   StaffOne = '/staff/one',

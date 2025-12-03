@@ -1,10 +1,10 @@
-import {makeAutoObservable, observable} from 'mobx';
-import {MenuProps} from 'antd';
-import {authApi} from '@/api';
-import {ILoginForm} from '@/api/auth/types';
-import {addNotification} from '@/utils/addNotification';
-import {IStaff} from '../profile/types';
-import {TokenType} from './types';
+import { makeAutoObservable, observable } from 'mobx';
+import { MenuProps } from 'antd';
+import { appApi, authApi } from '@/api';
+import { ILoginForm } from '@/api/auth/types';
+import { addNotification } from '@/utils/addNotification';
+import { IStaff } from '../profile/types';
+import { TokenType } from './types';
 import { generateAllMenuItems } from '@/modules/Layout/utils';
 import { mainMenuList } from '@/modules/Layout/constants';
 
@@ -45,6 +45,14 @@ class AuthStore {
       .catch(addNotification)
       .finally(() => {
         this.mainMenuItems = generateAllMenuItems(mainMenuList);
+      });
+
+  getCloseDayType = () =>
+    authApi.getCloseDay()
+      .then(res =>
+        console.log(res?.data))
+      .catch(err => {
+        addNotification(err);
       });
 
   setMainMenuItems = (menuItems: MenuProps['items'] | null) => {

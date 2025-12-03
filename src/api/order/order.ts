@@ -37,7 +37,7 @@ class OrdersApi extends Instance {
     this.patch(Endpoints.SellingOne, params, { params: { id: params?.id } });
 
   deleteOrder = (id: string): Promise<AxiosResponse> =>
-    this.delete(Endpoints.SellingOne, { params: { id } });
+    this.delete(Endpoints.SellingOne, { params: { id, method: 'hard' } });
 
   orderProductAdd = (params: IOrderProductAdd): Promise<AxiosResponse> =>
     this.post(Endpoints.AddEditProductToSelling, params);
