@@ -17,7 +17,7 @@ export const AddEditModal = observer(() => {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [searchClients, setSearchClients] = useState<string | null>(null);
-  const {clientId} = useParams();
+  const { clientId } = useParams();
 
   // GET DATAS
   const { data: clientsData, isLoading: loadingClients } = useQuery({
@@ -42,7 +42,7 @@ export const AddEditModal = observer(() => {
           addNotification('To\'lov muvaffaqiyatli tahrirlandi!');
           queryClient.invalidateQueries({ queryKey: ['getPayments'] });
           if (clientId) {
-            singleClientStore.getSingleClient({id: clientId});
+            singleClientStore.getSingleClient({ id: clientId });
           }
           handleModalClose();
         })
@@ -59,7 +59,11 @@ export const AddEditModal = observer(() => {
         addNotification('To\'lov muvaffaqiyatli qo\'shildi!');
         queryClient.invalidateQueries({ queryKey: ['getPayments'] });
         if (clientId) {
-          singleClientStore.getSingleClient({id: clientId});
+          singleClientStore.getSingleClient({
+            id: clientId,
+            deedEndDate: singleClientStore.endDate!,
+            deedStartDate: singleClientStore.startDate!,
+          });
         }
         handleModalClose();
       })

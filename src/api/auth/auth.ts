@@ -28,7 +28,7 @@ class AuthApi extends Instance {
   closeDay = (): Promise<AxiosResponse<any>> =>
     this.post(Endpoints.CloseDay);
 
-  getCloseDay = (): Promise<IResponse<ICloseDayType>> =>
+  getCloseDay = (): Promise<{data: {isClosed: boolean}}> =>
     this.get(Endpoints.CloseDay, { params: { closedDate: '2025-12-03T07:05:25.912Z' } });
 }
 

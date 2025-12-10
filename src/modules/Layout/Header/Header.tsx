@@ -45,14 +45,19 @@ export const Header = observer(({ collapsed, onCollapsedClick, isMobile }: Props
   ];
 
   return (
-    <AntdLayout.Header className="header">
+    <AntdLayout.Header className={`header header__isclose-${authStore?.isCloseDay}`}>
       <div className="header__left">
         <Button type="text" onClick={onCollapsedClick}>
           {collapsed
             ? <MenuUnfoldOutlined className="header__icon" />
             : <MenuFoldOutlined className="header__icon" />}
         </Button>
-        {isMobile && <span className="layout__logo-text">SAS Ideal</span>}
+        {!isMobile && authStore.isCloseDay && <span className="layout__logo-text">SAS Ideal || Kassa yopilgan</span>}
+        {isMobile &&
+          <span className="layout__logo-text">
+            {authStore.isCloseDay ? 'Kun yopilgan' : 'SAS-IDEAL'}
+          </span>
+        }
 
         <div className="header__profile">
           {!isMobile && (

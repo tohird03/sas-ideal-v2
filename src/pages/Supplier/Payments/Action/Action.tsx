@@ -15,7 +15,7 @@ type Props = {
 export const Action: FC<Props> = observer(({ supplierPayment }) => {
   const queryClient = useQueryClient();
   const today = new Date().toISOString().split('T')[0];
-  const checkDate = supplierPayment?.createdAt.split('T')[0];
+  const checkDate = supplierPayment?.createdAt.split('T')[0]?.split(' ')[0];
   const isToday = checkDate === today;
 
   const { mutate: deletePayment } =

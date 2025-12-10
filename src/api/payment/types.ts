@@ -15,7 +15,7 @@ export interface IGetClientsPaymentsParams extends IPagination {
   startDate?: Date;
   endDate?: Date;
   userId?: string;
-  sellerId?: string;
+  staffId?: string;
 }
 
 export interface IAddEditPaymentParams {

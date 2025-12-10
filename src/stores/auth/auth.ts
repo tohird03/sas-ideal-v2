@@ -13,6 +13,7 @@ class AuthStore {
   token: TokenType | null = null;
   staffInfo: IStaff | null = null;
   mainMenuItems: MenuProps['items'] | null = null;
+  isCloseDay = false;
 
   constructor() {
     makeAutoObservable(this, {
@@ -50,7 +51,7 @@ class AuthStore {
   getCloseDayType = () =>
     authApi.getCloseDay()
       .then(res =>
-        console.log(res?.data))
+        this.setIsCloseDay(res?.data?.isClosed))
       .catch(err => {
         addNotification(err);
       });
@@ -69,6 +70,10 @@ class AuthStore {
 
   setIsAuth = (isAuth: boolean) => {
     this.isAuth = isAuth;
+  };
+
+  setIsCloseDay = (isCloseDay: boolean) => {
+    this.isCloseDay = isCloseDay;
   };
 
   reset = () => {

@@ -4,6 +4,10 @@
   align-items: center;
   position: relative;
 
+  &__isclose-true {
+    background-color: red;
+  }
+
   &__left {
     display: flex;
     align-items: center;

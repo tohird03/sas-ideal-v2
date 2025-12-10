@@ -15,7 +15,7 @@ class IncomePaymentApi extends Instance {
   }
 
   getIncomePayments = (params: IIncomeGetClientsPaymentsParams): Promise<IResponse<ISupplierPayments[]>> =>
-    this.get(Endpoints.StaffPaymentsMany, { params });
+    this.get(Endpoints.SupplierPaymentsMany, { params });
 
   addIncomePayment = (params: IIncomeAddEditPaymentParams): Promise<AxiosResponse> =>
     this.post(Endpoints.SupplierPaymentsOne, params);

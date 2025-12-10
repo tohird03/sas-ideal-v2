@@ -63,7 +63,7 @@ export const SingleProduct = observer(() => {
             </Table.Summary.Row>
             <Table.Summary.Row>
               <Table.Summary.Cell colSpan={1} index={0}>
-                Umumiy farq
+                Umumiy qoldiq
               </Table.Summary.Cell>
               <Table.Summary.Cell
                 colSpan={9}

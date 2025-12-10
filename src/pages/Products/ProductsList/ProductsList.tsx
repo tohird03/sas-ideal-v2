@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
-import { PlusCircleOutlined } from '@ant-design/icons';
+import { DownloadOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
-import { Button, Input, Table, Typography } from 'antd';
+import { Button, Input, Table, Tooltip, Typography } from 'antd';
 import classNames from 'classnames';
-import { DataTable } from '@/components/Datatable/datatable';
 import { getPaginationParams } from '@/utils/getPaginationParams';
-import { useMediaQuery } from '@/utils/mediaQuery';
 import { AddEditModal } from './AddEditModal';
 import styles from './product-list.scss';
 import { productsListColumn } from './constants';
@@ -14,10 +12,14 @@ import { productsListStore } from '@/stores/products';
 import { IProducts } from '@/api/product/types';
 import { priceFormat } from '@/utils/priceFormat';
 import { authStore } from '@/stores/auth';
+import { productsApi } from '@/api/product/product';
+import { addNotification } from '@/utils';
 
 const cn = classNames.bind(styles);
 
 export const ProductsList = observer(() => {
+  const [downloadLoading, setDownLoadLoading] = useState(false);
+
   const { data: productsData, isLoading: loading } = useQuery({
     queryKey: [
       'getProducts',
@@ -46,6 +48,28 @@ export const ProductsList = observer(() => {
     productsListStore.setPageSize(pageSize!);
   };
 
+  const handleDownloadExcel = () => {
+    setDownLoadLoading(true);
+    productsApi.getProductsToExcel({
+      pageNumber: productsListStore.pageNumber,
+      pageSize: productsListStore.pageSize,
+      search: productsListStore.search!,
+    })
+      .then(res => {
+        const url = URL.createObjectURL(new Blob([res]));
+        const a = document.createElement('a');
+
+        a.href = url;
+        a.download = 'mahsulotlar.xlsx';
+        a.click();
+        URL.revokeObjectURL(url);
+      })
+      .catch(addNotification)
+      .finally(() => {
+        setDownLoadLoading(false);
+      });
+  };
+
   useEffect(() => () => {
     productsListStore.reset();
   }, []);
@@ -66,6 +90,16 @@ export const ProductsList = observer(() => {
             onChange={handleSearch}
             className={cn('product-list__search')}
           />
+          <Tooltip placement="top" title="Excelda yuklash">
+            <Button
+              onClick={handleDownloadExcel}
+              type="primary"
+              icon={<DownloadOutlined />}
+              loading={downloadLoading}
+            >
+              Exelda Yuklash
+            </Button>
+          </Tooltip>
           <Button
             onClick={handleAddNewProduct}
             type="primary"
@@ -88,7 +122,7 @@ export const ProductsList = observer(() => {
           showSizeChanger: true,
           onChange: handlePageChange,
           ...getPaginationParams(productsData?.data?.totalCount),
-          pageSizeOptions: [50, 100, 500, 1000],
+          pageSizeOptions: [50, 100, 500, 1000, 5000],
         }}
         summary={() => (
           <Table.Summary.Row>

@@ -62,7 +62,7 @@ export interface ISeller {
 
 export interface IGetClientsInfoParams extends IPagination {
   search?: string;
-  debt?: number;
+  debtValue?: number;
   debtType?: IClientDebtFilter;
 }
 

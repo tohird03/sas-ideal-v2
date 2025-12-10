@@ -35,7 +35,7 @@ export const SupplierInfo = observer(() => {
         pageNumber: supplierInfoStore.pageNumber,
         pageSize: supplierInfoStore.pageSize,
         search: supplierInfoStore.search!,
-        debt: supplierInfoStore.debt!,
+        debtValue: supplierInfoStore.debt || 0,
         debtType: supplierInfoStore.debtType!,
       }),
   });
@@ -67,6 +67,8 @@ export const SupplierInfo = observer(() => {
       pageNumber: supplierInfoStore.pageNumber,
       pageSize: supplierInfoStore.pageSize,
       search: supplierInfoStore.search!,
+      debtValue: supplierInfoStore.debt || 0,
+      debtType: supplierInfoStore.debtType!,
     })
       .then(res => {
         const url = URL.createObjectURL(new Blob([res]));

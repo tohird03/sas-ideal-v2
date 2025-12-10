@@ -37,7 +37,7 @@ export const ClientsInfo = observer(() => {
         pageNumber: clientsInfoStore.pageNumber,
         pageSize: clientsInfoStore.pageSize,
         search: clientsInfoStore.search!,
-        debt: clientsInfoStore.debt!,
+        debtValue: clientsInfoStore.debt || 0,
         debtType: clientsInfoStore.debtType!,
       }),
   });

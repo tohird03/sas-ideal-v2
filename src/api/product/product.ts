@@ -26,8 +26,18 @@ class ProductsApi extends Instance {
   deleteProduct = (id: string): Promise<AxiosResponse> =>
     this.delete(`${Endpoints.ProductsOne}`, { params: { id } });
 
-  getSingleProduct = (params: IGetSingleProductParams): Promise<{data: IGetSingleProducts}> =>
+  getSingleProduct = (params: IGetSingleProductParams): Promise<{ data: IGetSingleProducts }> =>
     this.get(Endpoints.ProductSingleStatus, { params });
+
+  getProductsToExcel = (params: IGetProductsParams): Promise<any> =>
+    this.get(Endpoints.GetProductsToExcel, {
+      params,
+      responseType: 'arraybuffer',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/xlsx',
+      },
+    });
 }
 
 export const productsApi = new ProductsApi(config);
