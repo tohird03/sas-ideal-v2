@@ -45,10 +45,6 @@ class ClientsInfoApi extends Instance {
       },
     });
 
-  //XATO
-  deleteUser = (id: string): Promise<AxiosResponse> =>
-    this.delete(`${Endpoints.Users}/${id}`);
-
   getUploadDeedToExel = (params: IGetClientDeedExcelParams): Promise<any> =>
     this.get(`${Endpoints.ClientDeedExcelUpload}`, {
       params,
@@ -58,6 +54,10 @@ class ClientsInfoApi extends Instance {
         'Accept': 'application/xlsx',
       },
     });
+
+  //XATO
+  deleteUser = (id: string): Promise<AxiosResponse> =>
+    this.delete(`${Endpoints.Users}/${id}`);
 
   getUploadSupplierDeedToExel = (params: IGetClientDeedExcelParams): Promise<any> =>
     this.get(`${Endpoints.SupplierDeedExcelUpload}`, {

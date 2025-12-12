@@ -80,7 +80,6 @@ export interface IAddEditClientInfo {
 
 export interface IGetClientDeedExcelParams {
   id: string;
-  startDate?: Date;
-  endDate?: Date;
-  type: 'deed' | 'product';
+  deedStartDate?: Date;
+  deedEndDate?: Date;
 }

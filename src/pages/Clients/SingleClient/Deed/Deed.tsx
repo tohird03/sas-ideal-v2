@@ -39,9 +39,8 @@ export const Deed = observer(() => {
     setDownLoadLoadingDeed(true);
     clientsInfoApi.getUploadDeedToExel({
       id: clientId!,
-      type: 'deed',
-      startDate: singleClientStore?.startDate!,
-      endDate: singleClientStore?.endDate!,
+      deedStartDate: singleClientStore?.startDate!,
+      deedEndDate: singleClientStore?.endDate!,
     })
       .then(res => {
         const url = URL.createObjectURL(new Blob([res]));
@@ -62,9 +61,8 @@ export const Deed = observer(() => {
     setDownLoadLoadingDeedProduct(true);
     clientsInfoApi.getUploadDeedToExel({
       id: clientId!,
-      type: 'product',
-      startDate: singleClientStore?.startDate!,
-      endDate: singleClientStore?.endDate!,
+      deedStartDate: singleClientStore?.startDate!,
+      deedEndDate: singleClientStore?.endDate!,
     })
       .then(res => {
         const url = URL.createObjectURL(new Blob([res]));

@@ -18,6 +18,7 @@ import { PDFDownloadLink, pdf } from '@react-pdf/renderer';
 import { getFullDateFormat } from '@/utils/getDateFormat';
 import { useParams } from 'react-router-dom';
 import { singleClientStore } from '@/stores/clients';
+import { isShowEdit } from '@/utils/isShowEdit';
 
 export const Action: FC<Props> = observer(({ orders }) => {
   const queryClient = useQueryClient();
@@ -95,6 +96,8 @@ export const Action: FC<Props> = observer(({ orders }) => {
     deleteOrder(orders?.id);
   };
 
+  const showEdit = isShowEdit(orders.status, orders.date);
+
   const menuSaveOptions = (
     <Menu style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
       <Item key="excel">
@@ -167,7 +170,7 @@ export const Action: FC<Props> = observer(({ orders }) => {
       <Dropdown placement="bottomRight" overlay={menuSaveOptions} trigger={['click']}>
         <Button icon={<DownloadOutlined />} />
       </Dropdown>
-      {(isToday || orders?.status === IOrderStatus.NOTACCEPTED) && (
+      {showEdit && (
         <Dropdown placement="bottomRight" overlay={menuOrderOptions} trigger={['click']}>
           <Button icon={<MoreOutlined />} />
         </Dropdown>
