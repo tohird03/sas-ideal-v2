@@ -24,7 +24,17 @@ class IncomePaymentApi extends Instance {
     this.patch(`${Endpoints.SupplierPaymentsOne}`, params, { params: { id: params?.id } });
 
   deleteIncomePayment = (id: string): Promise<AxiosResponse> =>
-    this.delete(`${Endpoints.SupplierPaymentsOne}`, {params: {id}});
+    this.delete(`${Endpoints.SupplierPaymentsOne}`, { params: { id } });
+
+  getUploadPayments = (params: IIncomeGetClientsPaymentsParams): Promise<any> =>
+    this.get(Endpoints.SupplierPaymentsExcel, {
+      params,
+      responseType: 'arraybuffer',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/xlsx',
+      },
+    });
 }
 
 export const incomePaymentApi = new IncomePaymentApi(config);

@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
-import { PlusCircleOutlined } from '@ant-design/icons';
+import { DownloadOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
-import { Button, DatePicker, DatePickerProps, Input, Table, Typography } from 'antd';
+import { Button, DatePicker, DatePickerProps, Input, Table, Tooltip, Typography } from 'antd';
 import classNames from 'classnames';
 import { DataTable } from '@/components/Datatable/datatable';
 import { getPaginationParams } from '@/utils/getPaginationParams';
@@ -14,11 +14,14 @@ import { supplierPaymentsStore } from '@/stores/supplier';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { priceFormat } from '@/utils/priceFormat';
+import { addNotification } from '@/utils';
+import { incomePaymentApi } from '@/api/payment-income';
 
 const cn = classNames.bind(styles);
 
 export const SupplierPayments = observer(() => {
   const { supplierId } = useParams();
+  const [downloadLoading, setDownLoadLoading] = useState(false);
 
   const { data: supplierPaymentsData, isLoading: loading } = useQuery({
     queryKey: [
@@ -69,6 +72,31 @@ export const SupplierPayments = observer(() => {
     supplierPaymentsStore.setPageSize(pageSize!);
   };
 
+  const handleDownloadExcel = () => {
+    setDownLoadLoading(true);
+    incomePaymentApi.getUploadPayments({
+      pageNumber: supplierPaymentsStore.pageNumber,
+      pageSize: supplierPaymentsStore.pageSize,
+      search: supplierPaymentsStore.search!,
+      startDate: supplierPaymentsStore?.startDate!,
+      endDate: supplierPaymentsStore?.endDate!,
+      supplierId,
+    })
+      .then(res => {
+        const url = URL.createObjectURL(new Blob([res]));
+        const a = document.createElement('a');
+
+        a.href = url;
+        a.download = 'to\'lovlar.xlsx';
+        a.click();
+        URL.revokeObjectURL(url);
+      })
+      .catch(addNotification)
+      .finally(() => {
+        setDownLoadLoading(false);
+      });
+  };
+
   useEffect(() => () => {
     supplierPaymentsStore.reset();
   }, []);
@@ -105,6 +133,16 @@ export const SupplierPayments = observer(() => {
           >
             Yangi to&apos;lov
           </Button>
+          <Tooltip placement="top" title="Excelda yuklash">
+            <Button
+              onClick={handleDownloadExcel}
+              type="primary"
+              icon={<DownloadOutlined />}
+              loading={downloadLoading}
+            >
+              Exelda Yuklash
+            </Button>
+          </Tooltip>
         </div>
       </div>
 

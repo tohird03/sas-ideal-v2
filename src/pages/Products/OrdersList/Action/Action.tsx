@@ -19,15 +19,12 @@ import { getFullDateFormat } from '@/utils/getDateFormat';
 import { useParams } from 'react-router-dom';
 import { singleClientStore } from '@/stores/clients';
 import { isShowEdit } from '@/utils/isShowEdit';
+import { authStore } from '@/stores/auth';
 
 export const Action: FC<Props> = observer(({ orders }) => {
   const queryClient = useQueryClient();
   const { clientId } = useParams();
   const [downloadLoading, setDownLoadLoading] = useState(false);
-
-  const today = new Date().toISOString().split('T')[0];
-  const checkDate = orders?.date?.split('T')[0]?.split(' ')[0];
-  const isToday = checkDate === today;
 
   const { mutate: deleteOrder } =
     useMutation({
@@ -96,7 +93,7 @@ export const Action: FC<Props> = observer(({ orders }) => {
     deleteOrder(orders?.id);
   };
 
-  const showEdit = isShowEdit(orders.status, orders.date);
+  const showEdit = isShowEdit(orders.status, orders.date, authStore.isCloseDay);
 
   const menuSaveOptions = (
     <Menu style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>

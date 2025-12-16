@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { addNotification } from '@/utils';
-import { IGetProductsParams, IGetSingleProductParams, IProducts, ISingleProductStory } from '@/api/product/types';
+import { IGetProductsParams, IGetSingleProductParams, IGetSingleProducts, IProducts, ISingleProductStory } from '@/api/product/types';
 import { productsApi } from '@/api/product/product';
 
 class ProductsListStore {
@@ -9,7 +9,7 @@ class ProductsListStore {
   search: string | null = null;
   isOpenAddEditProductModal = false;
   singleProduct: IProducts | null = null;
-  singleProductStory: ISingleProductStory[] = [];
+  singleProductStory: IGetSingleProducts | null = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -20,16 +20,23 @@ class ProductsListStore {
       .then(res => res)
       .catch(addNotification);
 
-  getSingleProduct = (params: IGetSingleProductParams) =>
-    productsApi.getSingleProduct(params)
+  getSingleProductStory = (params: IGetSingleProductParams) =>
+    productsApi.getSingleProductStory(params)
       .then(res => {
-        console.log(res?.data);
+        this.setSingleProductStory(res?.data);
 
-        this.setSingleProductStory(res?.data?.products);
+        return res;
       })
       .catch(addNotification);
 
-  setSingleProductStory = (singleProductStory: ISingleProductStory[]) => {
+  getSingleProducts = (productId: string) =>
+    productsApi.getSingleProducts(productId)
+      .then(res => {
+        this.setSingleProduct(res?.data);
+      })
+      .catch(addNotification);
+
+  setSingleProductStory = (singleProductStory: IGetSingleProducts) => {
     this.singleProductStory = singleProductStory;
   };
 

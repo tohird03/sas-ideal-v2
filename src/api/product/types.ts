@@ -1,5 +1,8 @@
 import { IStaff } from "@/stores/profile/types";
 import { IPagination } from "../types";
+import { IOrder } from "../order/types";
+import { IIncomeOrder } from "../income-products/types";
+import { IReturnedOrder } from "../returned-order/types";
 
 export interface IGetProductsParams extends IPagination {
   search?: string;
@@ -49,6 +52,10 @@ export interface IGetSingleProductParams {
 
 export interface IGetSingleProducts {
   products: ISingleProductStory[];
+  actualCount: number,
+  totalSellingCount: number,
+  totalArrivalCount: number,
+  totalReturningCount: number,
 }
 
 export interface ISingleProductStory {
@@ -57,4 +64,8 @@ export interface ISingleProductStory {
   product?: IProducts;
   staff?: IStaff;
   id: string;
+  selling: IOrder;
+  arrival: IIncomeOrder;
+  returning: IReturnedOrder;
+  createdAt: string;
 }

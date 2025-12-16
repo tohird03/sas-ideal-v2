@@ -22,6 +22,7 @@ export enum Endpoints {
 
   SupplierPaymentsMany = '/supplier-payment/many',
   SupplierPaymentsOne = '/supplier-payment/one',
+  SupplierPaymentsExcel = '/supplier-payment/excel-download/many',
 
   ProductsMany = '/product/many',
   ProductsOne = '/product/one',

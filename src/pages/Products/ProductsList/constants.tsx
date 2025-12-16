@@ -4,6 +4,7 @@ import {Action} from './Action';
 import { IProducts } from '@/api/product/types';
 import { getFullDateFormat } from '@/utils/getDateFormat';
 import { priceFormat } from '@/utils/priceFormat';
+import { NavLink } from 'react-router-dom';
 
 export const productsListColumn: ColumnType<IProducts>[] = [
   {
@@ -18,7 +19,7 @@ export const productsListColumn: ColumnType<IProducts>[] = [
     dataIndex: 'name',
     title: 'Mahsulot nomi',
     align: 'center',
-    render: (value, record) => record?.name,
+    render: (value, record) => <NavLink to={`/products/${record?.id}`}>{record?.name}</NavLink>,
   },
   {
     key: 'count',

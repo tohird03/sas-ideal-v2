@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import { useParams } from 'react-router-dom';
 import { productsListStore } from '@/stores/products';
-import { Table } from 'antd';
+import { Table, Typography } from 'antd';
 import { singleProductColumns } from './constants';
 import classNames from 'classnames/bind';
 import { styles } from './single-product.scss';
@@ -11,21 +11,41 @@ const cn = classNames.bind(styles);
 
 export const SingleProduct = observer(() => {
   const { productId } = useParams();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (productId) {
-      productsListStore.getSingleProduct({
+      setLoading(true);
+
+      productsListStore.getSingleProducts(productId);
+
+      productsListStore.getSingleProductStory({
         productId,
-      });
+      })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   }, [productId]);
 
   return (
-    <div>SingleProduct
+    <div>
+      <Typography.Title
+        className={cn('single-product__name')}
+        level={3}
+      >
+        {productsListStore?.singleProduct?.name}
+      </Typography.Title>
+      <Typography.Title
+        className={cn('single-product__name')}
+        level={4}
+      >
+        Qoldig&apos;i: {productsListStore?.singleProduct?.count}
+      </Typography.Title>
 
       <Table
         columns={singleProductColumns}
-        dataSource={productsListStore?.singleProductStory || []}
+        dataSource={productsListStore?.singleProductStory?.products || []}
         bordered
         summary={(pageData) => (
           <>
@@ -39,7 +59,7 @@ export const SingleProduct = observer(() => {
                 className={cn('total__order')}
               >
                 <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
-                  10
+                  {productsListStore?.singleProductStory?.totalSellingCount}
                 </div>
               </Table.Summary.Cell>
               <Table.Summary.Cell
@@ -48,7 +68,7 @@ export const SingleProduct = observer(() => {
                 className={cn('total__arrival')}
               >
                 <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
-                  10
+                  {productsListStore?.singleProductStory?.totalArrivalCount}
                 </div>
               </Table.Summary.Cell>
               <Table.Summary.Cell
@@ -57,7 +77,7 @@ export const SingleProduct = observer(() => {
                 className={cn('total__returning')}
               >
                 <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
-                  10
+                  {productsListStore?.singleProductStory?.totalReturningCount}
                 </div>
               </Table.Summary.Cell>
             </Table.Summary.Row>
@@ -70,14 +90,15 @@ export const SingleProduct = observer(() => {
                 index={2}
                 className={cn('total')}
               >
-                <div style={{ textAlign: 'center' }}>
-                  1
+                <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                  {productsListStore?.singleProductStory?.actualCount}
                 </div>
               </Table.Summary.Cell>
             </Table.Summary.Row>
           </>
         )}
         pagination={false}
+        loading={loading}
       />
 
     </div>

@@ -17,6 +17,9 @@ class ProductsApi extends Instance {
   getProducts = (params: IGetProductsParams): Promise<IResponse<IProducts[], IProductTotalCalc>> =>
     this.get(Endpoints.ProductsMany, { params });
 
+  getSingleProducts = (productId: string): Promise<{data: IProducts}> =>
+    this.get(Endpoints.ProductsOne, { params: {id: productId} });
+
   addNewProduct = (params: IAddEditProduct): Promise<AxiosResponse> =>
     this.post(Endpoints.ProductsOne, params);
 
@@ -26,7 +29,7 @@ class ProductsApi extends Instance {
   deleteProduct = (id: string): Promise<AxiosResponse> =>
     this.delete(`${Endpoints.ProductsOne}`, { params: { id } });
 
-  getSingleProduct = (params: IGetSingleProductParams): Promise<{ data: IGetSingleProducts }> =>
+  getSingleProductStory = (params: IGetSingleProductParams): Promise<{ data: IGetSingleProducts }> =>
     this.get(Endpoints.ProductSingleStatus, { params });
 
   getProductsToExcel = (params: IGetProductsParams): Promise<any> =>

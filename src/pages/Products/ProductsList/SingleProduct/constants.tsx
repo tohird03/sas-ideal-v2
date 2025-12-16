@@ -33,7 +33,7 @@ export const singleProductColumns: ColumnsType<ISingleProductStory> = [
         key: 'client',
         dataIndex: 'client',
         width: 150,
-        render: (value, record) => record?.staff?.fullname,
+        render: (value, record) => record?.type === 'selling' ? record?.selling?.client?.fullname : null,
         onHeaderCell: () => ({
           style: {
             backgroundColor: '#BFF5C0',
@@ -46,8 +46,9 @@ export const singleProductColumns: ColumnsType<ISingleProductStory> = [
         title: 'Mahsulot soni',
         key: 'productCount',
         dataIndex: 'productCount',
-        width: 100,
-        render: (value, record) => record?.count,
+        width: 50,
+        className: 'product-story__count',
+        render: (value, record) => record?.type === 'selling' ? record?.count : null,
         onHeaderCell: () => ({
           style: {
             backgroundColor: '#BFF5C0',
@@ -58,10 +59,10 @@ export const singleProductColumns: ColumnsType<ISingleProductStory> = [
       },
       {
         title: 'Sotilgan vaqti',
-        key: 'productCount',
-        dataIndex: 'productCount',
+        key: 'date',
+        dataIndex: 'date',
         width: 100,
-        render: (value, record) => record?.count,
+        render: (value, record) => record?.type === 'selling' ? getFullDateFormat(record?.createdAt) : null,
         onHeaderCell: () => ({
           style: {
             backgroundColor: '#BFF5C0',
@@ -90,7 +91,7 @@ export const singleProductColumns: ColumnsType<ISingleProductStory> = [
         key: 'client',
         dataIndex: 'client',
         width: 150,
-        render: (value, record) => record?.staff?.fullname,
+        render: (value, record) => record?.type === 'arrival' ? record?.arrival?.supplier?.fullname : null,
         onHeaderCell: () => ({
           style: {
             backgroundColor: '#BEE6FF',
@@ -103,8 +104,9 @@ export const singleProductColumns: ColumnsType<ISingleProductStory> = [
         title: 'Mahsulot soni',
         key: 'productCount',
         dataIndex: 'productCount',
-        width: 100,
-        render: (value, record) => record?.count,
+        width: 50,
+        className: 'product-story__count',
+        render: (value, record) => record?.type === 'arrival' ? record?.count: null,
         onHeaderCell: () => ({
           style: {
             backgroundColor: '#BEE6FF',
@@ -118,7 +120,7 @@ export const singleProductColumns: ColumnsType<ISingleProductStory> = [
         key: 'productCount',
         dataIndex: 'productCount',
         width: 100,
-        render: (value, record) => record?.count,
+        render: (value, record) => record?.type === 'arrival' ? getFullDateFormat(record?.createdAt) : null,
         onHeaderCell: () => ({
           style: {
             backgroundColor: '#BEE6FF',
@@ -147,7 +149,7 @@ export const singleProductColumns: ColumnsType<ISingleProductStory> = [
         key: 'client',
         dataIndex: 'client',
         width: 150,
-        render: (value, record) => record?.staff?.fullname,
+        render: (value, record) => record?.type === 'returning' ? record?.returning?.client?.fullname : null,
         onHeaderCell: () => ({
           style: {
             backgroundColor: '#FFBDBD',
@@ -160,8 +162,9 @@ export const singleProductColumns: ColumnsType<ISingleProductStory> = [
         title: 'Mahsulot soni',
         key: 'productCount',
         dataIndex: 'productCount',
-        width: 100,
-        render: (value, record) => record?.count,
+        width: 50,
+        className: 'product-story__count',
+        render: (value, record) => record?.type === 'returning' ? record?.count : null,
         onHeaderCell: () => ({
           style: {
             backgroundColor: '#FFBDBD',
@@ -175,7 +178,7 @@ export const singleProductColumns: ColumnsType<ISingleProductStory> = [
         key: 'productCount',
         dataIndex: 'productCount',
         width: 100,
-        render: (value, record) => record?.count,
+        render: (value, record) => record?.type === 'returning' ? getFullDateFormat(record?.createdAt) : null,
         onHeaderCell: () => ({
           style: {
             backgroundColor: '#FFBDBD',
@@ -187,15 +190,3 @@ export const singleProductColumns: ColumnsType<ISingleProductStory> = [
     ],
   },
 ];
-
-const clientDeedAction: Record<IClientDeedAction, string> = {
-  [IClientDeedAction.SELLING]: 'Sotuv',
-  [IClientDeedAction.RETURNING]: 'Qaytaruv',
-  [IClientDeedAction.PAYMENT]: 'To\'lov',
-};
-
-const clientDeedActionColor: Record<IClientDeedAction, string> = {
-  [IClientDeedAction.SELLING]: '#52c41a',
-  [IClientDeedAction.RETURNING]: '#faad14',
-  [IClientDeedAction.PAYMENT]: '#1890ff',
-};
