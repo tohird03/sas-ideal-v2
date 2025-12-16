@@ -7,6 +7,8 @@ import { addNotification } from '@/utils';
 import { ISupplierPayments } from '@/api/payment-income/types';
 import { supplierPaymentsStore } from '@/stores/supplier';
 import { incomePaymentApi } from '@/api/payment-income';
+import { isShowEditPayments } from '@/utils/isShowEdit';
+import { authStore } from '@/stores/auth';
 
 type Props = {
   supplierPayment: ISupplierPayments;
@@ -14,9 +16,6 @@ type Props = {
 
 export const Action: FC<Props> = observer(({ supplierPayment }) => {
   const queryClient = useQueryClient();
-  const today = new Date().toISOString().split('T')[0];
-  const checkDate = supplierPayment?.createdAt.split('T')[0]?.split(' ')[0];
-  const isToday = checkDate === today;
 
   const { mutate: deletePayment } =
     useMutation({
@@ -38,9 +37,11 @@ export const Action: FC<Props> = observer(({ supplierPayment }) => {
     deletePayment(supplierPayment?.id);
   };
 
+  const isShowEdit = isShowEditPayments(supplierPayment?.createdAt, authStore.isCloseDay);
+
   return (
     <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
-      {isToday && (
+      {isShowEdit && (
         <>
           <Button onClick={handleEditPayment} type="primary" icon={<EditOutlined />} />
           <Popconfirm
