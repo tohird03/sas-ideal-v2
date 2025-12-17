@@ -39,14 +39,11 @@ class AuthStore {
     authApi.getUserProfile()
       .then(res => {
         if (res) {
-          // this.mainMenuItems = generateAllMenuItems(mainMenuList, res);
+          this.mainMenuItems = generateAllMenuItems(mainMenuList, res?.data);
           this.setStaffInfo(res?.data);
         }
       })
-      .catch(addNotification)
-      .finally(() => {
-        this.mainMenuItems = generateAllMenuItems(mainMenuList);
-      });
+      .catch(addNotification);
 
   getCloseDayType = () =>
     authApi.getCloseDay()

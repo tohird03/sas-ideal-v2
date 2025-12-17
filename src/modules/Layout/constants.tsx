@@ -13,55 +13,8 @@ import {
   UsergroupAddOutlined,
 } from '@ant-design/icons';
 import {ROUTES} from '@/constants';
-import {IAppRole, IMenuItems} from './types';
-import { IStaffPerKey } from '@/stores/profile/types';
-
-export const appRoles: Record<IAppRole, {name: string, color: string}> = {
-  [IAppRole.SuperAdmin]: {
-    name: 'Super admin',
-    color: 'green',
-  },
-  [IAppRole.Engeneer]: {
-    name: 'Engeneer',
-    color: 'pink',
-  },
-  [IAppRole.ProductManager]: {
-    name: 'Product Manager',
-    color: 'cyan',
-  },
-  [IAppRole.Provider]: {
-    name: 'Provider',
-    color: 'orange',
-  },
-  [IAppRole.Storekeeper]: {
-    name: 'Storekeeper',
-    color: 'yellow',
-  },
-  [IAppRole.MainStorekeeper]: {
-    name: 'Main Storekeeper',
-    color: 'purple',
-  },
-  [IAppRole.Seller]: {
-    name: 'Seller',
-    color: 'volcano',
-  },
-  [IAppRole.MainSeller]: {
-    name: 'Main Seller',
-    color: 'magenta',
-  },
-  [IAppRole.HeadSeller]: {
-    name: 'Head Seller',
-    color: 'red',
-  },
-  [IAppRole.DeliveryAdmin]: {
-    name: 'Delivery admin',
-    color: 'gold',
-  },
-  [IAppRole.Courier]: {
-    name: 'Courier',
-    color: 'gold',
-  },
-};
+import {IMenuItems} from './types';
+import { EPageAccess } from '@/api/staffs';
 
 export const mainMenuList: IMenuItems[] = [
   {
@@ -72,7 +25,7 @@ export const mainMenuList: IMenuItems[] = [
       {
         label: <><AppstoreAddOutlined /> Statistika</>,
         key: ROUTES.home,
-        roleKey: IStaffPerKey.GET_STATISTIC,
+        roleKey: EPageAccess.STAT,
       },
     ],
   },
@@ -84,22 +37,22 @@ export const mainMenuList: IMenuItems[] = [
       {
         label: <><AppstoreAddOutlined /> Mahsulotlar ro&apos;yxati</>,
         key: ROUTES.productsList,
-        roleKey: IStaffPerKey.GET_PRODUCTS,
+        roleKey: EPageAccess.PRODUCT,
       },
       {
         label: <><ShoppingCartOutlined /> Sotuvlar ro&apos;yxati</>,
         key: ROUTES.productsOrder,
-        roleKey: IStaffPerKey.GET_ORDER,
+        roleKey: EPageAccess.SELLING,
       },
       {
         label: <><DownloadOutlined /> Tushurilgan mahsulotlar</>,
         key: ROUTES.productsIncome,
-        roleKey: IStaffPerKey.GET_INCOME_ORDERS,
+        roleKey: EPageAccess.ARRIVAL,
       },
       {
         label: <><FileSyncOutlined /> Mijozdan qaytgan mahsulotlar</>,
         key: ROUTES.productsReturnedOrder,
-        roleKey: IStaffPerKey.GET_INCOME_ORDERS,
+        roleKey: EPageAccess.RETURNING,
       },
     ],
   },
@@ -107,17 +60,16 @@ export const mainMenuList: IMenuItems[] = [
     label: 'Mijozlar',
     key: ROUTES.clients,
     icon: <TeamOutlined />,
-    roleKey: 'clients',
     children: [
       {
         label: 'Mijozlar ro\'yxati',
         key: ROUTES.clientsInfo,
-        roleKey: IStaffPerKey.GET_CLIENTS,
+        roleKey: EPageAccess.CLIENT,
       },
       {
         label: 'To\'lovlar ro\'yxati',
         key: ROUTES.clientsPayments,
-        roleKey: IStaffPerKey.GET_PAYMENTS,
+        roleKey: EPageAccess.CLIENTPAYMENT,
       },
     ],
   },
@@ -125,17 +77,16 @@ export const mainMenuList: IMenuItems[] = [
     label: 'Yetkazib beruvchilar',
     key: ROUTES.supplier,
     icon: <UsergroupAddOutlined />,
-    roleKey: 'supplier',
     children: [
       {
         label: <><ContactsOutlined /> Yetkazib beruvchilar ro&apos;yxati</>,
         key: ROUTES.supplierInfo,
-        roleKey: IStaffPerKey.GET_SUPPLIERS,
+        roleKey: EPageAccess.SUPPLIER,
       },
       {
         label: <><ContactsOutlined /> To&apos;langan qarzlar ro&apos;yxati</>,
         key: ROUTES.supplierPayments,
-        roleKey: IStaffPerKey.GET_SUPPLIERS,
+        roleKey: EPageAccess.SUPPLIERPAYMENT,
       },
     ],
   },
@@ -143,17 +94,16 @@ export const mainMenuList: IMenuItems[] = [
     label: 'Xodimlar',
     key: ROUTES.workers,
     icon: <SettingOutlined />,
-    roleKey: 'staffs',
     children: [
       {
         label: <><SolutionOutlined /> Xodimlar ro&apos;yxati</>,
         key: ROUTES.workersStaffs,
-        roleKey: IStaffPerKey.GET_STAFFS,
+        roleKey: EPageAccess.STUFF,
       },
       {
         label: <><SolutionOutlined /> Xodimlar hisoboti</>,
         key: ROUTES.workersStaffsPayments,
-        roleKey: IStaffPerKey.GET_STAFFS_PAYMENTS,
+        roleKey: EPageAccess.STUFFPAYMENT,
       },
     ],
   },

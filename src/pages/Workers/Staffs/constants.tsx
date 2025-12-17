@@ -1,6 +1,6 @@
 import React from 'react';
 import {ColumnType} from 'antd/es/table';
-import {IStaffs} from '@/api/staffs';
+import {EPageAccess, IStaffs} from '@/api/staffs';
 import {Action} from './Action';
 import {formatPhoneNumber} from '@/utils/phoneFormat';
 
@@ -34,3 +34,17 @@ export const staffsColumns: ColumnType<IStaffs>[] = [
     render: (value, record) => <Action staff={record} />,
   },
 ];
+
+export const EPageAccessLabel: Record<EPageAccess, string> = {
+  [EPageAccess.STAT]: 'Statistika sahifasi',
+  [EPageAccess.PRODUCT]: 'Mahsulotlar ro\'yxati',
+  [EPageAccess.SELLING]: 'Sotuvlar',
+  [EPageAccess.ARRIVAL]: 'Tushurilgan mahsulotlar',
+  [EPageAccess.RETURNING]: 'Qaytaruv',
+  [EPageAccess.CLIENT]: 'Mijozlar',
+  [EPageAccess.CLIENTPAYMENT]: 'Mijoz to\'lovlari',
+  [EPageAccess.SUPPLIER]: 'Yetkazib beruvchilar',
+  [EPageAccess.SUPPLIERPAYMENT]: 'Yetkazib beruvchilarga to\'lovlar',
+  [EPageAccess.STUFF]: 'Xodimlar',
+  [EPageAccess.STUFFPAYMENT]: 'Xodimlarga to\'lovlar',
+};

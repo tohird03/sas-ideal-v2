@@ -6,7 +6,6 @@ import React from 'react';
 import {observer} from 'mobx-react';
 import {Badge, Card, Skeleton, Typography} from 'antd';
 import classNames from 'classnames';
-import {appRoles} from '@/modules/Layout/constants';
 import {IAppRole} from '@/modules/Layout/types';
 import {authStore} from '@/stores/auth';
 import {useMediaQuery} from '@/utils/mediaQuery';

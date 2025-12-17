@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Checkbox, Collapse, Form, Input, InputNumber, Modal } from 'antd';
-import { IAddStaff, IUpdateStaff, staffsApi } from '@/api/staffs';
+import { EPageAccess, IAddStaff, IUpdateStaff, staffsApi } from '@/api/staffs';
 import { staffsStore } from '@/stores/workers';
 import { addNotification } from '@/utils';
 import { regexPhoneNumber } from '@/utils/phoneFormat';
 import { roleApi } from '@/api/role';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { EPageAccessLabel } from '../constants';
 
 export const AddStaffsModal = observer(() => {
   const [form] = Form.useForm();
@@ -15,6 +16,8 @@ export const AddStaffsModal = observer(() => {
   const [loading, setLoading] = useState(false);
   const [userPer, setUserPer] = useState<string[]>([]);
   const [oldPer, setOldPer] = useState<string[]>([]);
+  const [userPageAccess, setUserPageAccess] = useState<EPageAccess[]>([]);
+  const [oldPageAccess, setOldPageAccess] = useState<EPageAccess[]>([]);
 
   const { data: permissionsData } = useQuery({
     queryKey: ['getPermissions'],
@@ -66,6 +69,8 @@ export const AddStaffsModal = observer(() => {
     if (staffsStore?.singleStaff) {
       const connectPer = userPer?.filter(newPer => !oldPer?.includes(newPer));
       const disconnectPer = oldPer?.filter(newPer => !userPer?.includes(newPer));
+      const connectPage = userPageAccess?.filter(newPage => !oldPageAccess?.includes(newPage));
+      const disconnectPage = oldPageAccess?.filter(newPage => !userPageAccess?.includes(newPage));
 
       updateStaffs({
         fullname: values?.fullname,
@@ -74,6 +79,8 @@ export const AddStaffsModal = observer(() => {
         id: staffsStore?.singleStaff?.id!,
         actionsToConnect: connectPer,
         actionsToDisconnect: disconnectPer,
+        pagesToConnect: connectPage,
+        pagesToDisconnect: disconnectPage,
       });
 
       return;
@@ -81,6 +88,7 @@ export const AddStaffsModal = observer(() => {
     addNewStaffs({
       ...values,
       actionsToConnect: userPer,
+      pagesToConnect: userPageAccess,
       phone: `998${values?.phone}`,
     });
   };
@@ -97,6 +105,18 @@ export const AddStaffsModal = observer(() => {
     }
   };
 
+  const handleChangePageAccess = (e: CheckboxChangeEvent, pageAccess: EPageAccess) => {
+    const findOldAssignPage = userPageAccess?.find((page) => page === pageAccess);
+
+    if (e?.target?.checked && !findOldAssignPage) {
+      setUserPageAccess([...userPageAccess, pageAccess]);
+    } else if (findOldAssignPage) {
+      const filterPageAccess = userPageAccess?.filter((page) => page !== pageAccess);
+
+      setUserPageAccess(filterPageAccess);
+    }
+  };
+
   useEffect(() => {
     if (staffsStore.singleStaff) {
       staffsApi?.getSingleStaffs(staffsStore?.singleStaff?.id)
@@ -109,6 +129,8 @@ export const AddStaffsModal = observer(() => {
 
           setUserPer(checkPer);
           setOldPer(checkPer);
+          setUserPageAccess(res?.data?.pages);
+          setOldPageAccess(res?.data?.pages);
         });
     }
   }, [staffsStore.singleStaff]);
@@ -183,6 +205,29 @@ export const AddStaffsModal = observer(() => {
           />
         </Form.Item>
       </Form>
+      <Collapse
+        size="small"
+        items={[
+          {
+            key: 'page-access',
+            label: 'Sahifalarga kirish huquqi',
+            children: (
+              <>
+                {Object.values(EPageAccess).map((access) => (
+                  <Checkbox
+                    key={access}
+                    checked={userPageAccess.includes(access)}
+                    onChange={(e) => handleChangePageAccess(e, access)}
+                    style={{ display: 'flex', paddingLeft: 20 }}
+                  >
+                    {EPageAccessLabel[access]}
+                  </Checkbox>
+                ))}
+              </>
+            ),
+          },
+        ]}
+      />
       {permissionsData?.data?.data?.map(role => (
         <div key={role?.id}>
           <Collapse

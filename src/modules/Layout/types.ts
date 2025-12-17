@@ -1,3 +1,4 @@
+import { EPageAccess } from '@/api/staffs';
 import {ReactNode} from 'react';
 
 export interface IMenuItems {
@@ -7,7 +8,7 @@ export interface IMenuItems {
   label: ReactNode;
   parent?: IMenuItems['key'];
   notification?: ReactNode;
-  roleKey?: string;
+  roleKey?: EPageAccess;
 }
 
 
