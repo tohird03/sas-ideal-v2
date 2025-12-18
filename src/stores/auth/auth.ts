@@ -1,6 +1,6 @@
 import { makeAutoObservable, observable } from 'mobx';
 import { MenuProps } from 'antd';
-import { appApi, authApi } from '@/api';
+import { authApi } from '@/api';
 import { ILoginForm } from '@/api/auth/types';
 import { addNotification } from '@/utils/addNotification';
 import { IStaff } from '../profile/types';

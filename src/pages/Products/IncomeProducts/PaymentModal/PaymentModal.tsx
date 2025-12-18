@@ -6,8 +6,6 @@ import { IPaymentType } from '@/api/types';
 import { addNotification } from '@/utils';
 import { useQueryClient } from '@tanstack/react-query';
 import { incomeProductsStore } from '@/stores/products';
-import { IIncomeAddEditPaymentParams } from '@/api/payment-income/types';
-import { incomePaymentApi } from '@/api/payment-income';
 import { incomeProductsApi } from '@/api/income-products';
 import { singleSupplierStore } from '@/stores/supplier';
 import { useParams } from 'react-router-dom';

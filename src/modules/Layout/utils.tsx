@@ -47,7 +47,3 @@ export const generateAllMenuItems = (list: IMenuItems[] | undefined, staff: ISta
     })
     .filter(item => item !== null) as MenuItem[];
 
-// export const generateAllMenuItems = (list: IMenuItems[] | undefined): MenuProps['items'] =>
-//   list
-//     ?.map((item) => item)
-//     .filter(item => item !== null) as MenuItem[];

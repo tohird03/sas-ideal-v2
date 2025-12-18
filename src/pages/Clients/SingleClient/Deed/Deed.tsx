@@ -59,7 +59,7 @@ export const Deed = observer(() => {
 
   const handleDownloadExcelDeedProducts = () => {
     setDownLoadLoadingDeedProduct(true);
-    clientsInfoApi.getUploadDeedToExel({
+    clientsInfoApi.getUploadDeedToExelWithProducts({
       id: clientId!,
       deedStartDate: singleClientStore?.startDate!,
       deedEndDate: singleClientStore?.endDate!,

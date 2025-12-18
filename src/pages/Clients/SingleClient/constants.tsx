@@ -1,6 +1,5 @@
 import React from 'react';
 import { ISingleClientTabs } from '@/stores/clients';
-import { ClientsPayments } from '../Payments';
 import { Payments } from './Payment';
 import { Orders } from '@/pages/Products';
 import { Deed } from './Deed';

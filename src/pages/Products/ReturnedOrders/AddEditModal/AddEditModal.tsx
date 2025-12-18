@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, DatePicker, Form, InputNumber, Modal, Popconfirm, Select, Spin } from 'antd';
 import classNames from 'classnames';
 import { addNotification } from '@/utils';
-import { ordersStore, productsListStore, returnedOrdersStore } from '@/stores/products';
+import { productsListStore, returnedOrdersStore } from '@/stores/products';
 import { priceFormat } from '@/utils/priceFormat';
 import { CheckOutlined, DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { DataTable } from '@/components/Datatable/datatable';

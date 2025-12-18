@@ -1,9 +1,5 @@
-import React from 'react';
-import { ColumnType, ColumnsType } from 'antd/es/table';
-import { priceFormat } from '@/utils/priceFormat';
+import { ColumnsType } from 'antd/es/table';
 import { getFullDateFormat } from '@/utils/getDateFormat';
-import { IClientDeedAction, IClientDeedType} from '@/api/clients';
-import { Tag } from 'antd';
 import { ISingleProductStory } from '@/api/product/types';
 
 export const singleProductColumns: ColumnsType<ISingleProductStory> = [

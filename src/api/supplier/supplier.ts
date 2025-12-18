@@ -3,6 +3,7 @@ import { Endpoints, umsStages } from '../endpoints';
 import { INetworkConfig, Instance } from '../instance';
 import { IResponse } from '../types';
 import { IAddEditSupplier, IGetSingleSupplierParams, IGetSupplierInfoParams, ISupplierInfo } from './types';
+import { IGetClientDeedExcelParams } from '../clients';
 
 const config: INetworkConfig = {
   baseURL: Endpoints.Base,
@@ -31,6 +32,26 @@ class SupplierInfoApi extends Instance {
 
   getUploadSupplier = (params: IGetSupplierInfoParams): Promise<any> =>
     this.get(Endpoints.UploadSupplier, {
+      params,
+      responseType: 'arraybuffer',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/xlsx',
+      },
+    });
+
+  getUploadDeedToExel = (params: IGetClientDeedExcelParams): Promise<any> =>
+    this.get(`${Endpoints.SupplierDeedExcelUpload}`, {
+      params,
+      responseType: 'arraybuffer',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/xlsx',
+      },
+    });
+
+  getUploadDeedToExelWithProducts = (params: IGetClientDeedExcelParams): Promise<any> =>
+    this.get(`${Endpoints.SupplierDeedProductsExcelUpload}`, {
       params,
       responseType: 'arraybuffer',
       headers: {

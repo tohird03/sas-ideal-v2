@@ -1,10 +1,10 @@
-import React, { FC, useRef, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { observer } from 'mobx-react';
-import { DeleteOutlined, DownOutlined, DownloadOutlined, EditOutlined, EyeOutlined, MoreOutlined, PrinterOutlined } from '@ant-design/icons';
+import { DeleteOutlined, DownloadOutlined, EditOutlined, EyeOutlined, MoreOutlined, PrinterOutlined } from '@ant-design/icons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button, Dropdown, Menu, Popconfirm, Tooltip } from 'antd';
 import { addNotification } from '@/utils';
-import { IOrder, IOrderStatus } from '@/api/order/types';
+import { IOrder} from '@/api/order/types';
 import { ordersStore } from '@/stores/products';
 import { ordersApi } from '@/api/order';
 import Item from 'antd/es/list/Item';

@@ -51,8 +51,6 @@ export const Action: FC<Props> = observer(({ staffsPayment }) => {
           <Button type="primary" icon={<DeleteOutlined />} danger />
         </Popconfirm>
       </>
-      {/* ) */}
-      {/* } */}
     </div>
   );
 });

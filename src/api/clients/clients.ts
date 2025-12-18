@@ -55,12 +55,8 @@ class ClientsInfoApi extends Instance {
       },
     });
 
-  //XATO
-  deleteUser = (id: string): Promise<AxiosResponse> =>
-    this.delete(`${Endpoints.Users}/${id}`);
-
-  getUploadSupplierDeedToExel = (params: IGetClientDeedExcelParams): Promise<any> =>
-    this.get(`${Endpoints.SupplierDeedExcelUpload}`, {
+  getUploadDeedToExelWithProducts = (params: IGetClientDeedExcelParams): Promise<any> =>
+    this.get(`${Endpoints.ClientDeedProductsExcelUpload}`, {
       params,
       responseType: 'arraybuffer',
       headers: {

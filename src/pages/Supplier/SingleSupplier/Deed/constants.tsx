@@ -2,7 +2,6 @@ import React from 'react';
 import { ColumnType } from 'antd/es/table';
 import { priceFormat } from '@/utils/priceFormat';
 import { getFullDateFormat } from '@/utils/getDateFormat';
-import { ArrowRightOutlined } from '@ant-design/icons';
 import { ISupplierDeed, ISupplierDeedAction, ISupplierDeedType } from '@/api/supplier/types';
 import { Tag } from 'antd';
 

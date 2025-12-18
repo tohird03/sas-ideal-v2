@@ -1,1 +1,0 @@
-export {Tinymce} from './Tinymce';

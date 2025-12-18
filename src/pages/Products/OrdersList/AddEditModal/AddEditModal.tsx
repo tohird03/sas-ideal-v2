@@ -203,6 +203,13 @@ export const AddEditModal = observer(() => {
   };
 
   const handleModalClose = () => {
+    if (clientId) {
+      singleClientStore.getSingleClient({
+        id: clientId,
+        deedEndDate: singleClientStore.endDate!,
+        deedStartDate: singleClientStore.startDate!,
+      });
+    }
     queryClient.invalidateQueries({ queryKey: ['getOrders'] });
     ordersStore.setSingleOrder(null);
     ordersStore.setOrder(null);

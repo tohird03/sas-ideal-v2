@@ -74,6 +74,13 @@ export const AddEditModal = observer(() => {
   };
 
   const handleModalClose = () => {
+    if (clientId) {
+      singleClientStore.getSingleClient({
+        id: clientId,
+        deedEndDate: singleClientStore.endDate!,
+        deedStartDate: singleClientStore.startDate!,
+      });
+    }
     singleClientStore.setSinglePayment(null);
     singleClientStore.setIsOpenAddEditPaymentModal(false);
   };

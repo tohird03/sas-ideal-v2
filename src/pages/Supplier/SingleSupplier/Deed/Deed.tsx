@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { observer } from 'mobx-react';
-import { useQuery } from '@tanstack/react-query';
 import { Button, DatePicker, DatePickerProps, Table, Typography } from 'antd';
 import classNames from 'classnames';
 import { useMediaQuery } from '@/utils/mediaQuery';
 import { deedColumns } from './constants';
 import { useParams } from 'react-router-dom';
 import styles from './deed.scss';
-import { singleSupplierStore, supplierInfoStore } from '@/stores/supplier';
+import { singleSupplierStore} from '@/stores/supplier';
 import { DownloadOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
-import { clientsInfoApi } from '@/api/clients';
 import { addNotification } from '@/utils';
 import { priceFormat } from '@/utils/priceFormat';
+import { supplierInfoApi } from '@/api/supplier/supplier';
 
 const cn = classNames.bind(styles);
 
 export const Deed = observer(() => {
-  const isMobile = useMediaQuery('(max-width: 800px)');
   const { supplierId } = useParams();
   const [downloadLoadingDeed, setDownLoadLoadingDeed] = useState(false);
   const [downloadLoadingDeedProduct, setDownLoadLoadingDeedProduct] = useState(false);
@@ -38,7 +36,7 @@ export const Deed = observer(() => {
 
   const handleDownloadExcelDeed = () => {
     setDownLoadLoadingDeed(true);
-    clientsInfoApi.getUploadSupplierDeedToExel({
+    supplierInfoApi.getUploadDeedToExel({
       id: supplierId!,
       deedStartDate: singleSupplierStore?.startDate!,
       deedEndDate: singleSupplierStore?.endDate!,
@@ -60,7 +58,7 @@ export const Deed = observer(() => {
 
   const handleDownloadExcelDeedProducts = () => {
     setDownLoadLoadingDeedProduct(true);
-    clientsInfoApi.getUploadSupplierDeedToExel({
+    supplierInfoApi.getUploadDeedToExelWithProducts({
       id: supplierId!,
       deedStartDate: singleSupplierStore?.startDate!,
       deedEndDate: singleSupplierStore?.endDate!,

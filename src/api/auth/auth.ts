@@ -4,7 +4,6 @@ import { Endpoints, umsStages } from '../endpoints';
 import { INetworkConfig, Instance } from '../instance';
 import { ILoginForm, ILoginResponse } from './types';
 import { IResponse } from '../types';
-import { ICloseDayType } from '../app';
 
 const config: INetworkConfig = {
   baseURL: Endpoints.Base,

@@ -11,7 +11,6 @@ import { ROUTES } from '@/constants';
 import { authStore, TokenType } from '@/stores/auth';
 import { addNotification } from '@/utils/addNotification';
 import styles from './login.scss';
-import SASLogo from '@/assets/img/sas.svg';
 // @ts-ignore
 import 'react-phone-input-2/lib/style.css';
 // @ts-ignore

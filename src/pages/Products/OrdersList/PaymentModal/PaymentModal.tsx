@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, InputNumber, Modal, Select, Space, Spin, message, notification } from 'antd';
+import { Button, Form, Input, InputNumber, Modal, Select, message} from 'antd';
 import { observer } from 'mobx-react';
 import { ordersStore } from '@/stores/products';
 import { priceFormat } from '@/utils/priceFormat';
 import { IPaymentType } from '@/api/types';
-import { IAddEditPaymentParams } from '@/api/payment/types';
 import { addNotification } from '@/utils';
 import { useQueryClient } from '@tanstack/react-query';
 import { singleClientStore } from '@/stores/clients';
 import { useParams } from 'react-router-dom';
-import { clientsPaymentApi } from '@/api/payment/payment';
 import { ordersApi } from '@/api/order';
-import { IOrderStatus } from '@/api/order/types';
 
 export const PaymentModal = observer(() => {
   const [form] = Form.useForm();
@@ -26,6 +23,13 @@ export const PaymentModal = observer(() => {
   const isToday = checkDate === today;
 
   const handleModalClose = () => {
+    if (clientId) {
+      singleClientStore.getSingleClient({
+        id: clientId,
+        deedEndDate: singleClientStore.endDate!,
+        deedStartDate: singleClientStore.startDate!,
+      });
+    }
     ordersStore.setOrderPayment(null);
     ordersStore.setSingleOrder(null);
     ordersStore.setOrder(null);

@@ -11,9 +11,6 @@ const handleCatchChunkError = () => {
 export const Statistic = lazy(() =>
   import('@/pages/Home').then(({Statistic}) => ({default: Statistic})).catch(handleCatchChunkError));
 
-export const MyProfileHome = lazy(() =>
-  import('@/pages/MyProfile').then(({MyProfile}) => ({default: MyProfile})).catch(handleCatchChunkError));
-
 export const Login = lazy(() =>
   import('@/pages/Login').then(({Login}) => ({default: Login})).catch(handleCatchChunkError));
 

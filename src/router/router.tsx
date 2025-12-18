@@ -9,7 +9,6 @@ import {
   ClientsPayments,
   IncomeProducts,
   Login,
-  MyProfileHome,
   Orders,
   ProductsList,
   ReturnedOrders,

@@ -1,10 +1,7 @@
 import React from 'react';
 import { ColumnType } from 'antd/es/table';
-import { IClientDebtFilter, IClientsInfo } from '@/api/clients';
 import { Action } from './Action';
-import { formatPhoneNumber } from '@/utils/phoneFormat';
 import { priceFormat } from '@/utils/priceFormat';
-import { ClientNameLink } from '@/pages/ActionComponents/ClientNameLink';
 import { getFullDateFormat } from '@/utils/getDateFormat';
 import { IStaffsPayments } from '@/api/staffs-payments/types';
 

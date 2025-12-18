@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
 import {observer} from 'mobx-react';
-import {DeleteOutlined, EditOutlined} from '@ant-design/icons';
+import {EditOutlined} from '@ant-design/icons';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
-import {Button, Popconfirm} from 'antd';
+import {Button} from 'antd';
 import {addNotification} from '@/utils';
 import { IProducts } from '@/api/product/types';
 import { productsListStore } from '@/stores/products';
