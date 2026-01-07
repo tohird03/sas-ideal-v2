@@ -9,6 +9,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { singleClientStore } from '@/stores/clients';
 import { useParams } from 'react-router-dom';
 import { ordersApi } from '@/api/order';
+import { authStore } from '@/stores/auth';
 
 export const PaymentModal = observer(() => {
   const [form] = Form.useForm();
@@ -17,10 +18,11 @@ export const PaymentModal = observer(() => {
   const [totalPrice, setTotalPrice] = useState(0);
   const { clientId } = useParams();
   const [loadingPayment, setLoadingPayment] = useState(false);
+  const {isCloseDay} = authStore;
 
   const today = new Date().toISOString().split('T')[0];
   const checkDate = ordersStore.order?.date?.split('T')[0]?.split(' ')[0];
-  const isToday = checkDate === today;
+  const isToday = checkDate === today && !isCloseDay;
 
   const handleModalClose = () => {
     if (clientId) {

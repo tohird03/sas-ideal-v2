@@ -19,8 +19,13 @@ import { ISupplierInfo } from '@/api/supplier/types';
 
 const cn = classNames.bind(styles);
 
-const filterOption = (input: string, option?: { label: string, value: string }) =>
-  (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+const filterOption = (input: string, option?: { label: string, value: string }) => {
+  if (!input) return true;
+  const formattedInput = input.trim().toLowerCase();
+  const formattedLabel = option?.label?.toLowerCase() || '';
+
+  return formattedLabel.includes(formattedInput);
+};
 
 const countColor = (count: number, min_amount: number): string =>
   count < 0 ? 'red' : count < min_amount ? 'orange' : 'green';
@@ -583,7 +588,7 @@ export const AddEditModal = observer(() => {
             loading={loadingProducts}
             optionFilterProp="children"
             notFoundContent={loadingProducts ? <Spin style={{ margin: '10px' }} /> : null}
-            filterOption={filterOption}
+            filterOption={false}
             onSearch={handleSearchProducts}
             open={isOpenProductSelect}
             onChange={handleChangeProduct}

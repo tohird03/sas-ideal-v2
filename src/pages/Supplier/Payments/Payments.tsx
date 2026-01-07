@@ -38,7 +38,7 @@ export const SupplierPayments = observer(() => {
         search: supplierPaymentsStore.search!,
         startDate: supplierPaymentsStore?.startDate!,
         endDate: supplierPaymentsStore?.endDate!,
-        supplierId,
+        userId: supplierId!,
       }),
   });
 
@@ -78,7 +78,7 @@ export const SupplierPayments = observer(() => {
       search: supplierPaymentsStore.search!,
       startDate: supplierPaymentsStore?.startDate!,
       endDate: supplierPaymentsStore?.endDate!,
-      supplierId,
+      userId: supplierId!,
     })
       .then(res => {
         const url = URL.createObjectURL(new Blob([res]));

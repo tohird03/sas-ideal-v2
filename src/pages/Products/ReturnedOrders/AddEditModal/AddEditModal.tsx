@@ -498,7 +498,7 @@ export const AddEditModal = observer(() => {
             loading={loadingProducts}
             optionFilterProp="children"
             notFoundContent={loadingProducts ? <Spin style={{ margin: '10px' }} /> : null}
-            filterOption={filterOption}
+            filterOption={false}
             onSearch={handleSearchProducts}
             onChange={handleChangeProduct}
             optionLabelProp="label"

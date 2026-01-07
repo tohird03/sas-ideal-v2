@@ -15,6 +15,7 @@ import dayjs from 'dayjs';
 import { PaymentModal } from './PaymentModal';
 import { returnedOrderApi } from '@/api/returned-order/returned-order';
 import { addNotification } from '@/utils';
+import { ReturnedOrderShowInfoModal } from './OrderShowInfoModal';
 
 const cn = classNames.bind(styles);
 
@@ -158,6 +159,7 @@ export const ReturnedOrders = observer(() => {
 
       {returnedOrdersStore.isOpenAddEditReturnedOrderModal && <AddEditModal />}
       {returnedOrdersStore.isOpenPaymentModal && <PaymentModal />}
+      {returnedOrdersStore.isOpenShowProductModal && <ReturnedOrderShowInfoModal />}
     </main>
   );
 });

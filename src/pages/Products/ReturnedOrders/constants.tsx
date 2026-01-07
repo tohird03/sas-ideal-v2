@@ -2,7 +2,7 @@ import React from 'react';
 import {ColumnType} from 'antd/es/table';
 import {Action} from './Action';
 import { priceFormat } from '@/utils/priceFormat';
-import { IReturnedOrder } from '@/api/returned-order/types';
+import { IReturnedOrder, IReturnedOrderProducts } from '@/api/returned-order/types';
 import { ClientNameLink } from '@/pages/ActionComponents/ClientNameLink';
 import { Tag } from 'antd';
 import { OrderStatus, OrderStatusColor } from '../OrdersList/constants';
@@ -84,5 +84,48 @@ export const returnedOrdersColumns: ColumnType<IReturnedOrder>[] = [
     align: 'center',
     width: '150px',
     render: (value, record) => <Action returnedOrder={record} />,
+  },
+];
+
+export const returnedOrdersInfoProductsColumns: ColumnType<IReturnedOrderProducts>[] = [
+  {
+    key: 'index',
+    dataIndex: 'index',
+    title: '#',
+    align: 'center',
+    width: 100,
+    render: (value, record, index) => index + 1,
+  },
+  {
+    key: 'name',
+    dataIndex: 'name',
+    title: 'Mahsulot nomi',
+    align: 'center',
+    width: '150px',
+    render: (value, record) => record?.product?.name,
+  },
+  {
+    key: 'count',
+    dataIndex: 'count',
+    title: 'Soni',
+    align: 'center',
+    width: '150px',
+    render: (value, record) => record?.count,
+  },
+  {
+    key: 'cost',
+    dataIndex: 'cost',
+    title: 'Sotish narxi',
+    align: 'center',
+    width: '150px',
+    render: (value, record) => priceFormat(record?.price),
+  },
+  {
+    key: 'total',
+    dataIndex: 'total',
+    title: 'Jami narxi',
+    align: 'center',
+    width: '150px',
+    render: (value, record) => priceFormat(record?.count * record?.price),
   },
 ];

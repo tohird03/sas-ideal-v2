@@ -15,6 +15,7 @@ export interface IReturnedOrder {
   description: string,
   status: IOrderStatus,
   createdAt: string,
+  date: string,
   client: IClientsInfo,
   returnedDate: string,
   staff: ISeller,

@@ -15,6 +15,7 @@ class ReturnedOrdersStore {
   endDate: Date | null = this.#today;
   isOpenAddEditReturnedOrderModal = false;
   isOpenPaymentModal = false;
+  isOpenShowProductModal = false;
   singlePayment: IReturnedOrderPayments | null = null;
 
   constructor() {
@@ -73,6 +74,10 @@ class ReturnedOrdersStore {
 
   setSinglePayment = (singlePayment: IReturnedOrderPayments | null) => {
     this.singlePayment = singlePayment;
+  };
+
+  setIsOpenShowEditModal = (isOpenShowProductModal: boolean) => {
+    this.isOpenShowProductModal = isOpenShowProductModal;
   };
 
   reset() {

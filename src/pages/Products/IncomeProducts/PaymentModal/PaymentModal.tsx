@@ -9,6 +9,7 @@ import { incomeProductsStore } from '@/stores/products';
 import { incomeProductsApi } from '@/api/income-products';
 import { singleSupplierStore } from '@/stores/supplier';
 import { useParams } from 'react-router-dom';
+import { authStore } from '@/stores/auth';
 
 export const PaymentModal = observer(() => {
   const [form] = Form.useForm();
@@ -17,10 +18,11 @@ export const PaymentModal = observer(() => {
   const [totalPrice, setTotalPrice] = useState(0);
   const { supplierId } = useParams();
   const [loadingPayment, setLoadingPayment] = useState(false);
+  const {isCloseDay} = authStore;
 
   const today = new Date().toISOString().split('T')[0];
   const checkDate = incomeProductsStore.incomeOrder?.date?.split('T')[0]?.split(' ')[0];
-  const isToday = checkDate === today;
+  const isToday = checkDate === today && !isCloseDay;
 
   const handleModalClose = () => {
     incomeProductsStore.setIncomeOrderPayment(null);
@@ -139,6 +141,7 @@ export const PaymentModal = observer(() => {
           onClick={handleSavePayment}
           type="primary"
           loading={loadingPayment}
+          disabled={!isToday}
         >
           Maqullash
         </Button>

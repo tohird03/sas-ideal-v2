@@ -13,7 +13,7 @@ export interface IIncomeGetClientsPaymentsParams extends IPagination {
   search?: string;
   startDate?: Date;
   endDate?: Date;
-  supplierId?: string;
+  userId?: string;
 }
 
 export interface IIncomeAddEditPaymentParams extends IPaymentType {

@@ -8,12 +8,19 @@ import { IIncomeAddEditPaymentParams } from '@/api/payment-income/types';
 import { returnedOrdersStore } from '@/stores/products';
 import { returnedOrderApi } from '@/api/returned-order/returned-order';
 import { IReturnedOrderPayments } from '@/api/returned-order/types';
+import { authStore } from '@/stores/auth';
 
 export const PaymentModal = observer(() => {
   const [form] = Form.useForm();
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
+
+  const { isCloseDay } = authStore;
+
+  const today = new Date().toISOString().split('T')[0];
+  const checkDate = returnedOrdersStore.singleReturnedOrder?.date?.split('T')[0]?.split(' ')[0];
+  const isToday = checkDate === today && !isCloseDay;
 
   const handleSubmit = (values: IReturnedOrderPayments) => {
     setLoading(true);
@@ -84,6 +91,16 @@ export const PaymentModal = observer(() => {
       cancelText="Bekor qilish"
       centered
       confirmLoading={loading}
+      footer={
+        <Button
+          onClick={handleModalOk}
+          type="primary"
+          disabled={!isToday}
+          loading={loading}
+        >
+          Maqullash
+        </Button>
+      }
     >
       <Form
         form={form}
