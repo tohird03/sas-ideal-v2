@@ -178,7 +178,7 @@ export const Orders = observer(() => {
           <Select
             options={sellerOptions}
             onChange={handleChangeSeller}
-            style={{ width: '200px' }}
+            className={cn('orders__search')}
             placeholder="Sotuvchilar"
             loading={loadingSeller}
             allowClear
@@ -186,7 +186,7 @@ export const Orders = observer(() => {
           <Select
             options={FilterOrderStatusOptions}
             onChange={handleChangeFilter}
-            style={{ width: '200px' }}
+            className={cn('orders__search')}
             placeholder="Sotuv holati"
             allowClear
           />

@@ -24,7 +24,7 @@ export interface IAddStaff {
 export interface IUpdateStaff {
   id?: string;
   fullname: string;
-  phone: string;
+  phone?: string;
   password: string;
   actionsToConnect: string[];
   actionsToDisconnect: string[];
