@@ -154,6 +154,9 @@ export const DataTable = (props: DataTableProps) => {
             onChange={onChange}
             current={pagination?.current}
             total={pagination?.total}
+            showSizeChanger
+            pageSize={pagination?.pageSize}
+            size="small"
             pageSizeOptions={[20, 50, 100, 500, 1000]}
           />
         )}

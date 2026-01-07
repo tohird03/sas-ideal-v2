@@ -35,6 +35,7 @@ export const supplierColumns: ColumnType<ISupplierInfo>[] = [
     dataIndex: 'debt',
     title: 'Yetkazib beruvchiga qarz',
     align: 'center',
+    sorter: (a, b) => a?.debt - b?.debt,
     render: (value, record) => priceFormat(record?.debt),
   },
   {
