@@ -193,13 +193,13 @@ export const Statistic = observer(() => {
               <div>
                 <p className={cn('statistic__top-card-info')}>Bizga qarz</p>
                 <p className={cn('statistic__top-card-value')}>
-                  {formatter(ordersStatisticData?.client?.ourDebt || 0)}
+                  {formatter(ordersStatisticData?.client?.theirDebt || 0)}
                 </p>
               </div>
               <div>
                 <p className={cn('statistic__top-card-info')}>Bizning qarz</p>
                 <p className={cn('statistic__top-card-value')}>
-                  {formatter(ordersStatisticData?.client?.theirDebt || 0)}
+                  {formatter(ordersStatisticData?.client?.ourDebt || 0)}
                 </p>
               </div>
             </div>

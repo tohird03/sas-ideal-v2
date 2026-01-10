@@ -106,7 +106,7 @@ export const ClientsInfo = observer(() => {
         <Typography.Title level={3}>Mijozlar</Typography.Title>
         <div className={cn('client-info__filter')}>
           <Typography.Title level={3}>
-            Jami qarz: {priceFormat(ordersStatisticData?.client?.ourDebt)}
+            Jami qarz: {priceFormat(ordersStatisticData?.client?.theirDebt)}
           </Typography.Title>
           <Input
             placeholder="Mijozlarni qidirish"
