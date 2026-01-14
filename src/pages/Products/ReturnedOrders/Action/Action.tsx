@@ -21,7 +21,7 @@ export const Action: FC<Props> = observer(({ returnedOrder }) => {
   const { isCloseDay } = authStore;
 
   const today = new Date().toISOString().split('T')[0];
-  const checkDate = returnedOrdersStore.singleReturnedOrder?.date?.split('T')[0]?.split(' ')[0];
+  const checkDate = returnedOrder?.date?.split('T')[0]?.split(' ')[0];
   const isToday = checkDate === today && !isCloseDay;
 
   const { mutate: deleteReturnedOrder } =

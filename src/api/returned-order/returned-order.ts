@@ -58,12 +58,10 @@ class ReturnedOrderApi extends Instance {
         'Accept': 'application/xlsx',
       },
     });
-  // XATO
-
 
   deleteReturnedOrder = (id: string): Promise<AxiosResponse> =>
-    this.delete(`${Endpoints.returnedOrder}/${id}`);
-
+    this.delete(Endpoints.ReturnedOrderOne, { params: { id, method: 'hard' } });
+  // XATO
 
   deleteProductFromReturnedOrder = (id: string): Promise<AxiosResponse> =>
     this.delete(`${Endpoints.returnedProduct}/${id}`);

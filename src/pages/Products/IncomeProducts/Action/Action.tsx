@@ -21,7 +21,7 @@ export const Action: FC<Props> = observer(({ order }) => {
   const { isCloseDay } = authStore;
 
   const today = new Date().toISOString().split('T')[0];
-  const checkDate = incomeProductsStore.incomeOrder?.date?.split('T')[0]?.split(' ')[0];
+  const checkDate = order?.date?.split('T')[0]?.split(' ')[0];
   const isToday = checkDate === today && !isCloseDay;
 
   const { mutate: deleteIncomeProducts } =

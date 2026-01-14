@@ -143,7 +143,7 @@ export const Deed = observer(() => {
               </Table.Summary.Cell>
               <Table.Summary.Cell colSpan={2} index={2}>
                 <div style={{ textAlign: 'center' }}>
-                  {-priceFormat(singleSupplierStore?.activeSupplier?.deedInfo?.debt)}
+                  {priceFormat(-Number(singleSupplierStore?.activeSupplier?.deedInfo?.debt))}
                 </div>
               </Table.Summary.Cell>
             </Table.Summary.Row>
