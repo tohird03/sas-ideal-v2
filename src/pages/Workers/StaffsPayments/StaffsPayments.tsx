@@ -34,7 +34,7 @@ export const StaffsPayments = observer(() => {
       staffsPaymentStore.getStaffsPayments({
         pageNumber: staffsPaymentStore.pageNumber,
         pageSize: staffsPaymentStore.pageSize,
-        staffId: staffsPaymentStore.sellerId!,
+        userId: staffsPaymentStore.sellerId!,
         startDate: staffsPaymentStore.startDate!,
         endDate: staffsPaymentStore.endDate!,
       }),
@@ -87,7 +87,7 @@ export const StaffsPayments = observer(() => {
     staffsPaymentsApi.getAllUploadStaffPaymentExel({
       pageNumber: staffsPaymentStore.pageNumber,
       pageSize: staffsPaymentStore.pageSize,
-      staffId: staffsPaymentStore.sellerId!,
+      userId: staffsPaymentStore.sellerId!,
       startDate: staffsPaymentStore.startDate!,
       endDate: staffsPaymentStore.endDate!,
     })
