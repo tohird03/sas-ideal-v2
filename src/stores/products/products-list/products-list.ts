@@ -4,12 +4,16 @@ import { IGetProductsParams, IGetSingleProductParams, IGetSingleProducts, IProdu
 import { productsApi } from '@/api/product/product';
 
 class ProductsListStore {
+  #today = new Date();
+
   pageNumber = 1;
   pageSize = 100;
   search: string | null = null;
   isOpenAddEditProductModal = false;
   singleProduct: IProducts | null = null;
   singleProductStory: IGetSingleProducts | null = null;
+  startDate: Date | null = this.#today;
+  endDate: Date | null = this.#today;
 
   constructor() {
     makeAutoObservable(this);
@@ -58,6 +62,14 @@ class ProductsListStore {
 
   setSingleProduct = (singleProduct: IProducts | null) => {
     this.singleProduct = singleProduct;
+  };
+
+  setStartDate = (startDate: Date | null) => {
+    this.startDate = startDate;
+  };
+
+  setEndDate = (endDate: Date | null) => {
+    this.endDate = endDate;
   };
 
   reset() {

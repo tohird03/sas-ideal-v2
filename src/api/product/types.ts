@@ -48,6 +48,8 @@ export interface IProductTotalCalc {
 
 export interface IGetSingleProductParams {
   productId: string;
+  startDate: Date;
+  endDate: Date
 }
 
 export interface IGetSingleProducts {

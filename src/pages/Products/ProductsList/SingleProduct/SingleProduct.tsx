@@ -2,16 +2,31 @@ import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react';
 import { useParams } from 'react-router-dom';
 import { productsListStore } from '@/stores/products';
-import { Table, Typography } from 'antd';
+import { DatePicker, DatePickerProps, Table, Typography } from 'antd';
 import { singleProductColumns } from './constants';
 import classNames from 'classnames/bind';
 import { styles } from './single-product.scss';
+import dayjs from 'dayjs';
 
 const cn = classNames.bind(styles);
 
 export const SingleProduct = observer(() => {
   const { productId } = useParams();
   const [loading, setLoading] = useState(false);
+
+  const handleStartDateChange: DatePickerProps['onChange'] = (date, dateString) => {
+    if (!dateString) {
+      productsListStore.setStartDate(null);
+    }
+    productsListStore.setStartDate(new Date(dateString));
+  };
+
+  const handleEndDateChange: DatePickerProps['onChange'] = (date, dateString) => {
+    if (!dateString) {
+      productsListStore.setEndDate(null);
+    }
+    productsListStore.setEndDate(new Date(dateString));
+  };
 
   useEffect(() => {
     if (productId) {
@@ -21,27 +36,49 @@ export const SingleProduct = observer(() => {
 
       productsListStore.getSingleProductStory({
         productId,
+        startDate: productsListStore?.startDate!,
+        endDate: productsListStore?.endDate!,
       })
         .finally(() => {
           setLoading(false);
         });
     }
-  }, [productId]);
+  }, [productId, productsListStore.startDate, productsListStore.endDate]);
 
   return (
     <div>
-      <Typography.Title
-        className={cn('single-product__name')}
-        level={3}
-      >
-        {productsListStore?.singleProduct?.name}
-      </Typography.Title>
-      <Typography.Title
-        className={cn('single-product__name')}
-        level={4}
-      >
-        Qoldig&apos;i: {productsListStore?.singleProduct?.count}
-      </Typography.Title>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <Typography.Title
+            className={cn('single-product__name')}
+            level={3}
+          >
+            {productsListStore?.singleProduct?.name}
+          </Typography.Title>
+          <Typography.Title
+            className={cn('single-product__name')}
+            level={4}
+          >
+            Qoldig&apos;i: {productsListStore?.singleProduct?.count}
+          </Typography.Title>
+        </div>
+        <div>
+          <DatePicker
+            className={cn('promotion__datePicker')}
+            onChange={handleStartDateChange}
+            placeholder={'Boshlanish sanasi'}
+            defaultValue={dayjs(productsListStore.startDate)}
+            allowClear={false}
+          />
+          <DatePicker
+            className={cn('promotion__datePicker')}
+            onChange={handleEndDateChange}
+            placeholder={'Tugash sanasi'}
+            defaultValue={dayjs(productsListStore.endDate)}
+            allowClear={false}
+          />
+        </div>
+      </div>
 
       <Table
         columns={singleProductColumns}
