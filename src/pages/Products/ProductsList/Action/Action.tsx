@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
 import {observer} from 'mobx-react';
-import {EditOutlined} from '@ant-design/icons';
+import {DeleteOutlined, EditOutlined} from '@ant-design/icons';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
-import {Button} from 'antd';
+import {Button, Popconfirm} from 'antd';
 import {addNotification} from '@/utils';
 import { IProducts } from '@/api/product/types';
 import { productsListStore } from '@/stores/products';
@@ -38,16 +38,16 @@ export const Action: FC<Props> = observer(({product}) => {
   return (
     <div style={{display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center'}}>
       <Button onClick={handleEditProcess} type="primary" icon={<EditOutlined />} />
-      {/* <Popconfirm
-        title="Xodimni o'chirish"
-        description="Rostdan ham bu xodimni o'chirishni xohlaysizmi?"
+      <Popconfirm
+        title="Nahsulotni o'chirish"
+        description="Rostdan ham bu Nahsulotni o'chirishni xohlaysizmi?"
         onConfirm={handleDelete}
         okText="Ha"
         okButtonProps={{style: {background: 'red'}}}
         cancelText="Yo'q"
       >
         <Button type="primary" icon={<DeleteOutlined />} danger />
-      </Popconfirm> */}
+      </Popconfirm>
     </div>
   );
 });
