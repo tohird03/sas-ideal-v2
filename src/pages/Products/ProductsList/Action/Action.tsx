@@ -38,16 +38,16 @@ export const Action: FC<Props> = observer(({product}) => {
   return (
     <div style={{display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center'}}>
       <Button onClick={handleEditProcess} type="primary" icon={<EditOutlined />} />
-      <Popconfirm
-        title="Nahsulotni o'chirish"
-        description="Rostdan ham bu Nahsulotni o'chirishni xohlaysizmi?"
+      {/* <Popconfirm
+        title="Mahsulotni o'chirish"
+        description="Rostdan ham bu Mahsulotni o'chirishni xohlaysizmi?"
         onConfirm={handleDelete}
         okText="Ha"
         okButtonProps={{style: {background: 'red'}}}
         cancelText="Yo'q"
       >
         <Button type="primary" icon={<DeleteOutlined />} danger />
-      </Popconfirm>
+      </Popconfirm> */}
     </div>
   );
 });
