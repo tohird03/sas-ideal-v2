@@ -71,6 +71,11 @@ export const mainMenuList: IMenuItems[] = [
         key: ROUTES.clientsPayments,
         roleKey: EPageAccess.CLIENTPAYMENT,
       },
+      {
+        label: 'Mijozlar hisoboti',
+        key: ROUTES.clientsStatistic,
+        roleKey: EPageAccess.CLIENTSTATISTIC,
+      },
     ],
   },
   {

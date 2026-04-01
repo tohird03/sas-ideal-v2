@@ -40,6 +40,7 @@ export enum EPageAccess {
   RETURNING = 'returning',
   CLIENT = 'client',
   CLIENTPAYMENT = 'clientpayment',
+  CLIENTSTATISTIC = 'clientreport',
   SUPPLIER = 'supplier',
   SUPPLIERPAYMENT = 'supplierpayment',
   STUFF = 'stuff',

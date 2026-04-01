@@ -43,6 +43,7 @@ export const EPageAccessLabel: Record<EPageAccess, string> = {
   [EPageAccess.RETURNING]: 'Qaytaruv',
   [EPageAccess.CLIENT]: 'Mijozlar',
   [EPageAccess.CLIENTPAYMENT]: 'Mijoz to\'lovlari',
+  [EPageAccess.CLIENTSTATISTIC]: 'Mijozlar hisoboti',
   [EPageAccess.SUPPLIER]: 'Yetkazib beruvchilar',
   [EPageAccess.SUPPLIERPAYMENT]: 'Yetkazib beruvchilarga to\'lovlar',
   [EPageAccess.STUFF]: 'Xodimlar',

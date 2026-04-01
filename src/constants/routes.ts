@@ -13,6 +13,7 @@ export const ROUTES = {
   clientsInfo: '/clients/clients-info',
   clientsPayments: '/clients/clients-payments',
   clientsSingleClient: '/clients/single-client/:clientId',
+  clientsStatistic: '/clients/clients-statistic',
 
   // SUPPLIER
   supplier: '/supplier',

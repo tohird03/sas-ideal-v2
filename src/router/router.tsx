@@ -23,6 +23,7 @@ import {
 } from './lazy';
 import {ProtectedRoutes} from './ProtectedRoutes';
 import {PublicRoutes} from './PublicRoutes';
+import { ClientStatistic } from '@/pages/Clients';
 
 type Props = {
   isAuth: boolean | null;
@@ -64,6 +65,10 @@ export const Router = ({isAuth}: Props) => useRoutes([
           {
             element: <Suspense fallback={<Loading />}><ClientsPayments /></Suspense>,
             path: ROUTES.clientsPayments,
+          },
+          {
+            element: <Suspense fallback={<Loading />}><ClientStatistic /></Suspense>,
+            path: ROUTES.clientsStatistic,
           },
           // SUPPLIER
           {

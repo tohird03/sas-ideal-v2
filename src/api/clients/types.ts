@@ -83,3 +83,42 @@ export interface IGetClientDeedExcelParams {
   deedStartDate?: Date;
   deedEndDate?: Date;
 }
+
+export interface IGetClientsStatisticParams extends IPagination{
+  startDate?: Date;
+  endDate?: Date;
+  search?: string;
+  debtType?: 'gt' | 'lt' | 'eq';
+}
+
+export interface IClientStatistic {
+  id: string;
+  fullname: string;
+  address: string;
+  phone: string;
+  debt: number;
+  deedInfo: IClientDeedInfo;
+  lastSellingDate: string;
+  calc: {
+    selling: {
+      count: number;
+      totalPrice: number;
+      payment: {
+        count: number;
+        total: number;
+        totalCard: number;
+        totalCash: number;
+        totalTransfer: number;
+        totalOther: number;
+      };
+    };
+    returning: {
+      count: number;
+      totalPrice: number;
+      payment: {
+        totalFromBalance: number;
+        totalCash: number;
+      };
+    };
+  };
+}
