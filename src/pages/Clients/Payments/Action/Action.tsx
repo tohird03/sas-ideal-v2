@@ -41,7 +41,7 @@ export const Action: FC<Props> = observer(({ clientPayment }) => {
 
   return (
     <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
-      {isShowEdit && (
+    
         <>
           <Button onClick={handleEditPayment} type="primary" icon={<EditOutlined />} />
           <Popconfirm
@@ -55,7 +55,7 @@ export const Action: FC<Props> = observer(({ clientPayment }) => {
             <Button type="primary" icon={<DeleteOutlined />} danger />
           </Popconfirm>
         </>
-      )}
+    
     </div>
   );
 });
