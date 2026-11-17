@@ -1,0 +1,36 @@
+.reminder-page__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.reminder-page__filter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.reminder-page__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.reminder-page__client {
+  width: 250px;
+}
+
+@media only screen and (max-width: 800px) {
+  .reminder-page__head,
+  .reminder-page__filter {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .reminder-page__client {
+    width: 100%;
+  }
+}

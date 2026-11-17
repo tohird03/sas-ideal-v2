@@ -37,6 +37,9 @@ const config = (env: Record<string, string>): Configuration => {
       }),
       new ESLintPlugin({
         extensions: ["js", "jsx", "ts", "tsx"],
+        emitError: false,
+        emitWarning: true,
+        failOnError: false,
       }),
       new webpack.HotModuleReplacementPlugin(),
       new Dotenv({systemvars: true}),

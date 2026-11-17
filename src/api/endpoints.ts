@@ -71,6 +71,14 @@ export enum Endpoints {
   SupplierDeedExcelUpload = '/supplier/excel-download/one',
   SupplierDeedProductsExcelUpload = '/supplier/excel-with-product-download/one',
 
+  ChatMany = '/chat/many',
+  ChatInbox = '/chat/inbox',
+  ChatRead = '/chat/read',
+  ChatOne = '/chat/one',
+
+  ReminderMany = '/reminder/many',
+  ReminderOne = '/reminder/one',
+
 
   //XATO
   RefreshToken = '/dashboard-auth/refresh',
@@ -112,8 +120,8 @@ export enum Endpoints {
 
 const config: Record<string, TStage> = {
   dev: {
-    // apiUrl: 'https://tmp.16.170.250.134.nip.io',
     apiUrl: 'https://173-212-241-67.tmp.nip.io',
+    // apiUrl: 'http://127.0.0.1:5000',
   },
   prod: {
     // apiUrl: 'https://tmp.16.170.250.134.nip.io',

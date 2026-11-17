@@ -7,10 +7,12 @@ import {Layout} from '@/modules/Layout';
 import {
   ClientsInfo,
   ClientsPayments,
+  ChatPage,
   IncomeProducts,
   Login,
   Orders,
   ProductsList,
+  Reminders,
   ReturnedOrders,
   SingleClient,
   SingleProduct,
@@ -69,6 +71,14 @@ export const Router = ({isAuth}: Props) => useRoutes([
           {
             element: <Suspense fallback={<Loading />}><ClientStatistic /></Suspense>,
             path: ROUTES.clientsStatistic,
+          },
+          {
+            element: <Suspense fallback={<Loading />}><ChatPage /></Suspense>,
+            path: ROUTES.clientsChat,
+          },
+          {
+            element: <Suspense fallback={<Loading />}><Reminders /></Suspense>,
+            path: ROUTES.reminders,
           },
           // SUPPLIER
           {

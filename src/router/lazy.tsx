@@ -59,3 +59,9 @@ export const ReturnedOrders = lazy(() =>
 
 export const SingleProduct = lazy(() =>
   import('@/pages/Products').then(({ SingleProduct }) => ({ default: SingleProduct })).catch(handleCatchChunkError));
+
+export const ChatPage = lazy(() =>
+  import('@/pages/Chat').then(({ ChatPage }) => ({ default: ChatPage })).catch(handleCatchChunkError));
+
+export const Reminders = lazy(() =>
+  import('@/pages/Reminder').then(({ Reminders }) => ({ default: Reminders })).catch(handleCatchChunkError));

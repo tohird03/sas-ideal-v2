@@ -45,6 +45,8 @@ export enum EPageAccess {
   SUPPLIERPAYMENT = 'supplierpayment',
   STUFF = 'stuff',
   STUFFPAYMENT = 'stuffpayment',
+  CHAT = 'chat',
+  REMINDER = 'reminder',
 }
 
 export interface IStaffPer {

@@ -14,6 +14,8 @@ export const ROUTES = {
   clientsPayments: '/clients/clients-payments',
   clientsSingleClient: '/clients/single-client/:clientId',
   clientsStatistic: '/clients/clients-statistic',
+  clientsChat: '/clients/chat',
+  reminders: '/reminders',
 
   // SUPPLIER
   supplier: '/supplier',

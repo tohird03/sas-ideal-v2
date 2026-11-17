@@ -1,15 +1,20 @@
 import React from 'react';
 import {
   AppstoreAddOutlined,
+  BarChartOutlined,
+  BellOutlined,
   CodeSandboxOutlined,
   ContactsOutlined,
+  DollarOutlined,
   DownloadOutlined,
   FileSyncOutlined,
   HomeOutlined,
+  MessageOutlined,
   SettingOutlined,
   ShoppingCartOutlined,
   SolutionOutlined,
   TeamOutlined,
+  UserOutlined,
   UsergroupAddOutlined,
 } from '@ant-design/icons';
 import {ROUTES} from '@/constants';
@@ -62,19 +67,29 @@ export const mainMenuList: IMenuItems[] = [
     icon: <TeamOutlined />,
     children: [
       {
-        label: 'Mijozlar ro\'yxati',
+        label: <><UserOutlined /> Mijozlar ro&apos;yxati</>,
         key: ROUTES.clientsInfo,
         roleKey: EPageAccess.CLIENT,
       },
       {
-        label: 'To\'lovlar ro\'yxati',
+        label: <><DollarOutlined /> To&apos;lovlar ro&apos;yxati</>,
         key: ROUTES.clientsPayments,
         roleKey: EPageAccess.CLIENTPAYMENT,
       },
       {
-        label: 'Mijozlar hisoboti',
+        label: <><BarChartOutlined /> Mijozlar hisoboti</>,
         key: ROUTES.clientsStatistic,
         roleKey: EPageAccess.CLIENTSTATISTIC,
+      },
+      {
+        label: <><MessageOutlined /> Chat</>,
+        key: ROUTES.clientsChat,
+        roleKey: EPageAccess.CHAT,
+      },
+      {
+        label: <><BellOutlined /> Eslatmalar</>,
+        key: ROUTES.reminders,
+        roleKey: EPageAccess.REMINDER,
       },
     ],
   },
