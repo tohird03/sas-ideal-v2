@@ -30,7 +30,16 @@ const showWarning = (result?: {warning?: {is?: boolean, messages?: string[]}}) =
   }
 };
 
-const toClient = (item: {id: string, fullname: string, phone?: string | null, telegram?: {isActive?: boolean} | null, unreadCount?: number, lastMessage?: {text?: string | null}}): ChatListClient => ({
+type ChatListSource = {
+  id: string;
+  fullname: string;
+  phone?: string | null;
+  telegram?: {isActive?: boolean} | null;
+  unreadCount?: number;
+  lastMessage?: {text?: string | null};
+};
+
+const toClient = (item: ChatListSource): ChatListClient => ({
   id: item.id,
   fullname: item.fullname,
   phone: item.phone || '',
