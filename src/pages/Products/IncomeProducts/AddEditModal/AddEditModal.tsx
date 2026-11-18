@@ -1,25 +1,33 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { observer } from 'mobx-react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Button, DatePicker, Form, InputNumber, Modal, Popconfirm, Select, Spin } from 'antd';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {observer} from 'mobx-react';
+import {
+  CheckOutlined,
+  CloseOutlined,
+  DeleteOutlined,
+  DollarOutlined,
+  EditOutlined,
+  PlusOutlined,
+  SaveOutlined,
+} from '@ant-design/icons';
+import {useQuery, useQueryClient} from '@tanstack/react-query';
+import {Button, DatePicker, Form, InputNumber, Modal, Popconfirm, Select, Spin} from 'antd';
+import {ColumnType} from 'antd/es/table';
 import classNames from 'classnames';
-import { addNotification } from '@/utils';
-import { incomeProductsStore, productsListStore } from '@/stores/products';
-import { priceFormat } from '@/utils/priceFormat';
-import { CheckOutlined, DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { DataTable } from '@/components/Datatable/datatable';
-import { useMediaQuery } from '@/utils/mediaQuery';
 import dayjs from 'dayjs';
+import {incomeProductsApi} from '@/api/income-products';
+import {IAddEditIncomeOrder, IAddIncomeOrderForm, IAddIncomeOrderProducts, IIncomeOrderProductAdd, IIncomeProduct} from '@/api/income-products/types';
+import {ISupplierInfo} from '@/api/supplier/types';
+import {DataTable} from '@/components/Datatable/datatable';
+import {incomeProductsStore, productsListStore} from '@/stores/products';
+import {singleSupplierStore, supplierInfoStore} from '@/stores/supplier';
+import {addNotification} from '@/utils';
+import {useMediaQuery} from '@/utils/mediaQuery';
+import {priceFormat} from '@/utils/priceFormat';
 import styles from '../income-products.scss';
-import { ColumnType } from 'antd/es/table';
-import { incomeProductsApi } from '@/api/income-products';
-import { IAddEditIncomeOrder, IAddIncomeOrderForm, IAddIncomeOrderProducts, IIncomeOrderProductAdd, IIncomeProduct } from '@/api/income-products/types';
-import { singleSupplierStore, supplierInfoStore } from '@/stores/supplier';
-import { ISupplierInfo } from '@/api/supplier/types';
 
 const cn = classNames.bind(styles);
 
-const filterOption = (input: string, option?: { label: string, value: string }) => {
+const filterOption = (input: string, option?: {label: string, value: string}) => {
   if (!input) return true;
   const formattedInput = input.trim().toLowerCase();
   const formattedLabel = option?.label?.toLowerCase() || '';
@@ -27,8 +35,8 @@ const filterOption = (input: string, option?: { label: string, value: string }) 
   return formattedLabel.includes(formattedInput);
 };
 
-const countColor = (count: number, min_amount: number): string =>
-  count < 0 ? 'red' : count < min_amount ? 'orange' : 'green';
+const countColor = (count: number, minAmount: number): string =>
+  count < 0 ? 'red' : count < minAmount ? 'orange' : 'green';
 
 const getNextFieldName = (currentFieldName: string) => {
   const fieldNames = [
@@ -58,7 +66,7 @@ export const AddEditModal = observer(() => {
   const [selectedSupplier, setSelectedSupplier] = useState<ISupplierInfo | null>(null);
 
   // GET DATAS
-  const { data: supplierData, isLoading: loadingClients } = useQuery({
+  const {data: supplierData, isLoading: loadingClients} = useQuery({
     queryKey: ['getSuppliers', searchClients],
     queryFn: () =>
       supplierInfoStore.getSuppliers({
@@ -68,7 +76,7 @@ export const AddEditModal = observer(() => {
       }),
   });
 
-  const { data: productsData, isLoading: loadingProducts } = useQuery({
+  const {data: productsData, isLoading: loadingProducts} = useQuery({
     queryKey: ['getProducts', searchProducts],
     queryFn: () =>
       productsListStore.getProducts({
@@ -134,7 +142,7 @@ export const AddEditModal = observer(() => {
 
               fieldInstance?.focus();
             });
-          queryClient.invalidateQueries({ queryKey: ['getIncomeOrders'] });
+          queryClient.invalidateQueries({queryKey: ['getIncomeOrders']});
         })
         .catch(addNotification)
         .finally(() => {
@@ -163,7 +171,7 @@ export const AddEditModal = observer(() => {
         } else {
           incomeProductsStore.setIncomeOrder(res?.data);
         }
-        queryClient.invalidateQueries({ queryKey: ['getIncomeOrders'] });
+        queryClient.invalidateQueries({queryKey: ['getIncomeOrders']});
       })
       .catch(addNotification)
       .finally(() => {
@@ -243,15 +251,15 @@ export const AddEditModal = observer(() => {
   };
 
   const handleChangePrice = (value: number | null) => {
-    setIsUpdatingProduct({ ...isUpdatingProduct!, cost: value || 0 });
+    setIsUpdatingProduct({...isUpdatingProduct!, cost: value || 0});
   };
 
   const handleChangeCount = (value: number | null) => {
-    setIsUpdatingProduct({ ...isUpdatingProduct!, count: value || 0 });
+    setIsUpdatingProduct({...isUpdatingProduct!, count: value || 0});
   };
 
   const handleChangeSellingPrice = (value: number | null) => {
-    setIsUpdatingProduct({ ...isUpdatingProduct!, price: value || 0 });
+    setIsUpdatingProduct({...isUpdatingProduct!, price: value || 0});
   };
 
   const handleSaveAndUpdateOrderProduct = () => {
@@ -351,23 +359,25 @@ export const AddEditModal = observer(() => {
     {
       key: 'action',
       dataIndex: 'action',
-      title: 'Action',
+      title: 'Amallar',
       align: 'center',
       render: (value, record) => (
-        <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center'}}>
           {isUpdatingProduct?.id === record?.id ? (
             <Button
               onClick={handleSaveAndUpdateOrderProduct}
               type="primary"
-              style={{ backgroundColor: 'green' }}
+              style={{backgroundColor: 'green'}}
               icon={<CheckOutlined />}
-            />
+            >Saqlash
+            </Button>
           ) : (
             <Button
               onClick={handleEditProduct.bind(null, record)}
               type="primary"
               icon={<EditOutlined />}
-            />
+            >Tahrirlash
+            </Button>
           )
           }
           <Popconfirm
@@ -375,10 +385,11 @@ export const AddEditModal = observer(() => {
             description="Rostdan ham bu mahsulotni o'chirishni xohlaysizmi?"
             onConfirm={handleDeleteProduct.bind(null, record?.id)}
             okText="Ha"
-            okButtonProps={{ style: { background: 'red' } }}
+            okButtonProps={{icon: <CheckOutlined />, style: {background: 'red'}}}
             cancelText="Yo'q"
+            cancelButtonProps={{icon: <CloseOutlined />}}
           >
-            <Button type="primary" icon={<DeleteOutlined />} danger />
+            <Button type="primary" icon={<DeleteOutlined />} danger >{'O\'chirish'}</Button>
           </Popconfirm>
         </div>
       ),
@@ -493,18 +504,19 @@ export const AddEditModal = observer(() => {
       open={incomeProductsStore.isOpenAddEditIncomeProductsModal}
       title={(
         <div className={cn('order__add-products-header')}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <div style={{display: 'flex', alignItems: 'center', gap: '20px'}}>
             {
               incomeProductsStore?.incomeOrder?.id
                 ? 'Tushurilgan mahsulotlarni tahrirlash'
                 : 'Yangi mahsulot tushurish'
             }
-            <p style={{ margin: 0 }}>{selectedSupplier && `Yetkazib beruvchiga qarz: ${priceFormat(selectedSupplier?.debt)}`}</p>
+            <p style={{margin: 0}}>{selectedSupplier && `Yetkazib beruvchiga qarz: ${priceFormat(selectedSupplier?.debt)}`}</p>
             {incomeProductsStore?.incomeOrder?.id && (
               <Button
                 type="primary"
-                style={{ backgroundColor: 'green' }}
+                style={{backgroundColor: 'green'}}
                 onClick={handleSaveAccepted}
+                icon={<SaveOutlined />}
               >
                 To&lsquo;lovsiz saqlash
               </Button>
@@ -514,6 +526,7 @@ export const AddEditModal = observer(() => {
             <Button
               type="primary"
               onClick={handleOpenPaymentModal}
+              icon={<DollarOutlined />}
             >
               Yetkazib beruvchiga to&lsquo;lov
             </Button>
@@ -522,8 +535,9 @@ export const AddEditModal = observer(() => {
       )}
       onCancel={handleModalClose}
       cancelText="Bekor qilish"
+      cancelButtonProps={{icon: <CloseOutlined />}}
       centered
-      style={{ top: 0, padding: 0 }}
+      style={{top: 0, padding: 0}}
       bodyStyle={{
         height: '85vh',
         overflow: 'auto',
@@ -540,7 +554,7 @@ export const AddEditModal = observer(() => {
       >
         <Form.Item
           label="Yetkazib beruvchi"
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
           name="supplierId"
         >
           <Select
@@ -549,7 +563,7 @@ export const AddEditModal = observer(() => {
             placeholder="Yetkazib beruvchi"
             loading={loadingClients}
             optionFilterProp="children"
-            notFoundContent={loadingClients ? <Spin style={{ margin: '10px' }} /> : null}
+            notFoundContent={loadingClients ? <Spin style={{margin: '10px'}} /> : null}
             filterOption={filterOption}
             onSearch={handleSearchSupplier}
             onClear={handleClearClient}
@@ -567,19 +581,19 @@ export const AddEditModal = observer(() => {
         </Form.Item>
         <Form.Item
           label="Sanasi"
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
           name="date"
           initialValue={dayjs()}
         >
           <DatePicker
             defaultValue={dayjs()}
             format="DD.MM.YYYY"
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
           />
         </Form.Item>
         <Form.Item
           label="Mahsulot"
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
           name="productId"
         >
           <Select
@@ -587,7 +601,7 @@ export const AddEditModal = observer(() => {
             placeholder="Mahsulot"
             loading={loadingProducts}
             optionFilterProp="children"
-            notFoundContent={loadingProducts ? <Spin style={{ margin: '10px' }} /> : null}
+            notFoundContent={loadingProducts ? <Spin style={{margin: '10px'}} /> : null}
             filterOption={false}
             onSearch={handleSearchProducts}
             open={isOpenProductSelect}
@@ -610,7 +624,7 @@ export const AddEditModal = observer(() => {
                   </p>
                   <div className={cn('income-order__add-product-info')}>
                     <p
-                      style={{ backgroundColor: `${countColor(product?.count, product?.minAmount)}` }}
+                      style={{backgroundColor: `${countColor(product?.count, product?.minAmount)}`}}
                       className={cn('income-order__add-product-count')}
                     >
                       {product?.count} dona
@@ -623,38 +637,38 @@ export const AddEditModal = observer(() => {
         </Form.Item>
         <Form.Item
           label="Sotib olish narxi"
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
           name="cost"
           initialValue={0}
         >
           <InputNumber
             placeholder="Sotib olingan narxi"
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             formatter={(value) => priceFormat(value!)}
             onKeyUp={handleChangeCostForm}
           />
         </Form.Item>
         <Form.Item
           label="Mahsulot soni"
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
           name="count"
         >
           <InputNumber
             placeholder="Tushuriladigan mahsulot sonini kiriting"
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             ref={countInputRef}
             formatter={(value) => priceFormat(value!)}
           />
         </Form.Item>
         <Form.Item
           label="Sotish narxi"
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
           name="price"
           initialValue={0}
         >
           <InputNumber
-            placeholder="Sotib olingan narxi"
-            style={{ width: '100%' }}
+            placeholder="Sotish narxi"
+            style={{width: '100%'}}
             formatter={(value) => priceFormat(value!)}
             onKeyUp={handleChangePriceForm}
           />
@@ -674,12 +688,12 @@ export const AddEditModal = observer(() => {
         data={incomeProductsStore?.incomeOrder?.products || []}
         isMobile={isMobile}
         pagination={false}
-        scroll={{ y: 300 }}
+        scroll={{y: 300}}
         rowClassName={rowClassName}
       />
 
       <div>
-        <p style={{ textAlign: 'end', fontSize: '24px', fontWeight: 'bold' }}>Umumiy qiymati: {
+        <p style={{textAlign: 'end', fontSize: '24px', fontWeight: 'bold'}}>Umumiy qiymati: {
           priceFormat(incomeProductsStore?.incomeOrder?.products?.reduce((prev, current) => prev + (current?.cost * current?.count), 0))
         }
         </p>

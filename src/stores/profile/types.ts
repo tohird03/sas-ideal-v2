@@ -1,5 +1,5 @@
-import { ISeller } from '@/api/clients';
-import { EPageAccess } from '@/api/staffs';
+import {ISeller} from '@/api/clients';
+import {EPageAccess} from '@/api/staffs';
 
 export interface IStaff extends ISeller {
   permissions: IPemissions[];

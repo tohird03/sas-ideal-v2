@@ -1,13 +1,13 @@
 import React from 'react';
-import { ROUTES } from '@/constants';
-import { useNavigate } from 'react-router-dom';
-import { ISupplierInfo } from '@/api/supplier/types';
+import {useNavigate} from 'react-router-dom';
+import {ISupplierInfo} from '@/api/supplier/types';
+import {ROUTES} from '@/constants';
 
 type Props = {
   supplier: ISupplierInfo;
 };
 
-export const SupplierNameLink = ({ supplier }: Props) => {
+export const SupplierNameLink = ({supplier}: Props) => {
   const navigate = useNavigate();
 
   const handleReloadSingleClient = () => {
@@ -16,7 +16,7 @@ export const SupplierNameLink = ({ supplier }: Props) => {
 
   return (
     <div onClick={handleReloadSingleClient} style={{color: '#17a2b8', cursor: 'pointer'}}>
-      <p style={{ margin: 0, fontWeight: 'bold' }}>
+      <p style={{margin: 0, fontWeight: 'bold'}}>
         {supplier?.fullname}
       </p>
       <i>+{supplier?.phone}</i>

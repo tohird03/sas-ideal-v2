@@ -1,13 +1,10 @@
 import React from 'react';
 import {ColumnType} from 'antd/es/table';
-import {IClientsInfo} from '@/api/clients';
+import {IClientsPayments} from '@/api/payment/types';
+import {ClientNameLink} from '@/pages/ActionComponents/ClientNameLink';
+import {getFullDateFormat} from '@/utils/getDateFormat';
+import {priceFormat} from '@/utils/priceFormat';
 import {Action} from './Action';
-import { formatPhoneNumber } from '@/utils/phoneFormat';
-import { priceFormat } from '@/utils/priceFormat';
-import { dateFormatterWithStringMonth } from '@/utils/dateFormat';
-import { IClientsPayments } from '@/api/payment/types';
-import { getFullDateFormat } from '@/utils/getDateFormat';
-import { ClientNameLink } from '@/pages/ActionComponents/ClientNameLink';
 
 export const paymentsColumns: ColumnType<IClientsPayments>[] = [
   {
@@ -76,12 +73,12 @@ export const paymentsColumns: ColumnType<IClientsPayments>[] = [
     dataIndex: 'seller',
     title: 'Sotuvchi',
     align: 'center',
-    render: (value, record) => <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.staff?.fullname}</p>,
+    render: (value, record) => <p style={{margin: 0, fontWeight: 'bold'}}>{record?.staff?.fullname}</p>,
   },
   {
     key: 'action',
     dataIndex: 'action',
-    title: 'Action',
+    title: 'Amallar',
     align: 'center',
     render: (value, record) => <Action clientPayment={record} />,
   },

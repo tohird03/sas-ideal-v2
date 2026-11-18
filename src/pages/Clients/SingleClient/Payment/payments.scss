@@ -7,6 +7,8 @@
 .clients-payments__filter {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  gap: 12px;
 }
 .clients-payments__search {
   width: 250px;

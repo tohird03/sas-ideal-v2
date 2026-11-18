@@ -1,10 +1,10 @@
 import React from 'react';
+import {NavLink} from 'react-router-dom';
 import {ColumnType} from 'antd/es/table';
+import {IProducts} from '@/api/product/types';
+import {getFullDateFormat} from '@/utils/getDateFormat';
+import {priceFormat} from '@/utils/priceFormat';
 import {Action} from './Action';
-import { IProducts } from '@/api/product/types';
-import { getFullDateFormat } from '@/utils/getDateFormat';
-import { priceFormat } from '@/utils/priceFormat';
-import { NavLink } from 'react-router-dom';
 
 export const productsListColumn: ColumnType<IProducts>[] = [
   {
@@ -77,7 +77,7 @@ export const productsListColumn: ColumnType<IProducts>[] = [
   {
     key: 'action',
     dataIndex: 'action',
-    title: 'Action',
+    title: 'Amallar',
     align: 'center',
     render: (value, record) => <Action product={record} />,
   },

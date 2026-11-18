@@ -1,12 +1,12 @@
 import React from 'react';
-import { ColumnType } from 'antd/es/table';
-import { IClientDebtFilter, IClientsInfo } from '@/api/clients';
-import { Action } from './Action';
-import { formatPhoneNumber } from '@/utils/phoneFormat';
-import { priceFormat } from '@/utils/priceFormat';
-import { ClientNameLink } from '@/pages/ActionComponents/ClientNameLink';
-import { getFullDateFormat } from '@/utils/getDateFormat';
-import { Tag } from 'antd';
+import {Tag} from 'antd';
+import {ColumnType} from 'antd/es/table';
+import {IClientDebtFilter, IClientsInfo} from '@/api/clients';
+import {ClientNameLink} from '@/pages/ActionComponents/ClientNameLink';
+import {getFullDateFormat} from '@/utils/getDateFormat';
+import {formatPhoneNumber} from '@/utils/phoneFormat';
+import {priceFormat} from '@/utils/priceFormat';
+import {Action} from './Action';
 
 export const clientsColumns: ColumnType<IClientsInfo>[] = [
   {
@@ -45,7 +45,7 @@ export const clientsColumns: ColumnType<IClientsInfo>[] = [
     align: 'center',
     render: (value, record) => (
       <Tag color={record?.telegram?.isActive ? '#228B22' : '#FF7F50'}>
-        {record?.telegram?.isActive ? 'Active' : 'NoActive' }
+        {record?.telegram?.isActive ? 'Faol' : 'Faol emas' }
       </Tag>
     ),
   },
@@ -59,7 +59,7 @@ export const clientsColumns: ColumnType<IClientsInfo>[] = [
   {
     key: 'action',
     dataIndex: 'action',
-    title: 'Action',
+    title: 'Amallar',
     align: 'center',
     render: (value, record) => <Action client={record} />,
   },

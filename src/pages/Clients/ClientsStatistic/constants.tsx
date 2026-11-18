@@ -1,8 +1,8 @@
 import React from 'react';
 import {ColumnsType} from 'antd/es/table';
-import { IClientStatistic } from '@/api/clients';
-import { ClientNameLink } from '@/pages/ActionComponents/ClientNameLink';
-import { priceFormat } from '@/utils/priceFormat';
+import {IClientStatistic} from '@/api/clients';
+import {ClientNameLink} from '@/pages/ActionComponents/ClientNameLink';
+import {priceFormat} from '@/utils/priceFormat';
 
 export const staffsWorkingTimeReportsColumns: ColumnsType<IClientStatistic> = [
   {

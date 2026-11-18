@@ -1,19 +1,19 @@
 import React from 'react';
-import { observer } from 'mobx-react';
-import { DataTable } from '@/components/Datatable/datatable';
-import { getPaginationParams } from '@/utils/getPaginationParams';
-import { staffsWorkingTimeReportsColumns } from './constants';
-import { DatePicker, DatePickerProps, Input, Typography } from 'antd';
-import styles from './styles.scss';
+import {observer} from 'mobx-react';
+import {useQuery} from '@tanstack/react-query';
+import {DatePicker, DatePickerProps, Input, Typography} from 'antd';
 import classNames from 'classnames/bind';
 import dayjs from 'dayjs';
-import { clientsStatisticStore } from '@/stores/clients';
-import { useQuery } from '@tanstack/react-query';
+import {DataTable} from '@/components/Datatable/datatable';
+import {clientsStatisticStore} from '@/stores/clients';
+import {getPaginationParams} from '@/utils/getPaginationParams';
+import {staffsWorkingTimeReportsColumns} from './constants';
+import styles from './styles.scss';
 
 const cn = classNames.bind(styles);
 
 export const ClientStatistic = observer(() => {
-  const { data: clientsStatisticData, isLoading: loading } = useQuery({
+  const {data: clientsStatisticData, isLoading: loading} = useQuery({
     queryKey: [
       'getOrders',
       clientsStatisticStore?.pageNumber,

@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { observer } from 'mobx-react';
-import { DownloadOutlined, PlusCircleOutlined } from '@ant-design/icons';
-import { useQuery } from '@tanstack/react-query';
-import { Button, DatePicker, DatePickerProps, Input, Tooltip, Typography } from 'antd';
+import React, {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
+import {observer} from 'mobx-react';
+import {DownloadOutlined, PlusCircleOutlined} from '@ant-design/icons';
+import {useQuery} from '@tanstack/react-query';
+import {Button, DatePicker, DatePickerProps, Input, Tooltip, Typography} from 'antd';
 import classNames from 'classnames';
-import { DataTable } from '@/components/Datatable/datatable';
-import { getPaginationParams } from '@/utils/getPaginationParams';
-import { useMediaQuery } from '@/utils/mediaQuery';
-import { AddEditModal } from './AddEditModal';
-import styles from './income-products.scss';
-import { incomeOrdersColumns, incomeOrdersTotalCalc } from './constants';
-import { incomeProductsStore } from '@/stores/products';
-import { OrderShowInfoModal } from './OrderShowInfoModal';
-import { PaymentModal } from './PaymentModal';
-import { useParams } from 'react-router-dom';
-import { addNotification } from '@/utils';
 import dayjs from 'dayjs';
-import { incomeProductsApi } from '@/api/income-products';
+import {incomeProductsApi} from '@/api/income-products';
+import {DataTable} from '@/components/Datatable/datatable';
+import {incomeProductsStore} from '@/stores/products';
+import {addNotification} from '@/utils';
+import {getPaginationParams} from '@/utils/getPaginationParams';
+import {useMediaQuery} from '@/utils/mediaQuery';
+import {AddEditModal} from './AddEditModal';
+import {incomeOrdersColumns, incomeOrdersTotalCalc} from './constants';
+import styles from './income-products.scss';
+import {OrderShowInfoModal} from './OrderShowInfoModal';
+import {PaymentModal} from './PaymentModal';
 
 const cn = classNames.bind(styles);
 
 export const IncomeProducts = observer(() => {
   const isMobile = useMediaQuery('(max-width: 800px)');
-  const { supplierId } = useParams();
+  const {supplierId} = useParams();
   const [downloadLoading, setDownLoadLoading] = useState(false);
 
-  const { data: incomeOrdersData, isLoading: loading } = useQuery({
+  const {data: incomeOrdersData, isLoading: loading} = useQuery({
     queryKey: [
       'getIncomeOrders',
       incomeProductsStore.pageNumber,
@@ -128,14 +128,14 @@ export const IncomeProducts = observer(() => {
             defaultValue={dayjs(incomeProductsStore.endDate)}
             allowClear={false}
           />
-          <Tooltip placement="top" title="Excelda yuklash">
+          <Tooltip placement="top" title="Excelga yuklash">
             <Button
               onClick={handleDownloadExcel}
               type="primary"
               icon={<DownloadOutlined />}
               loading={downloadLoading}
             >
-              Exelda Yuklash
+              Excelga yuklash
             </Button>
           </Tooltip>
           <Button
@@ -169,7 +169,7 @@ export const IncomeProducts = observer(() => {
           data={[incomeOrdersData?.data?.calc || {}]}
           isMobile
           loading={loading}
-          cardStyle={{ width: '500px' }}
+          cardStyle={{width: '500px'}}
           className="total-calc"
           loadingLength={1}
         />

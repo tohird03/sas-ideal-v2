@@ -1,7 +1,14 @@
 import './reminder.scss';
 
 import React, {useState} from 'react';
-import {DeleteOutlined, EditOutlined, PlusCircleOutlined} from '@ant-design/icons';
+import {
+  CheckOutlined,
+  CloseOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  PlusCircleOutlined,
+  SaveOutlined,
+} from '@ant-design/icons';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {Button, DatePicker, Form, Input, Modal, Popconfirm, Select, Typography} from 'antd';
 import {ColumnType} from 'antd/es/table';
@@ -24,7 +31,7 @@ interface ReminderFormValues {
   description: string;
 }
 
-const hours = Array.from({length: 24}, (_, hour) => ({value: hour, label: `${String(hour).padStart(2, '0')}:00`}));
+const hours = Array.from({length: 24}, (value, hour) => ({value: hour, label: `${String(hour).padStart(2, '0')}:00`}));
 
 export const Reminders = () => {
   const queryClient = useQueryClient();
@@ -111,14 +118,14 @@ export const Reminders = () => {
       key: 'index',
       title: '#',
       align: 'center',
-      render: (_value, _record, index) => (pageNumber - 1) * pageSize + index + 1,
+      render: (value, record, index) => (pageNumber - 1) * pageSize + index + 1,
     },
     {
       key: 'client',
       title: 'Mijoz',
       align: 'center',
       dataIndex: ['client', 'fullname'],
-      render: (_, record) => (
+      render: (value, record) => (
         <div>
           <div>{record.client.fullname}</div>
           <i>{record.client.phone ? `+${formatPhoneNumber(record.client.phone)}` : ''}</i>
@@ -131,9 +138,9 @@ export const Reminders = () => {
     {key: 'lastSentOn', title: 'Oxirgi yuborilgan', align: 'center', dataIndex: 'lastSentOn', render: (value?: string) => value ? dateFormat(value) : '—'},
     {
       key: 'action',
-      title: 'Action',
+      title: 'Amallar',
       align: 'center',
-      render: (_, record) => (
+      render: (value, record) => (
         <div className="reminder-page__actions">
           <Button type="primary" icon={<EditOutlined />} onClick={() => openEdit(record)} />
           <Popconfirm
@@ -141,8 +148,9 @@ export const Reminders = () => {
             description="Har kuni yuborish to'xtaydi."
             onConfirm={() => removeReminder(record.id)}
             okText="Ha"
-            okButtonProps={{style: {background: 'red'}}}
+            okButtonProps={{icon: <CheckOutlined />, style: {background: 'red'}}}
             cancelText="Yo'q"
+            cancelButtonProps={{icon: <CloseOutlined />}}
           >
             <Button type="primary" danger icon={<DeleteOutlined />} />
           </Popconfirm>
@@ -195,7 +203,9 @@ export const Reminders = () => {
         title={editing ? 'Eslatmani tahrirlash' : 'Yangi eslatma'}
         onCancel={() => setOpen(false)}
         okText="Saqlash"
-        cancelText="Bekor"
+        okButtonProps={{icon: <SaveOutlined />}}
+        cancelText="Bekor qilish"
+        cancelButtonProps={{icon: <CloseOutlined />}}
         confirmLoading={isPending}
         onOk={() => form.submit()}
         destroyOnClose
@@ -217,7 +227,7 @@ export const Reminders = () => {
             <Select options={hours} />
           </Form.Item>
           <Form.Item name="description" label="Matn" rules={[{required: true, message: 'Matn kiriting'}]}>
-            <Input.TextArea rows={3} maxLength={1000} placeholder="eslatma matni" />
+            <Input.TextArea rows={3} maxLength={1000} placeholder="Eslatma matnini kiriting" />
           </Form.Item>
         </Form>
       </Modal>

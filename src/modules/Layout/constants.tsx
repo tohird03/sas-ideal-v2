@@ -1,25 +1,27 @@
 import React from 'react';
 import {
-  AppstoreAddOutlined,
+  AccountBookOutlined,
   BarChartOutlined,
   BellOutlined,
-  CodeSandboxOutlined,
   ContactsOutlined,
   DollarOutlined,
-  DownloadOutlined,
-  FileSyncOutlined,
   HomeOutlined,
+  IdcardOutlined,
+  ImportOutlined,
   MessageOutlined,
-  SettingOutlined,
+  PieChartOutlined,
+  RiseOutlined,
+  RollbackOutlined,
+  ShopOutlined,
   ShoppingCartOutlined,
+  ShoppingOutlined,
   SolutionOutlined,
-  TeamOutlined,
-  UserOutlined,
-  UsergroupAddOutlined,
+  UnorderedListOutlined,
+  WalletOutlined,
 } from '@ant-design/icons';
+import {EPageAccess} from '@/api/staffs';
 import {ROUTES} from '@/constants';
 import {IMenuItems} from './types';
-import { EPageAccess } from '@/api/staffs';
 
 export const mainMenuList: IMenuItems[] = [
   {
@@ -28,8 +30,13 @@ export const mainMenuList: IMenuItems[] = [
     icon: <HomeOutlined />,
     children: [
       {
-        label: <><AppstoreAddOutlined /> Statistika</>,
+        label: <><PieChartOutlined /> Statistika</>,
         key: ROUTES.home,
+        roleKey: EPageAccess.STAT,
+      },
+      {
+        label: <><RiseOutlined /> Mahsulotlar tahlili</>,
+        key: ROUTES.productAnalytics,
         roleKey: EPageAccess.STAT,
       },
     ],
@@ -37,10 +44,10 @@ export const mainMenuList: IMenuItems[] = [
   {
     label: 'Mahsulotlar',
     key: ROUTES.products,
-    icon: <CodeSandboxOutlined />,
+    icon: <ShoppingOutlined />,
     children: [
       {
-        label: <><AppstoreAddOutlined /> Mahsulotlar ro&apos;yxati</>,
+        label: <><UnorderedListOutlined /> Mahsulotlar ro&apos;yxati</>,
         key: ROUTES.productsList,
         roleKey: EPageAccess.PRODUCT,
       },
@@ -50,12 +57,12 @@ export const mainMenuList: IMenuItems[] = [
         roleKey: EPageAccess.SELLING,
       },
       {
-        label: <><DownloadOutlined /> Tushurilgan mahsulotlar</>,
+        label: <><ImportOutlined /> Tushurilgan mahsulotlar</>,
         key: ROUTES.productsIncome,
         roleKey: EPageAccess.ARRIVAL,
       },
       {
-        label: <><FileSyncOutlined /> Mijozdan qaytgan mahsulotlar</>,
+        label: <><RollbackOutlined /> Mijozdan qaytgan mahsulotlar</>,
         key: ROUTES.productsReturnedOrder,
         roleKey: EPageAccess.RETURNING,
       },
@@ -64,10 +71,10 @@ export const mainMenuList: IMenuItems[] = [
   {
     label: 'Mijozlar',
     key: ROUTES.clients,
-    icon: <TeamOutlined />,
+    icon: <ContactsOutlined />,
     children: [
       {
-        label: <><UserOutlined /> Mijozlar ro&apos;yxati</>,
+        label: <><IdcardOutlined /> Mijozlar ro&apos;yxati</>,
         key: ROUTES.clientsInfo,
         roleKey: EPageAccess.CLIENT,
       },
@@ -82,7 +89,7 @@ export const mainMenuList: IMenuItems[] = [
         roleKey: EPageAccess.CLIENTSTATISTIC,
       },
       {
-        label: <><MessageOutlined /> Chat</>,
+        label: <><MessageOutlined /> Suhbat</>,
         key: ROUTES.clientsChat,
         roleKey: EPageAccess.CHAT,
       },
@@ -96,15 +103,15 @@ export const mainMenuList: IMenuItems[] = [
   {
     label: 'Yetkazib beruvchilar',
     key: ROUTES.supplier,
-    icon: <UsergroupAddOutlined />,
+    icon: <ShopOutlined />,
     children: [
       {
-        label: <><ContactsOutlined /> Yetkazib beruvchilar ro&apos;yxati</>,
+        label: <><UnorderedListOutlined /> Yetkazib beruvchilar ro&apos;yxati</>,
         key: ROUTES.supplierInfo,
         roleKey: EPageAccess.SUPPLIER,
       },
       {
-        label: <><ContactsOutlined /> To&apos;langan qarzlar ro&apos;yxati</>,
+        label: <><WalletOutlined /> To&apos;langan qarzlar ro&apos;yxati</>,
         key: ROUTES.supplierPayments,
         roleKey: EPageAccess.SUPPLIERPAYMENT,
       },
@@ -113,15 +120,15 @@ export const mainMenuList: IMenuItems[] = [
   {
     label: 'Xodimlar',
     key: ROUTES.workers,
-    icon: <SettingOutlined />,
+    icon: <SolutionOutlined />,
     children: [
       {
-        label: <><SolutionOutlined /> Xodimlar ro&apos;yxati</>,
+        label: <><IdcardOutlined /> Xodimlar ro&apos;yxati</>,
         key: ROUTES.workersStaffs,
         roleKey: EPageAccess.STUFF,
       },
       {
-        label: <><SolutionOutlined /> Xodimlar hisoboti</>,
+        label: <><AccountBookOutlined /> Xodimlar hisoboti</>,
         key: ROUTES.workersStaffsPayments,
         roleKey: EPageAccess.STUFFPAYMENT,
       },

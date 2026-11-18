@@ -8,6 +8,6 @@ const cn = classnamesBind.bind(styles);
 export const UploadButton = () => (
   <div>
     <PlusOutlined />
-    <div className={cn('upload-button')}>Upload</div>
+    <div className={cn('upload-button')}>Yuklash</div>
   </div>
 );

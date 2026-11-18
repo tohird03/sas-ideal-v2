@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { observer } from 'mobx-react';
-import { DownloadOutlined, PlusCircleOutlined } from '@ant-design/icons';
-import { useQuery } from '@tanstack/react-query';
-import { Button, DatePicker, DatePickerProps, Input, Table, Tooltip, Typography } from 'antd';
+import React, {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
+import {observer} from 'mobx-react';
+import {DownloadOutlined, PlusCircleOutlined} from '@ant-design/icons';
+import {useQuery} from '@tanstack/react-query';
+import {Button, DatePicker, DatePickerProps, Input, Table, Tooltip, Typography} from 'antd';
 import classNames from 'classnames';
-import { getPaginationParams } from '@/utils/getPaginationParams';
-import { AddEditModal } from './AddEditModal';
-import styles from './payments.scss';
-import { paymentsColumns } from './constants';
-import { supplierPaymentsStore } from '@/stores/supplier';
-import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { priceFormat } from '@/utils/priceFormat';
-import { addNotification } from '@/utils';
-import { incomePaymentApi } from '@/api/payment-income';
+import {incomePaymentApi} from '@/api/payment-income';
+import {supplierPaymentsStore} from '@/stores/supplier';
+import {addNotification} from '@/utils';
+import {getPaginationParams} from '@/utils/getPaginationParams';
+import {priceFormat} from '@/utils/priceFormat';
+import {AddEditModal} from './AddEditModal';
+import {paymentsColumns} from './constants';
+import styles from './payments.scss';
 
 const cn = classNames.bind(styles);
 
 export const SupplierPayments = observer(() => {
-  const { supplierId } = useParams();
+  const {supplierId} = useParams();
   const [downloadLoading, setDownLoadLoading] = useState(false);
 
-  const { data: supplierPaymentsData, isLoading: loading } = useQuery({
+  const {data: supplierPaymentsData, isLoading: loading} = useQuery({
     queryKey: [
       'getPayments',
       supplierPaymentsStore.pageNumber,
@@ -131,14 +131,14 @@ export const SupplierPayments = observer(() => {
           >
             Yangi to&apos;lov
           </Button>
-          <Tooltip placement="top" title="Excelda yuklash">
+          <Tooltip placement="top" title="Excelga yuklash">
             <Button
               onClick={handleDownloadExcel}
               type="primary"
               icon={<DownloadOutlined />}
               loading={downloadLoading}
             >
-              Exelda Yuklash
+              Excelga yuklash
             </Button>
           </Tooltip>
         </div>
@@ -160,22 +160,22 @@ export const SupplierPayments = observer(() => {
           <Table.Summary.Row>
             <Table.Summary.Cell colSpan={2} index={1} />
             <Table.Summary.Cell index={2}>
-              <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+              <div style={{textAlign: 'center', fontWeight: 'bold'}}>
                 Jami: {priceFormat(supplierPaymentsData?.data?.calc?.totalCash)}
               </div>
             </Table.Summary.Cell>
             <Table.Summary.Cell index={2}>
-              <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+              <div style={{textAlign: 'center', fontWeight: 'bold'}}>
                 Jami: {priceFormat(supplierPaymentsData?.data?.calc?.totalCard)}
               </div>
             </Table.Summary.Cell>
             <Table.Summary.Cell index={2}>
-              <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+              <div style={{textAlign: 'center', fontWeight: 'bold'}}>
                 Jami: {priceFormat(supplierPaymentsData?.data?.calc?.totalTransfer)}
               </div>
             </Table.Summary.Cell>
             <Table.Summary.Cell index={2}>
-              <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+              <div style={{textAlign: 'center', fontWeight: 'bold'}}>
                 Jami: {priceFormat(supplierPaymentsData?.data?.calc?.totalOther)}
               </div>
             </Table.Summary.Cell>

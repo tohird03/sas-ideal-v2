@@ -1,10 +1,11 @@
-import { AxiosResponse } from 'axios';
-import { Endpoints, umsStages } from '../endpoints';
-import { INetworkConfig, Instance } from '../instance';
+import {Endpoints, umsStages} from '../endpoints';
+import {INetworkConfig, Instance} from '../instance';
 import {
+  IGetProductRankParams,
   IOrderGraphStatistic,
   IOrderGraphStatisticType,
   IOrderStatistic,
+  IProductRankResponse,
 } from './types';
 
 const config: INetworkConfig = {
@@ -23,6 +24,9 @@ class StatisticApi extends Instance {
 
   getOrdersGraphStatistic = (type: IOrderGraphStatisticType): Promise<{data: IOrderGraphStatistic[]}> =>
     this.get(Endpoints.OrderGraphStatistic, {params: {type}});
+
+  getProductRank = (params: IGetProductRankParams): Promise<{data: IProductRankResponse}> =>
+    this.get(Endpoints.ProductRank, {params});
 }
 
 export const statisticApi = new StatisticApi(config);

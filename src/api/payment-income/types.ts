@@ -1,12 +1,12 @@
-import { IOrder } from "../order/types"
-import { ISupplierInfo } from "../supplier/types";
-import { IPagination, IPaymentType } from "../types"
+import {IOrder} from '../order/types';
+import {ISupplierInfo} from '../supplier/types';
+import {IPagination, IPaymentType} from '../types';
 
 export interface ISupplierPayments extends IPaymentType {
-  id: string,
-  createdAt: string,
-  order: IOrder,
-  user: ISupplierInfo,
+  id: string;
+  createdAt: string;
+  order: IOrder;
+  user: ISupplierInfo;
 }
 
 export interface IIncomeGetClientsPaymentsParams extends IPagination {
@@ -17,7 +17,7 @@ export interface IIncomeGetClientsPaymentsParams extends IPagination {
 }
 
 export interface IIncomeAddEditPaymentParams extends IPaymentType {
-  id?: string,
-  orderId?: string,
-  supplierId: string,
+  id?: string;
+  orderId?: string;
+  supplierId: string;
 }

@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {observer} from 'mobx-react';
-import {DeleteOutlined, EditOutlined} from '@ant-design/icons';
+import {CheckOutlined, CloseOutlined, DeleteOutlined, EditOutlined} from '@ant-design/icons';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {Button, Popconfirm} from 'antd';
 import {clientsInfoApi, IClientsInfo} from '@/api/clients';
@@ -37,12 +37,13 @@ export const Action: FC<Props> = observer(({client}) => {
     <div style={{display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center'}}>
       <Button onClick={handleEditProcess} type="primary" icon={<EditOutlined />} />
       <Popconfirm
-        title="Xodimni o'chirish"
-        description="Rostdan ham bu xodimni o'chirishni xohlaysizmi?"
+        title="Mijozni o'chirish"
+        description="Rostdan ham bu mijozni o'chirishni xohlaysizmi?"
         onConfirm={handleDelete}
         okText="Ha"
-        okButtonProps={{style: {background: 'red'}}}
+        okButtonProps={{icon: <CheckOutlined />, style: {background: 'red'}}}
         cancelText="Yo'q"
+        cancelButtonProps={{icon: <CloseOutlined />}}
       >
         <Button type="primary" icon={<DeleteOutlined />} danger />
       </Popconfirm>

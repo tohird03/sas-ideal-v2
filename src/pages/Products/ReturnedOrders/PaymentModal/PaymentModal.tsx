@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { observer } from 'mobx-react';
-import { useQueryClient } from '@tanstack/react-query';
-import { Button, Form, InputNumber, Modal } from 'antd';
-import { addNotification } from '@/utils';
-import { priceFormat } from '@/utils/priceFormat';
-import { IIncomeAddEditPaymentParams } from '@/api/payment-income/types';
-import { returnedOrdersStore } from '@/stores/products';
-import { returnedOrderApi } from '@/api/returned-order/returned-order';
-import { IReturnedOrderPayments } from '@/api/returned-order/types';
-import { authStore } from '@/stores/auth';
+import React, {useEffect, useState} from 'react';
+import {observer} from 'mobx-react';
+import {CalculatorOutlined, CheckOutlined, CloseOutlined} from '@ant-design/icons';
+import {useQueryClient} from '@tanstack/react-query';
+import {Button, Form, InputNumber, Modal} from 'antd';
+import {returnedOrderApi} from '@/api/returned-order/returned-order';
+import {IReturnedOrderPayments} from '@/api/returned-order/types';
+import {authStore} from '@/stores/auth';
+import {returnedOrdersStore} from '@/stores/products';
+import {addNotification} from '@/utils';
+import {priceFormat} from '@/utils/priceFormat';
 
 export const PaymentModal = observer(() => {
   const [form] = Form.useForm();
@@ -16,7 +16,7 @@ export const PaymentModal = observer(() => {
   const [loading, setLoading] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const { isCloseDay } = authStore;
+  const {isCloseDay} = authStore;
 
   const today = new Date().toISOString().split('T')[0];
   const checkDate = returnedOrdersStore.singleReturnedOrder?.date?.split('T')[0]?.split(' ')[0];
@@ -34,7 +34,7 @@ export const PaymentModal = observer(() => {
     })
       .then(() => {
         addNotification('Qaytuv tasdiqlandi');
-        queryClient.invalidateQueries({ queryKey: ['getReturnedOrders'] });
+        queryClient.invalidateQueries({queryKey: ['getReturnedOrders']});
         handleModalClose();
       })
       .catch(addNotification)
@@ -88,7 +88,9 @@ export const PaymentModal = observer(() => {
       onCancel={handleModalClose}
       onOk={handleModalOk}
       okText="Maqullash"
+      okButtonProps={{icon: <CheckOutlined />}}
       cancelText="Bekor qilish"
+      cancelButtonProps={{icon: <CloseOutlined />}}
       centered
       confirmLoading={loading}
       footer={
@@ -97,6 +99,7 @@ export const PaymentModal = observer(() => {
           type="primary"
           disabled={!isToday}
           loading={loading}
+          icon={<CheckOutlined />}
         >
           Maqullash
         </Button>
@@ -115,12 +118,13 @@ export const PaymentModal = observer(() => {
         >
           <InputNumber
             placeholder="Mijozning hisobidan ayirish"
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             formatter={(value) => priceFormat(value!)}
             addonAfter={
               <Button
                 type="primary"
                 onClick={handleClickClientDebt}
+                icon={<CalculatorOutlined />}
               >
                 Umumiy miqdor
               </Button>
@@ -134,12 +138,13 @@ export const PaymentModal = observer(() => {
         >
           <InputNumber
             placeholder="Naqd to'lov"
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             formatter={(value) => priceFormat(value!)}
             addonAfter={
               <Button
                 type="primary"
                 onClick={handleClickCashDebt}
+                icon={<CalculatorOutlined />}
               >
                 Umumiy miqdor
               </Button>
@@ -148,7 +153,7 @@ export const PaymentModal = observer(() => {
         </Form.Item>
       </Form>
       <div>
-        <p style={{ textAlign: 'end', fontSize: '16px', fontWeight: 'bold' }}>
+        <p style={{textAlign: 'end', fontSize: '16px', fontWeight: 'bold'}}>
           Umumiy qiymati: {priceFormat(totalPrice)}
         </p>
       </div>

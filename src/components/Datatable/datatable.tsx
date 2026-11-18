@@ -11,8 +11,18 @@ import {
 import {ColumnType} from 'antd/es/table';
 import styles from './datatable.module.css';
 
+const skeletonKeys = (count: number) => {
+  const keys: string[] = [];
+
+  for (let position = 0; position < count; position += 1) {
+    keys.push(`skeleton-${position}`);
+  }
+
+  return keys;
+};
+
 export interface DataTableColumnsType<T> extends ColumnType<T> {
-  colStyle?: (value: any, record: T, index: number) => Object;
+  colStyle?: (value: any, record: T, index: number) => object;
 }
 
 type DataTableProps = {
@@ -28,8 +38,8 @@ type DataTableProps = {
   className?: string;
   rowClassName?: any;
   loading?: boolean;
-  cardStyle?: Object;
-  cardTextStyle?: Object;
+  cardStyle?: object;
+  cardTextStyle?: object;
   pagination?:
   | {
     pageSize?: number;
@@ -85,11 +95,11 @@ export const DataTable = (props: DataTableProps) => {
     />
   ) : loading ? (
     <div className={styles.loading__container}>
-      {[...new Array(loadingLength ?? 4)].map((item: any, index: number) => (
+      {skeletonKeys(loadingLength ?? 4).map((skeletonKey) => (
         <Skeleton
           paragraph={{rows: 7}}
           className={styles.loading__skeleton}
-          key={index}
+          key={skeletonKey}
           active
         />
       ))}

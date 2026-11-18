@@ -1,9 +1,9 @@
 import React from 'react';
 import {ColumnType} from 'antd/es/table';
+import {IClientsPayments} from '@/api/payment/types';
+import {getFullDateFormat} from '@/utils/getDateFormat';
+import {priceFormat} from '@/utils/priceFormat';
 import {Action} from './Action';
-import { priceFormat } from '@/utils/priceFormat';
-import { IClientsPayments } from '@/api/payment/types';
-import { getFullDateFormat } from '@/utils/getDateFormat';
 
 export const paymentsColumns: ColumnType<IClientsPayments>[] = [
   {
@@ -20,7 +20,7 @@ export const paymentsColumns: ColumnType<IClientsPayments>[] = [
     align: 'center',
     render: (value, record) => (
       <div>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.user?.fullname}</p>
+        <p style={{margin: 0, fontWeight: 'bold'}}>{record?.user?.fullname}</p>
         <i>+{record?.user?.phone}</i>
       </div>
     ),
@@ -67,7 +67,7 @@ export const paymentsColumns: ColumnType<IClientsPayments>[] = [
   {
     key: 'action',
     dataIndex: 'action',
-    title: 'Action',
+    title: 'Amallar',
     align: 'center',
     render: (value, record) => <Action clientPayment={record} />,
   },

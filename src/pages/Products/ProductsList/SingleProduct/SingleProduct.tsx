@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { observer } from 'mobx-react';
-import { useParams } from 'react-router-dom';
-import { productsListStore } from '@/stores/products';
-import { DatePicker, DatePickerProps, Table, Typography } from 'antd';
-import { singleProductColumns } from './constants';
+import React, {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
+import {observer} from 'mobx-react';
+import {DatePicker, DatePickerProps, Table, Typography} from 'antd';
 import classNames from 'classnames/bind';
-import { styles } from './single-product.scss';
 import dayjs from 'dayjs';
+import {productsListStore} from '@/stores/products';
+import {singleProductColumns} from './constants';
+import {styles} from './single-product.scss';
 
 const cn = classNames.bind(styles);
 
 export const SingleProduct = observer(() => {
-  const { productId } = useParams();
+  const {productId} = useParams();
   const [loading, setLoading] = useState(false);
 
   const handleStartDateChange: DatePickerProps['onChange'] = (date, dateString) => {
@@ -47,7 +47,7 @@ export const SingleProduct = observer(() => {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
         <div>
           <Typography.Title
             className={cn('single-product__name')}
@@ -84,7 +84,7 @@ export const SingleProduct = observer(() => {
         columns={singleProductColumns}
         dataSource={productsListStore?.singleProductStory?.products || []}
         bordered
-        summary={(pageData) => (
+        summary={() => (
           <>
             <Table.Summary.Row>
               <Table.Summary.Cell colSpan={1} index={0}>
@@ -95,7 +95,7 @@ export const SingleProduct = observer(() => {
                 index={1}
                 className={cn('total__order')}
               >
-                <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                <div style={{textAlign: 'center', fontWeight: 'bold'}}>
                   {productsListStore?.singleProductStory?.totalSellingCount}
                 </div>
               </Table.Summary.Cell>
@@ -104,7 +104,7 @@ export const SingleProduct = observer(() => {
                 colSpan={3}
                 className={cn('total__arrival')}
               >
-                <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                <div style={{textAlign: 'center', fontWeight: 'bold'}}>
                   {productsListStore?.singleProductStory?.totalArrivalCount}
                 </div>
               </Table.Summary.Cell>
@@ -113,7 +113,7 @@ export const SingleProduct = observer(() => {
                 colSpan={3}
                 className={cn('total__returning')}
               >
-                <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                <div style={{textAlign: 'center', fontWeight: 'bold'}}>
                   {productsListStore?.singleProductStory?.totalReturningCount}
                 </div>
               </Table.Summary.Cell>
@@ -127,7 +127,7 @@ export const SingleProduct = observer(() => {
                 index={2}
                 className={cn('total')}
               >
-                <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                <div style={{textAlign: 'center', fontWeight: 'bold'}}>
                   {productsListStore?.singleProductStory?.actualCount}
                 </div>
               </Table.Summary.Cell>

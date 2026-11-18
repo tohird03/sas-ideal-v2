@@ -1,9 +1,9 @@
 import React from 'react';
-import { ColumnType } from 'antd/es/table';
-import { priceFormat } from '@/utils/priceFormat';
-import { getFullDateFormat } from '@/utils/getDateFormat';
-import { ISupplierDeed, ISupplierDeedAction, ISupplierDeedType } from '@/api/supplier/types';
-import { Tag } from 'antd';
+import {Tag} from 'antd';
+import {ColumnType} from 'antd/es/table';
+import {ISupplierDeed, ISupplierDeedAction, ISupplierDeedType} from '@/api/supplier/types';
+import {getFullDateFormat} from '@/utils/getDateFormat';
+import {priceFormat} from '@/utils/priceFormat';
 
 export const deedColumns: ColumnType<ISupplierDeed>[] = [
   {
@@ -32,7 +32,7 @@ export const deedColumns: ColumnType<ISupplierDeed>[] = [
   {
     key: 'debt',
     dataIndex: 'debt',
-    title: 'Дебит',
+    title: 'Debet',
     align: 'center',
     width: '50px',
     className: 'green-col',
@@ -45,7 +45,7 @@ export const deedColumns: ColumnType<ISupplierDeed>[] = [
   {
     key: 'data',
     dataIndex: 'data',
-    title: 'Кредит',
+    title: 'Kredit',
     align: 'center',
     width: '50px',
     className: 'red-col',

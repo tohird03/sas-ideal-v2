@@ -1,11 +1,11 @@
 import React from 'react';
-import { ColumnType } from 'antd/es/table';
-import { Action } from './Action';
-import { IIncomeOrder, IIncomeProduct, ITotalIncomeOrderPaymentCalc } from '@/api/income-products/types';
-import { priceFormat } from '@/utils/priceFormat';
-import { SupplierNameLink } from '@/pages/ActionComponents/SupplierNameLink';
-import { PaymentStatus } from './PaymentStatus';
-import { getFullDateFormat } from '@/utils/getDateFormat';
+import {ColumnType} from 'antd/es/table';
+import {IIncomeOrder, IIncomeProduct, ITotalIncomeOrderPaymentCalc} from '@/api/income-products/types';
+import {SupplierNameLink} from '@/pages/ActionComponents/SupplierNameLink';
+import {getFullDateFormat} from '@/utils/getDateFormat';
+import {priceFormat} from '@/utils/priceFormat';
+import {Action} from './Action';
+import {PaymentStatus} from './PaymentStatus';
 
 export const incomeOrdersColumns: ColumnType<IIncomeOrder>[] = [
   {
@@ -109,7 +109,7 @@ export const incomeOrdersColumns: ColumnType<IIncomeOrder>[] = [
   {
     key: 'action',
     dataIndex: 'action',
-    title: 'Action',
+    title: 'Amallar',
     align: 'center',
     render: (value, record) => <Action order={record} />,
   },
@@ -123,7 +123,7 @@ export const ordersInfoColumns: ColumnType<IIncomeOrder>[] = [
     align: 'center',
     render: (value, record) => (
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '5px 0'}}>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.supplier?.fullname}</p>
+        <p style={{margin: 0, fontWeight: 'bold'}}>{record?.supplier?.fullname}</p>
         <i>+{record?.supplier?.phone}</i>
       </div>
     ),
@@ -135,7 +135,7 @@ export const ordersInfoColumns: ColumnType<IIncomeOrder>[] = [
     align: 'center',
     render: (value, record) => (
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '5px 0'}}>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.staff?.fullname}</p>
+        <p style={{margin: 0, fontWeight: 'bold'}}>{record?.staff?.fullname}</p>
         <i>+{record?.staff?.phone}</i>
       </div>
     ),
@@ -143,7 +143,7 @@ export const ordersInfoColumns: ColumnType<IIncomeOrder>[] = [
   {
     key: 'createdAt',
     dataIndex: 'createdAt',
-    title: 'Sotilgan vaqti',
+    title: 'Tushurilgan vaqti',
     align: 'center',
     width: '150px',
     render: (value, record) => getFullDateFormat(record?.createdAt),

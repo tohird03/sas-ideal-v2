@@ -1,9 +1,9 @@
 import React from 'react';
-import { ColumnType } from 'antd/es/table';
-import { Action } from './Action';
-import { priceFormat } from '@/utils/priceFormat';
-import { getFullDateFormat } from '@/utils/getDateFormat';
-import { IStaffsPayments } from '@/api/staffs-payments/types';
+import {ColumnType} from 'antd/es/table';
+import {IStaffsPayments} from '@/api/staffs-payments/types';
+import {getFullDateFormat} from '@/utils/getDateFormat';
+import {priceFormat} from '@/utils/priceFormat';
+import {Action} from './Action';
 
 export const clientsColumns: ColumnType<IStaffsPayments>[] = [
   {
@@ -20,8 +20,8 @@ export const clientsColumns: ColumnType<IStaffsPayments>[] = [
     align: 'center',
     render: (value, record) => (
       <div>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.user?.fullname}</p>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.user?.phone}</p>
+        <p style={{margin: 0, fontWeight: 'bold'}}>{record?.user?.fullname}</p>
+        <p style={{margin: 0, fontWeight: 'bold'}}>{record?.user?.phone}</p>
       </div>
     ),
   },
@@ -52,7 +52,7 @@ export const clientsColumns: ColumnType<IStaffsPayments>[] = [
   {
     key: 'action',
     dataIndex: 'action',
-    title: 'Action',
+    title: 'Amallar',
     align: 'center',
     render: (value, record) => <Action staffsPayment={record} />,
   },

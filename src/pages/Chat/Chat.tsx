@@ -1,7 +1,7 @@
 import './chat.scss';
 
 import React, {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
-import {ArrowLeftOutlined, DeleteOutlined, SendOutlined} from '@ant-design/icons';
+import {ArrowLeftOutlined, CheckOutlined, CloseOutlined, DeleteOutlined, SendOutlined} from '@ant-design/icons';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {Button, Empty, Input, notification, Popconfirm, Spin, Tag, Typography} from 'antd';
 import {AxiosError} from 'axios';
@@ -155,7 +155,7 @@ export const ChatPage = () => {
   return (
     <main className={`chat-page${client && isMobile ? ' chat-page--open' : ''}`}>
       <div className="chat-page__head">
-        <Typography.Title level={3}>Chat</Typography.Title>
+        <Typography.Title level={3}>Suhbat</Typography.Title>
       </div>
       <div className="chat-page__body">
         <aside className="chat-page__clients">
@@ -219,7 +219,7 @@ export const ChatPage = () => {
                   <span className="chat-page__thread-name">{client.fullname}</span>
                   <span className="chat-page__thread-phone">+{formatPhoneNumber(client.phone)}</span>
                 </span>
-                {client.telegram?.isActive ? <Tag color="green">telegram</Tag> : <Tag>telegram yo&apos;q</Tag>}
+                {client.telegram?.isActive ? <Tag color="green">Telegram</Tag> : <Tag>Telegram yo&apos;q</Tag>}
               </div>
               <div
                 className="chat-page__thread"
@@ -231,7 +231,7 @@ export const ChatPage = () => {
                 }}
               >
                 {messagesLoading && <Spin />}
-                {messagesError && <div className="chat-page__empty">Chat yuklanmadi</div>}
+                {messagesError && <div className="chat-page__empty">Suhbat yuklanmadi</div>}
                 {!messagesLoading && !messagesError && messages.length === 0 && <div className="chat-page__empty">Xabarlar yo&apos;q</div>}
                 {messages.map((message) => (
                   <MessageBubble key={message.id} message={message} clientName={client.fullname} onDelete={handleDelete} />
@@ -271,7 +271,14 @@ const MessageBubble = ({message, clientName, onDelete}: {message: IChatMessage, 
       <div>{message.text}</div>
       <div className="chat-page__bubble-meta">
         <span>{getFullDateFormat(message.createdAt)}</span>
-        <Popconfirm title="Xabar o'chirilsinmi?" onConfirm={() => onDelete(message.id)} okText="Ha" cancelText="Yo'q">
+        <Popconfirm
+          title="Xabar o'chirilsinmi?"
+          onConfirm={() => onDelete(message.id)}
+          okText="Ha"
+          okButtonProps={{icon: <CheckOutlined />}}
+          cancelText="Yo'q"
+          cancelButtonProps={{icon: <CloseOutlined />}}
+        >
           <button type="button" aria-label="O'chirish"><DeleteOutlined /></button>
         </Popconfirm>
       </div>

@@ -1,7 +1,7 @@
-import { makeAutoObservable } from 'mobx';
-import { addNotification } from '@/utils';
-import { IGetProductsParams, IGetSingleProductParams, IGetSingleProducts, IProducts, ISingleProductStory } from '@/api/product/types';
-import { productsApi } from '@/api/product/product';
+import {makeAutoObservable} from 'mobx';
+import {productsApi} from '@/api/product/product';
+import {IGetProductsParams, IGetSingleProductParams, IGetSingleProducts, IProducts} from '@/api/product/types';
+import {addNotification} from '@/utils';
 
 class ProductsListStore {
   #today = new Date();

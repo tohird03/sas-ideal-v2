@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { observer } from 'mobx-react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Form, Input, InputNumber, Modal } from 'antd';
-import { addNotification } from '@/utils';
-import { productsListStore } from '@/stores/products';
-import { priceFormat } from '@/utils/priceFormat';
-import { productsApi } from '@/api/product/product';
-import { IAddEditProduct } from '@/api/product/types';
+import React, {useEffect, useState} from 'react';
+import {observer} from 'mobx-react';
+import {CloseOutlined, EditOutlined, PlusOutlined} from '@ant-design/icons';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {Form, Input, InputNumber, Modal} from 'antd';
+import {productsApi} from '@/api/product/product';
+import {IAddEditProduct} from '@/api/product/types';
+import {productsListStore} from '@/stores/products';
+import {addNotification} from '@/utils';
+import {priceFormat} from '@/utils/priceFormat';
 
 export const AddEditModal = observer(() => {
   const [form] = Form.useForm();
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
 
-  const { mutate: addNewProduct } =
+  const {mutate: addNewProduct} =
     useMutation({
       mutationKey: ['addNewProduct'],
       mutationFn: (params: IAddEditProduct) => productsApi.addNewProduct(params),
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['getProducts'] });
+        queryClient.invalidateQueries({queryKey: ['getProducts']});
         handleModalClose();
       },
       onError: addNotification,
@@ -27,12 +28,12 @@ export const AddEditModal = observer(() => {
       },
     });
 
-  const { mutate: updateProduct } =
+  const {mutate: updateProduct} =
     useMutation({
       mutationKey: ['updateProduct'],
       mutationFn: (params: IAddEditProduct) => productsApi.updateProduct(params),
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['getProducts'] });
+        queryClient.invalidateQueries({queryKey: ['getProducts']});
         handleModalClose();
       },
       onError: addNotification,
@@ -79,7 +80,9 @@ export const AddEditModal = observer(() => {
       onCancel={handleModalClose}
       onOk={handleModalOk}
       okText={productsListStore.singleProduct ? 'Mahsulotni tahrirlash' : 'Mahsulotni qo\'shish'}
+      okButtonProps={{icon: productsListStore.singleProduct ? <EditOutlined /> : <PlusOutlined />}}
       cancelText="Bekor qilish"
+      cancelButtonProps={{icon: <CloseOutlined />}}
       centered
       confirmLoading={loading}
     >
@@ -91,19 +94,19 @@ export const AddEditModal = observer(() => {
       >
         <Form.Item
           label="Mahsulot nomi"
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
           name="name"
         >
           <Input placeholder="Mahsulot nomi" />
         </Form.Item>
         <Form.Item
           label="Mahsulot soni"
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
           name="count"
         >
           <InputNumber
             placeholder="Qoldiq mahsulot"
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             formatter={(value) => priceFormat(value!)}
           />
         </Form.Item>
@@ -113,29 +116,29 @@ export const AddEditModal = observer(() => {
         >
           <InputNumber
             placeholder="Ushbu sondan kam qolgan mahsulot haqida sizni ogohlantiramiz!"
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             formatter={(value) => priceFormat(value!)}
           />
         </Form.Item>
         <Form.Item
           label="Sotish narxi"
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
           name="price"
         >
           <InputNumber
             placeholder="Sotish narxi"
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             formatter={(value) => priceFormat(value!)}
           />
         </Form.Item>
         <Form.Item
           label="Sotib olingan narxi"
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
           name="cost"
         >
           <InputNumber
             placeholder="Sotib olingan narxi"
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             formatter={(value) => priceFormat(value!)}
           />
         </Form.Item>

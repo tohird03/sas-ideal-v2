@@ -9,8 +9,8 @@ const cn = classNames.bind(styles);
 export const NotFound = () => (
   <div className={cn('not-found')}>
     <Result
-      title="Empty data"
-      subTitle="This bag is empty"
+      title="Ma'lumot yo'q"
+      subTitle="Bu yerda ma'lumot mavjud emas"
       icon={<StopOutlined />}
     />
   </div>

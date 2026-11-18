@@ -3,8 +3,8 @@ import './logout.scss';
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {observer} from 'mobx-react';
-import {LogoutOutlined} from '@ant-design/icons';
-import {Button, Modal, Typography} from 'antd';
+import {CloseOutlined, LogoutOutlined} from '@ant-design/icons';
+import {Button, Modal} from 'antd';
 import {useLocalStorage} from 'usehooks-ts';
 import {ROUTES} from '@/constants';
 import {resetStores} from '@/stores';
@@ -41,6 +41,10 @@ export const LogOut: React.FC = observer(() => {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
+        okText="Chiqish"
+        okButtonProps={{icon: <LogoutOutlined />}}
+        cancelText="Bekor qilish"
+        cancelButtonProps={{icon: <CloseOutlined />}}
       >
         <span>{logOutDictionary.logOut}</span>
       </Modal>

@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
-import { observer } from 'mobx-react';
-import { Segmented, Typography } from 'antd';
-import { ISingleClientTabs, singleClientStore } from '@/stores/clients/single-client';
-import { SegmentedValue } from 'antd/es/segmented';
-import { SegmentComponents, singleClientTabOptions } from './constants';
-import { useParams } from 'react-router-dom';
-import styles from './single-client.scss';
+import React, {useEffect} from 'react';
+import {useParams} from 'react-router-dom';
+import {observer} from 'mobx-react';
+import {Segmented, Typography} from 'antd';
+import {SegmentedValue} from 'antd/es/segmented';
 import classNames from 'classnames';
+import {ISingleClientTabs, singleClientStore} from '@/stores/clients/single-client';
+import {SegmentComponents, singleClientTabOptions} from './constants';
+import styles from './single-client.scss';
 
 const cn = classNames.bind(styles);
 
 export const SingleClient = observer(() => {
-  const { clientId } = useParams();
+  const {clientId} = useParams();
 
   const handleChangeProductTab = (value: SegmentedValue) => {
     singleClientStore.setActiveTabs(value as ISingleClientTabs);

@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, InputNumber, Modal, Select, message} from 'antd';
-import { observer } from 'mobx-react';
-import { ordersStore } from '@/stores/products';
-import { priceFormat } from '@/utils/priceFormat';
-import { IPaymentType } from '@/api/types';
-import { addNotification } from '@/utils';
-import { useQueryClient } from '@tanstack/react-query';
-import { singleClientStore } from '@/stores/clients';
-import { useParams } from 'react-router-dom';
-import { ordersApi } from '@/api/order';
-import { authStore } from '@/stores/auth';
+import React, {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
+import {observer} from 'mobx-react';
+import {CalculatorOutlined, CheckOutlined, CloseOutlined} from '@ant-design/icons';
+import {useQueryClient} from '@tanstack/react-query';
+import {Button, Form, Input, InputNumber, message, Modal, Select} from 'antd';
+import {ordersApi} from '@/api/order';
+import {IPaymentType} from '@/api/types';
+import {authStore} from '@/stores/auth';
+import {singleClientStore} from '@/stores/clients';
+import {ordersStore} from '@/stores/products';
+import {addNotification} from '@/utils';
+import {priceFormat} from '@/utils/priceFormat';
 
 export const PaymentModal = observer(() => {
   const [form] = Form.useForm();
   const queryClient = useQueryClient();
   const [totalPayment, setTotalPayment] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
-  const { clientId } = useParams();
+  const {clientId} = useParams();
   const [loadingPayment, setLoadingPayment] = useState(false);
   const {isCloseDay} = authStore;
 
@@ -60,7 +61,7 @@ export const PaymentModal = observer(() => {
       payment: values,
     })
       .then(() => {
-        queryClient.invalidateQueries({ queryKey: ['getOrders'] });
+        queryClient.invalidateQueries({queryKey: ['getOrders']});
         if (clientId) {
           singleClientStore.getSingleClient({id: clientId});
         }
@@ -77,7 +78,7 @@ export const PaymentModal = observer(() => {
       const payment = ordersStore?.orderPayment?.payment;
 
       if (payment) {
-        const { cash, card, transfer, other, description }: IPaymentType = payment;
+        const {cash, card, transfer, other, description}: IPaymentType = payment;
 
         form.setFieldsValue({
           cash,
@@ -100,7 +101,7 @@ export const PaymentModal = observer(() => {
   }, [ordersStore.orderPayment, ordersStore?.order?.products]);
 
   const handleValuesChange = (changedValues: any, allValues: any) => {
-    const { cash = 0, card = 0, transfer = 0, other = 0 } = allValues;
+    const {cash = 0, card = 0, transfer = 0, other = 0} = allValues;
     const total = [cash, card, transfer, other].reduce(
       (sum, value) => sum + Number(value || 0),
       0
@@ -111,7 +112,7 @@ export const PaymentModal = observer(() => {
 
   const handleAddonClick = (fieldName: string) => {
     const allValues = form.getFieldsValue();
-    const { cash = 0, card = 0, transfer = 0, other = 0 } = allValues;
+    const {cash = 0, card = 0, transfer = 0, other = 0} = allValues;
 
     const totalEntered = cash + card + transfer + other;
 
@@ -130,20 +131,21 @@ export const PaymentModal = observer(() => {
     <Modal
       open={ordersStore.isOpenPaymentModal}
       title={
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <p style={{ margin: 0 }}>
+        <div style={{display: 'flex', alignItems: 'center', gap: '20px'}}>
+          <p style={{margin: 0}}>
             To&apos;lov {ordersStore.orderPayment?.client?.fullname}
           </p>
-          <p style={{ margin: 0 }}>
+          <p style={{margin: 0}}>
             {ordersStore?.order?.client?.debt && `Mijoz qarzi: ${priceFormat(ordersStore?.order?.client?.debt)}`}
           </p>
         </div>
       }
       onCancel={handleModalClose}
       cancelText="Bekor qilish"
+      cancelButtonProps={{icon: <CloseOutlined />}}
       centered
       keyboard
-      style={{ top: 0, padding: '20px' }}
+      style={{top: 0, padding: '20px'}}
       bodyStyle={{
         height: '85vh',
         overflow: 'auto',
@@ -155,6 +157,7 @@ export const PaymentModal = observer(() => {
           type="primary"
           disabled={!isToday}
           loading={loadingPayment}
+          icon={<CheckOutlined />}
         >
           Maqullash
         </Button>
@@ -170,7 +173,7 @@ export const PaymentModal = observer(() => {
       >
         <Form.Item
           label="Mijoz"
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
           name="userId"
           initialValue={ordersStore.orderPayment?.client?.id}
         >
@@ -193,13 +196,14 @@ export const PaymentModal = observer(() => {
           <InputNumber
             placeholder="Bank kartasi orqali to'lov"
             defaultValue={0}
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             formatter={(value) => priceFormat(value!)}
             addonAfter={
               <Button
                 disabled={totalPayment >= totalPrice}
                 type="primary"
                 onClick={handleAddonClick?.bind(null, 'card')}
+                icon={<CalculatorOutlined />}
               >
                 Umumiy miqdor
               </Button>
@@ -212,15 +216,16 @@ export const PaymentModal = observer(() => {
           initialValue={0}
         >
           <InputNumber
-            placeholder="Bank kartasi orqali to'lov"
+            placeholder="Naqd to\'lov"
             defaultValue={0}
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             formatter={(value) => priceFormat(value!)}
             addonAfter={
               <Button
                 disabled={totalPayment >= totalPrice}
                 type="primary"
                 onClick={handleAddonClick?.bind(null, 'cash')}
+                icon={<CalculatorOutlined />}
               >
                 Umumiy miqdor
               </Button>
@@ -234,13 +239,14 @@ export const PaymentModal = observer(() => {
         >
           <InputNumber
             placeholder="Bank o'tkazmasi orqali to'lov"
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             formatter={(value) => priceFormat(value!)}
             addonAfter={
               <Button
                 disabled={totalPayment >= totalPrice}
                 type="primary"
                 onClick={handleAddonClick?.bind(null, 'transfer')}
+                icon={<CalculatorOutlined />}
               >
                 Umumiy miqdor
               </Button>
@@ -254,13 +260,14 @@ export const PaymentModal = observer(() => {
         >
           <InputNumber
             placeholder="Boshqa usullar bilan to'lov"
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             formatter={(value) => priceFormat(value!)}
             addonAfter={
               <Button
                 disabled={totalPayment >= totalPrice}
                 type="primary"
                 onClick={handleAddonClick?.bind(null, 'other')}
+                icon={<CalculatorOutlined />}
               >
                 Umumiy miqdor
               </Button>
@@ -273,11 +280,11 @@ export const PaymentModal = observer(() => {
         >
           <Input.TextArea
             placeholder="To'lov haqida ma'lumot"
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             rows={4}
             maxLength={100}
             showCount
-            autoSize={{ minRows: 2, maxRows: 6 }}
+            autoSize={{minRows: 2, maxRows: 6}}
           />
         </Form.Item>
       </Form>

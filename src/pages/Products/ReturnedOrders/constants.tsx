@@ -1,12 +1,12 @@
 import React from 'react';
+import {Tag} from 'antd';
 import {ColumnType} from 'antd/es/table';
+import {IReturnedOrder, IReturnedOrderProducts} from '@/api/returned-order/types';
+import {ClientNameLink} from '@/pages/ActionComponents/ClientNameLink';
+import {getFullDateFormat} from '@/utils/getDateFormat';
+import {priceFormat} from '@/utils/priceFormat';
+import {OrderStatus, OrderStatusColor} from '../OrdersList/constants';
 import {Action} from './Action';
-import { priceFormat } from '@/utils/priceFormat';
-import { IReturnedOrder, IReturnedOrderProducts } from '@/api/returned-order/types';
-import { ClientNameLink } from '@/pages/ActionComponents/ClientNameLink';
-import { Tag } from 'antd';
-import { OrderStatus, OrderStatusColor } from '../OrdersList/constants';
-import { getFullDateFormat } from '@/utils/getDateFormat';
 
 export const returnedOrdersColumns: ColumnType<IReturnedOrder>[] = [
   {
@@ -64,7 +64,7 @@ export const returnedOrdersColumns: ColumnType<IReturnedOrder>[] = [
     align: 'center',
     render: (value, record) => (
       <div>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.staff?.fullname}</p>
+        <p style={{margin: 0, fontWeight: 'bold'}}>{record?.staff?.fullname}</p>
         <i>+{record?.staff?.phone}</i>
       </div>
     ),

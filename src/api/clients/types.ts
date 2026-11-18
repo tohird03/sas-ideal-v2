@@ -1,6 +1,4 @@
-import { IOrder } from '../order/types';
-import { IReturnedOrder } from '../returned-order/types';
-import { IPagination, IPayment } from '../types';
+import {IPagination} from '../types';
 
 // CLIENT
 export interface IClientsInfo {

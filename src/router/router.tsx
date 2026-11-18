@@ -4,13 +4,15 @@ import {Navigate, useRoutes} from 'react-router-dom';
 import {Loading} from '@/components';
 import {ROUTES} from '@/constants';
 import {Layout} from '@/modules/Layout';
+import {ClientStatistic} from '@/pages/Clients';
 import {
+  ChatPage,
   ClientsInfo,
   ClientsPayments,
-  ChatPage,
   IncomeProducts,
   Login,
   Orders,
+  ProductAnalytics,
   ProductsList,
   Reminders,
   ReturnedOrders,
@@ -25,7 +27,6 @@ import {
 } from './lazy';
 import {ProtectedRoutes} from './ProtectedRoutes';
 import {PublicRoutes} from './PublicRoutes';
-import { ClientStatistic } from '@/pages/Clients';
 
 type Props = {
   isAuth: boolean | null;
@@ -45,6 +46,10 @@ export const Router = ({isAuth}: Props) => useRoutes([
             element: <Suspense fallback={<Loading />}><Statistic /></Suspense>,
             path: ROUTES.home,
             index: true,
+          },
+          {
+            element: <Suspense fallback={<Loading />}><ProductAnalytics /></Suspense>,
+            path: ROUTES.productAnalytics,
           },
           // STAFFS
           {

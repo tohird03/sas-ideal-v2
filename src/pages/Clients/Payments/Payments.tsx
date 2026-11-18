@@ -1,26 +1,26 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { observer } from 'mobx-react';
-import { DownloadOutlined, PlusCircleOutlined } from '@ant-design/icons';
-import { useQuery } from '@tanstack/react-query';
-import { Button, DatePicker, DatePickerProps, Input, Select, Table, Tooltip, Typography } from 'antd';
+import React, {useEffect, useMemo, useState} from 'react';
+import {observer} from 'mobx-react';
+import {DownloadOutlined, PlusCircleOutlined} from '@ant-design/icons';
+import {useQuery} from '@tanstack/react-query';
+import {Button, DatePicker, DatePickerProps, Input, Select, Table, Tooltip, Typography} from 'antd';
 import classNames from 'classnames';
-import { getPaginationParams } from '@/utils/getPaginationParams';
-import { AddEditModal } from './AddEditModal';
-import styles from './payments.scss';
-import { paymentsColumns } from './constants';
-import { paymentsStore } from '@/stores/clients';
 import dayjs from 'dayjs';
-import { addNotification } from '@/utils';
-import { staffsApi } from '@/api/staffs';
-import { priceFormat } from '@/utils/priceFormat';
-import { clientsPaymentApi } from '@/api/payment/payment';
+import {clientsPaymentApi} from '@/api/payment/payment';
+import {staffsApi} from '@/api/staffs';
+import {paymentsStore} from '@/stores/clients';
+import {addNotification} from '@/utils';
+import {getPaginationParams} from '@/utils/getPaginationParams';
+import {priceFormat} from '@/utils/priceFormat';
+import {AddEditModal} from './AddEditModal';
+import {paymentsColumns} from './constants';
+import styles from './payments.scss';
 
 const cn = classNames.bind(styles);
 
 export const ClientsPayments = observer(() => {
   const [downloadLoading, setDownLoadLoading] = useState(false);
 
-  const { data: paymentsData, isLoading: loading } = useQuery({
+  const {data: paymentsData, isLoading: loading} = useQuery({
     queryKey: [
       'getPayments',
       paymentsStore.pageNumber,
@@ -41,7 +41,7 @@ export const ClientsPayments = observer(() => {
       }),
   });
 
-  const { data: sellerData, isLoading: loadingSeller } = useQuery({
+  const {data: sellerData, isLoading: loadingSeller} = useQuery({
     queryKey: ['getSellers'],
     queryFn: () =>
       staffsApi.getStaffs({
@@ -137,7 +137,7 @@ export const ClientsPayments = observer(() => {
           <Select
             options={sellerOptions}
             onChange={handleChangeSeller}
-            style={{ width: '200px' }}
+            style={{width: '200px'}}
             placeholder="Sotuvchilar"
             loading={loadingSeller}
             allowClear
@@ -163,14 +163,14 @@ export const ClientsPayments = observer(() => {
           >
             Mijoz to&apos;lovi
           </Button>
-          <Tooltip placement="top" title="Excelda yuklash">
+          <Tooltip placement="top" title="Excelga yuklash">
             <Button
               onClick={handleDownloadExcel}
               type="primary"
               icon={<DownloadOutlined />}
               loading={downloadLoading}
             >
-              Exelda Yuklash
+              Excelga yuklash
             </Button>
           </Tooltip>
         </div>
@@ -192,22 +192,22 @@ export const ClientsPayments = observer(() => {
           <Table.Summary.Row>
             <Table.Summary.Cell colSpan={2} index={1} />
             <Table.Summary.Cell index={2}>
-              <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+              <div style={{textAlign: 'center', fontWeight: 'bold'}}>
                 Jami: {priceFormat(paymentsData?.data?.calc?.totalCash)}
               </div>
             </Table.Summary.Cell>
             <Table.Summary.Cell index={2}>
-              <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+              <div style={{textAlign: 'center', fontWeight: 'bold'}}>
                 Jami: {priceFormat(paymentsData?.data?.calc?.totalCard)}
               </div>
             </Table.Summary.Cell>
             <Table.Summary.Cell index={2}>
-              <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+              <div style={{textAlign: 'center', fontWeight: 'bold'}}>
                 Jami: {priceFormat(paymentsData?.data?.calc?.totalTransfer)}
               </div>
             </Table.Summary.Cell>
             <Table.Summary.Cell index={2}>
-              <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+              <div style={{textAlign: 'center', fontWeight: 'bold'}}>
                 Jami: {priceFormat(paymentsData?.data?.calc?.totalOther)}
               </div>
             </Table.Summary.Cell>

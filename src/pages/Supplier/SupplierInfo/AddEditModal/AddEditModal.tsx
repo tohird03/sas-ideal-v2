@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {observer} from 'mobx-react';
+import {CloseOutlined, EditOutlined, PlusOutlined} from '@ant-design/icons';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {Form, Input, InputNumber, Modal} from 'antd';
+import {supplierInfoApi} from '@/api/supplier/supplier';
+import {IAddEditSupplier} from '@/api/supplier/types';
+import {supplierInfoStore} from '@/stores/supplier';
 import {addNotification} from '@/utils';
 import {regexPhoneNumber} from '@/utils/phoneFormat';
-import { IAddEditClientInfo, clientsInfoApi } from '@/api/clients';
-import { supplierInfoStore } from '@/stores/supplier';
-import { supplierInfoApi } from '@/api/supplier/supplier';
-import { IAddEditSupplier } from '@/api/supplier/types';
 
 export const AddEditModal = observer(() => {
   const [form] = Form.useForm();
@@ -86,7 +86,9 @@ export const AddEditModal = observer(() => {
       onCancel={handleModalClose}
       onOk={handleModalOk}
       okText={supplierInfoStore.singleSupplierInfo ? 'Yetkazib beruvchini tahrirlash' : 'Yetkazib beruvchini qo\'shish'}
+      okButtonProps={{icon: supplierInfoStore.singleSupplierInfo ? <EditOutlined /> : <PlusOutlined />}}
       cancelText="Bekor qilish"
+      cancelButtonProps={{icon: <CloseOutlined />}}
       centered
       confirmLoading={loading}
     >
@@ -98,10 +100,10 @@ export const AddEditModal = observer(() => {
       >
         <Form.Item
           name="fullname"
-          label="Mijoz"
+          label="Yetkazib beruvchi"
           rules={[{required: true}]}
         >
-          <Input placeholder="F.I.O" />
+          <Input placeholder="F.I.Sh." />
         </Form.Item>
         <Form.Item
           name="phone"

@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
-import { Button, Modal, notification } from 'antd';
-import { observer } from 'mobx-react';
-import { incomeProductsStore } from '@/stores/products';
-import { DataTable } from '@/components/Datatable/datatable';
-import { ordersInfoColumns, ordersInfoPaymentColumns, ordersInfoProductsColumns } from '../constants';
-import styles from '../income-products.scss';
+import React, {useEffect} from 'react';
+import {observer} from 'mobx-react';
+import {CloseOutlined} from '@ant-design/icons';
+import {Button, Modal, notification} from 'antd';
 import classNames from 'classnames';
-import { useMediaQuery } from '@/utils/mediaQuery';
+import {DataTable} from '@/components/Datatable/datatable';
+import {incomeProductsStore} from '@/stores/products';
+import {useMediaQuery} from '@/utils/mediaQuery';
+import {ordersInfoColumns, ordersInfoPaymentColumns, ordersInfoProductsColumns} from '../constants';
+import styles from '../income-products.scss';
 
 const cn = classNames.bind(styles);
 
@@ -21,7 +22,7 @@ export const OrderShowInfoModal = observer(() => {
   useEffect(() => {
     if (!incomeProductsStore?.singleIncomeOrder) {
       notification.error({
-        message: 'Bu sotuv topilmadi!',
+        message: 'Bu tushum topilmadi!',
         placement: 'topRight',
       });
       handleModalClose();
@@ -31,18 +32,19 @@ export const OrderShowInfoModal = observer(() => {
   return (
     <Modal
       open={incomeProductsStore.isOpenShowIncomeOrderModal}
-      title={'Sotuv'}
+      title={'Tushurilgan mahsulot'}
       onCancel={handleModalClose}
       cancelText="Bekor qilish"
+      cancelButtonProps={{icon: <CloseOutlined />}}
       centered
-      style={{ top: 0, padding: '20px' }}
+      style={{top: 0, padding: '20px'}}
       bodyStyle={{
         height: '85vh',
         overflow: 'auto',
       }}
       width="100vw"
       footer={
-        <Button onClick={handleModalClose}>
+        <Button onClick={handleModalClose} icon={<CloseOutlined />}>
           Yopish
         </Button>
       }

@@ -1,11 +1,11 @@
-import React, { forwardRef } from 'react';
-import { Document, Page, Text, View, StyleSheet, Font, Image, Path } from '@react-pdf/renderer';
-import { IOrder } from '@/api/order/types';
-import { priceFormat } from '@/utils/priceFormat';
-import { getFullDateFormat } from '@/utils/getDateFormat';
-import LogoImg from '@/assets/img/logo-all.png';
+import React, {forwardRef} from 'react';
+import {Document, Font, Image, Page, StyleSheet, Text, View} from '@react-pdf/renderer';
+import {IOrder} from '@/api/order/types';
 import CheckmarkIcon from '@/assets/img/check-mark.png';
-import { phoneFormat } from '@/utils/phoneFormat';
+import LogoImg from '@/assets/img/logo-all.png';
+import {getFullDateFormat} from '@/utils/getDateFormat';
+import {phoneFormat} from '@/utils/phoneFormat';
+import {priceFormat} from '@/utils/priceFormat';
 
 Font.register({
   family: 'NotoSans',
@@ -23,18 +23,18 @@ type Props = {
   order: IOrder;
 };
 
-export const MyDocument = forwardRef<any, Props>(({ order }, ref) => (
+export const MyDocument = forwardRef<any, Props>(({order}, ref) => (
   <Document ref={ref}>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
         <View style={styles.topData}>
           <View style={styles.titleInfo}>
             <View style={styles.title}>
-              <Text style={styles.titleSpan}>Дата продажа:</Text>
+              <Text style={styles.titleSpan}>Sotuv sanasi:</Text>
               <Text style={styles.titleSpanData}>{getFullDateFormat(order?.date)}</Text>
             </View>
             <View style={styles.title}>
-              <Text style={styles.titleSpan}>Харидор:</Text>
+              <Text style={styles.titleSpan}>Xaridor:</Text>
               <Text style={styles.titleSpanData}>{order?.client?.fullname}    {phoneFormat(order?.client?.phone?.slice(3))}</Text>
             </View>
           </View>
@@ -46,35 +46,35 @@ export const MyDocument = forwardRef<any, Props>(({ order }, ref) => (
         {/* Jadval */}
         <View style={styles.table}>
           <View style={styles.tableHeader}>
-            <Text style={{ ...styles.tableHeaderCell, maxWidth: '30px' }}>№</Text>
-            <Text style={{ ...styles.tableHeaderCell, maxWidth: '280px', minWidth: '280px' }}>Махсулот номи</Text>
-            <Text style={{ ...styles.tableHeaderCell, maxWidth: '35px' }}>
-              <Image src={CheckmarkIcon} style={{ width: 10, height: 10 }} />
+            <Text style={{...styles.tableHeaderCell, maxWidth: '30px'}}>№</Text>
+            <Text style={{...styles.tableHeaderCell, maxWidth: '280px', minWidth: '280px'}}>Mahsulot nomi</Text>
+            <Text style={{...styles.tableHeaderCell, maxWidth: '35px'}}>
+              <Image src={CheckmarkIcon} style={{width: 10, height: 10}} />
             </Text>
-            <Text style={{ ...styles.tableHeaderCell }}>Сони</Text>
-            <Text style={{ ...styles.tableHeaderCell }}>Нархи</Text>
-            <Text style={{ ...styles.tableHeaderCell }}>Суммаси</Text>
+            <Text style={{...styles.tableHeaderCell}}>Soni</Text>
+            <Text style={{...styles.tableHeaderCell}}>Narxi</Text>
+            <Text style={{...styles.tableHeaderCell}}>Summasi</Text>
           </View>
           {
             order?.products?.map((product, index) => (
               <View key={product?.id} style={styles.tableRow}>
-                <Text style={{ ...styles.tableCell, maxWidth: '30px' }}>{index + 1}</Text>
-                <Text style={{ ...styles.tableCell, maxWidth: '280px', minWidth: '280px', textAlign: 'left' }}>{product?.product?.name}</Text>
-                <Text style={{ ...styles.tableCell, maxWidth: '35px' }} />
-                <Text style={{ ...styles.tableCell }}>{product?.count}</Text>
-                <Text style={{ ...styles.tableCell }}>{product?.price}</Text>
-                <Text style={{ ...styles.tableCell }}>{priceFormat(product?.count * product?.price)}</Text>
+                <Text style={{...styles.tableCell, maxWidth: '30px'}}>{index + 1}</Text>
+                <Text style={{...styles.tableCell, maxWidth: '280px', minWidth: '280px', textAlign: 'left'}}>{product?.product?.name}</Text>
+                <Text style={{...styles.tableCell, maxWidth: '35px'}} />
+                <Text style={{...styles.tableCell}}>{product?.count}</Text>
+                <Text style={{...styles.tableCell}}>{product?.price}</Text>
+                <Text style={{...styles.tableCell}}>{priceFormat(product?.count * product?.price)}</Text>
               </View>
             ))
           }
         </View>
         <View>
           <View style={styles.totalCalcTextWrapper}>
-            <Text style={styles.totalCalcText}>Жами сумма:</Text>
+            <Text style={styles.totalCalcText}>Jami summa:</Text>
             <Text style={styles.totalCalcPriceText}>{order?.totalPrice}</Text>
           </View>
           <View style={styles.totalCalcTextWrapper}>
-            <Text style={styles.totalCalcText}>Тулов килинди:</Text>
+            <Text style={styles.totalCalcText}>{'To\'lov qilindi:'}</Text>
             <Text style={styles.totalCalcPriceText}>{order?.totalPayment || 0}</Text>
           </View>
         </View>

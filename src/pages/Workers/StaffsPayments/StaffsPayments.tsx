@@ -1,27 +1,27 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { observer } from 'mobx-react';
-import { DownloadOutlined, PlusCircleOutlined } from '@ant-design/icons';
-import { useQuery } from '@tanstack/react-query';
-import { Button, DatePicker, DatePickerProps, Select, Table, Tooltip, Typography } from 'antd';
+import React, {useEffect, useMemo, useState} from 'react';
+import {observer} from 'mobx-react';
+import {DownloadOutlined, PlusCircleOutlined} from '@ant-design/icons';
+import {useQuery} from '@tanstack/react-query';
+import {Button, DatePicker, DatePickerProps, Select, Table, Tooltip, Typography} from 'antd';
 import classNames from 'classnames';
-import { getPaginationParams } from '@/utils/getPaginationParams';
-import { AddEditModal } from './AddEditModal';
-import styles from './staffs-payments.scss';
-import { clientsColumns } from './constants';
-import { staffsPaymentStore } from '@/stores/workers/staffs-payments';
 import dayjs from 'dayjs';
-import { staffsApi } from '@/api/staffs';
-import { priceFormat } from '@/utils/priceFormat';
-import { addNotification } from '@/utils';
-import { dateFormat } from '@/utils/getDateFormat';
-import { staffsPaymentsApi } from '@/api/staffs-payments/staffs-payments';
+import {staffsApi} from '@/api/staffs';
+import {staffsPaymentsApi} from '@/api/staffs-payments/staffs-payments';
+import {staffsPaymentStore} from '@/stores/workers/staffs-payments';
+import {addNotification} from '@/utils';
+import {dateFormat} from '@/utils/getDateFormat';
+import {getPaginationParams} from '@/utils/getPaginationParams';
+import {priceFormat} from '@/utils/priceFormat';
+import {AddEditModal} from './AddEditModal';
+import {clientsColumns} from './constants';
+import styles from './staffs-payments.scss';
 
 const cn = classNames.bind(styles);
 
 export const StaffsPayments = observer(() => {
   const [downloadLoading, setDownLoadLoading] = useState(false);
 
-  const { data: clientsInfoData, isLoading: loading } = useQuery({
+  const {data: clientsInfoData, isLoading: loading} = useQuery({
     queryKey: [
       'getStaffsPayments',
       staffsPaymentStore.pageNumber,
@@ -40,7 +40,7 @@ export const StaffsPayments = observer(() => {
       }),
   });
 
-  const { data: sellerData, isLoading: loadingSeller } = useQuery({
+  const {data: sellerData, isLoading: loadingSeller} = useQuery({
     queryKey: ['getSellers'],
     queryFn: () =>
       staffsApi.getStaffs({
@@ -125,8 +125,8 @@ export const StaffsPayments = observer(() => {
           <Select
             options={sellerOptions}
             onChange={handleChangeSeller}
-            style={{ width: '200px' }}
-            placeholder="Sotuvchilar"
+            style={{width: '200px'}}
+            placeholder="Xodim"
             loading={loadingSeller}
             allowClear
           />
@@ -144,14 +144,14 @@ export const StaffsPayments = observer(() => {
             defaultValue={dayjs(staffsPaymentStore.endDate)}
             allowClear={false}
           />
-          <Tooltip placement="top" title="Excelda yuklash">
+          <Tooltip placement="top" title="Excelga yuklash">
             <Button
               onClick={handleDownloadExcel}
               type="primary"
               icon={<DownloadOutlined />}
               loading={downloadLoading}
             >
-              Exelda Yuklash
+              Excelga yuklash
             </Button>
           </Tooltip>
           <Button
@@ -180,7 +180,7 @@ export const StaffsPayments = observer(() => {
           <Table.Summary.Row>
             <Table.Summary.Cell colSpan={2} index={1} />
             <Table.Summary.Cell index={2}>
-              <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+              <div style={{textAlign: 'center', fontWeight: 'bold'}}>
                 Jami: {priceFormat(clientsInfoData?.data?.calc?.sum)}
               </div>
             </Table.Summary.Cell>

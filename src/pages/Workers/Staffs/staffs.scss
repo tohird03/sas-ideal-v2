@@ -7,6 +7,8 @@
 .staffs__filter {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  gap: 12px;
 }
 .staffs__search {
   width: 250px;

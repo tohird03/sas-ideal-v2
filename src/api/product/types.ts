@@ -1,8 +1,8 @@
-import { IStaff } from "@/stores/profile/types";
-import { IPagination } from "../types";
-import { IOrder } from "../order/types";
-import { IIncomeOrder } from "../income-products/types";
-import { IReturnedOrder } from "../returned-order/types";
+import {IStaff} from '@/stores/profile/types';
+import {IIncomeOrder} from '../income-products/types';
+import {IOrder} from '../order/types';
+import {IReturnedOrder} from '../returned-order/types';
+import {IPagination} from '../types';
 
 export interface IGetProductsParams extends IPagination {
   search?: string;
@@ -35,29 +35,29 @@ export interface IAddEditProduct {
 
 export interface IProductTotalCalc {
   calcPage: {
-    totalPrice: number,
-    totalCost: number,
-    totalCount: number,
-  },
+    totalPrice: number;
+    totalCost: number;
+    totalCount: number;
+  };
   calcTotal: {
-    totalPrice: number,
-    totalCost: number,
-    totalCount: number,
-  }
+    totalPrice: number;
+    totalCost: number;
+    totalCount: number;
+  };
 }
 
 export interface IGetSingleProductParams {
   productId: string;
   startDate: Date;
-  endDate: Date
+  endDate: Date;
 }
 
 export interface IGetSingleProducts {
   products: ISingleProductStory[];
-  actualCount: number,
-  totalSellingCount: number,
-  totalArrivalCount: number,
-  totalReturningCount: number,
+  actualCount: number;
+  totalSellingCount: number;
+  totalArrivalCount: number;
+  totalReturningCount: number;
 }
 
 export interface ISingleProductStory {

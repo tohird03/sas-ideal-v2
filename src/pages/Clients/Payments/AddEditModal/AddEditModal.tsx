@@ -1,15 +1,16 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { observer } from 'mobx-react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Form, Input, InputNumber, Modal, Select, Spin } from 'antd';
-import { clientsInfoStore, paymentsStore } from '@/stores/clients';
-import { addNotification } from '@/utils';
-import { priceFormat } from '@/utils/priceFormat';
-import { clientsPaymentApi } from '@/api/payment';
-import { IAddEditPaymentParams } from '@/api/payment/types';
-import { IClientsInfo } from '@/api/clients';
+import React, {useEffect, useMemo, useState} from 'react';
+import {observer} from 'mobx-react';
+import {CloseOutlined, EditOutlined, PlusOutlined} from '@ant-design/icons';
+import {useQuery, useQueryClient} from '@tanstack/react-query';
+import {Form, Input, InputNumber, Modal, Select, Spin} from 'antd';
+import {IClientsInfo} from '@/api/clients';
+import {clientsPaymentApi} from '@/api/payment';
+import {IAddEditPaymentParams} from '@/api/payment/types';
+import {clientsInfoStore, paymentsStore} from '@/stores/clients';
+import {addNotification} from '@/utils';
+import {priceFormat} from '@/utils/priceFormat';
 
-const filterOption = (input: string, option?: { label: string, value: string }) =>
+const filterOption = (input: string, option?: {label: string, value: string}) =>
   (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
 export const AddEditModal = observer(() => {
@@ -20,7 +21,7 @@ export const AddEditModal = observer(() => {
   const [selectedClient, setSelectedClient] = useState<IClientsInfo | null>(null);
 
   // GET DATAS
-  const { data: clientsData, isLoading: loadingClients } = useQuery({
+  const {data: clientsData, isLoading: loadingClients} = useQuery({
     queryKey: ['getClients', searchClients],
     queryFn: () =>
       clientsInfoStore.getClients({
@@ -40,7 +41,7 @@ export const AddEditModal = observer(() => {
       })
         .then(() => {
           addNotification('To\'lov muvaffaqiyatli tahrirlandi!');
-          queryClient.invalidateQueries({ queryKey: ['getPayments'] });
+          queryClient.invalidateQueries({queryKey: ['getPayments']});
           handleModalClose();
         })
         .catch(addNotification)
@@ -54,7 +55,7 @@ export const AddEditModal = observer(() => {
     clientsPaymentApi.addPayment(values)
       .then(() => {
         addNotification('To\'lov muvaffaqiyatli qo\'shildi!');
-        queryClient.invalidateQueries({ queryKey: ['getPayments'] });
+        queryClient.invalidateQueries({queryKey: ['getPayments']});
         handleModalClose();
       })
       .catch(addNotification)
@@ -102,21 +103,21 @@ export const AddEditModal = observer(() => {
     }
   }, [paymentsStore.singlePayment]);
 
-  console.log(selectedClient);
-
   return (
     <Modal
       open={paymentsStore.isOpenAddEditPaymentModal}
       title={(
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+        <div style={{display: 'flex', alignItems: 'center', gap: '20px'}}>
           {paymentsStore.singlePayment ? 'To\'lovni tahrirlash' : 'To\'lov qo\'shish'}
-          <p style={{ margin: 0 }}>{selectedClient && `Mijoz qarzi: ${priceFormat(selectedClient?.debt)}`}</p>
+          <p style={{margin: 0}}>{selectedClient && `Mijoz qarzi: ${priceFormat(selectedClient?.debt)}`}</p>
         </div>
       )}
       onCancel={handleModalClose}
       onOk={handleModalOk}
       okText={paymentsStore.singlePayment ? 'To\'lovni tahrirlash' : 'To\'lov qo\'shish'}
+      okButtonProps={{icon: paymentsStore.singlePayment ? <EditOutlined /> : <PlusOutlined />}}
       cancelText="Bekor qilish"
+      cancelButtonProps={{icon: <CloseOutlined />}}
       centered
       confirmLoading={loading}
     >
@@ -128,7 +129,7 @@ export const AddEditModal = observer(() => {
       >
         <Form.Item
           label="Mijoz"
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
           name="userId"
         >
           <Select
@@ -136,7 +137,7 @@ export const AddEditModal = observer(() => {
             placeholder="Mijoz"
             loading={loadingClients}
             optionFilterProp="children"
-            notFoundContent={loadingClients ? <Spin style={{ margin: '10px' }} /> : null}
+            notFoundContent={loadingClients ? <Spin style={{margin: '10px'}} /> : null}
             filterOption={filterOption}
             onSearch={handleSearchClients}
             onClear={handleClearClient}
@@ -157,9 +158,9 @@ export const AddEditModal = observer(() => {
           initialValue={0}
         >
           <InputNumber
-            placeholder="Bank kartasi orqali to'lov"
+            placeholder="Naqd to\'lov"
             defaultValue={0}
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             formatter={(value) => priceFormat(value!)}
           />
         </Form.Item>
@@ -171,7 +172,7 @@ export const AddEditModal = observer(() => {
           <InputNumber
             placeholder="Bank kartasi orqali to'lov"
             defaultValue={0}
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             formatter={(value) => priceFormat(value!)}
           />
         </Form.Item>
@@ -182,7 +183,7 @@ export const AddEditModal = observer(() => {
         >
           <InputNumber
             placeholder="Bank o'tkazmasi orqali to'lov"
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             formatter={(value) => priceFormat(value!)}
           />
         </Form.Item>
@@ -193,7 +194,7 @@ export const AddEditModal = observer(() => {
         >
           <InputNumber
             placeholder="Boshqa usullar bilan to'lov"
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             formatter={(value) => priceFormat(value!)}
           />
         </Form.Item>
@@ -203,11 +204,11 @@ export const AddEditModal = observer(() => {
         >
           <Input.TextArea
             placeholder="To'lov haqida ma'lumot"
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             rows={4}
             maxLength={100}
             showCount
-            autoSize={{ minRows: 2, maxRows: 6 }}
+            autoSize={{minRows: 2, maxRows: 6}}
           />
         </Form.Item>
       </Form>

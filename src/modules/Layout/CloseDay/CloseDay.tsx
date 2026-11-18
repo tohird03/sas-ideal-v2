@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
-import { observer } from 'mobx-react';
-import { LogoutOutlined } from '@ant-design/icons';
-import { Button, Modal, Typography } from 'antd';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { authApi } from '@/api';
-import { addNotification } from '@/utils';
-import { authStore } from '@/stores/auth';
+import React, {useState} from 'react';
+import {observer} from 'mobx-react';
+import {CloseOutlined, PoweroffOutlined} from '@ant-design/icons';
+import {useMutation} from '@tanstack/react-query';
+import {Button, Modal} from 'antd';
+import {authApi} from '@/api';
+import {authStore} from '@/stores/auth';
+import {addNotification} from '@/utils';
 
 export const CloseDay: React.FC = observer(() => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const queryClient = useQueryClient();
 
-  const { mutate: closeDay } =
+  const {mutate: closeDay} =
     useMutation({
       mutationKey: ['closeDay'],
       mutationFn: () => authApi.closeDay(),
@@ -38,7 +37,7 @@ export const CloseDay: React.FC = observer(() => {
     <div>
       {authStore?.staffInfo?.phone === '998981157574' &&
         <span onClick={showModal} className="logout">
-          <Button style={{ width: '100%' }} type="primary" danger>Kunni yopish</Button>
+          <Button style={{width: '100%'}} type="primary" danger>Kunni yopish</Button>
         </span>
       }
       <Modal
@@ -47,8 +46,9 @@ export const CloseDay: React.FC = observer(() => {
         onOk={handleOk}
         onCancel={handleCancel}
         okText="Yopish"
-        okButtonProps={{ style: { backgroundColor: 'red' } }}
+        okButtonProps={{icon: <PoweroffOutlined />, style: {backgroundColor: 'red'}}}
         cancelText="Bekor qilish"
+        cancelButtonProps={{icon: <CloseOutlined />}}
       />
     </div>
   );

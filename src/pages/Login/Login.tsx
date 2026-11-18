@@ -1,21 +1,22 @@
 'use client';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { observer } from 'mobx-react';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
-import classNames from 'classnames';
-import { useLocalStorage } from 'usehooks-ts';
-import { ILoginForm } from '@/api/auth/types';
-import { ROUTES } from '@/constants';
-import { authStore, TokenType } from '@/stores/auth';
-import { addNotification } from '@/utils/addNotification';
-import styles from './login.scss';
 // @ts-ignore
 import 'react-phone-input-2/lib/style.css';
+
+import React, {useState} from 'react';
 // @ts-ignore
 import PhoneInput from 'react-phone-input-2';
+import {useNavigate} from 'react-router-dom';
+import {observer} from 'mobx-react';
+import {EyeInvisibleOutlined, EyeTwoTone} from '@ant-design/icons';
+import {Button, Form, Input} from 'antd';
+import classNames from 'classnames';
+import {useLocalStorage} from 'usehooks-ts';
 import ProductImg from '/public/images/sas-product.jpg';
+import {ILoginForm} from '@/api/auth/types';
+import {ROUTES} from '@/constants';
+import {authStore, TokenType} from '@/stores/auth';
+import {addNotification} from '@/utils/addNotification';
+import styles from './login.scss';
 
 const cn = classNames.bind(styles);
 
@@ -33,7 +34,7 @@ export const Login = observer(() => {
         if (res?.data) {
           setAccessToken(res?.data?.data?.tokens?.accessToken);
           navigate(ROUTES.productsOrder);
-          addNotification('Success login');
+          addNotification('Muvaffaqiyatli kirdingiz');
           authStore.getProfile();
         }
       })
@@ -116,8 +117,8 @@ c20 28 41 50 45 50 3 0 23 -17 42 -37z"
           >
             <Form.Item
               name="phone"
-              label="Phone"
-              rules={[{ required: true }]}
+              label="Telefon raqami"
+              rules={[{required: true}]}
             >
               <PhoneInput
                 country={'uz'}
@@ -132,11 +133,11 @@ c20 28 41 50 45 50 3 0 23 -17 42 -37z"
             </Form.Item>
             <Form.Item
               name="password"
-              label="Password"
-              rules={[{ required: true }]}
+              label="Parol"
+              rules={[{required: true}]}
             >
               <Input.Password
-                placeholder="Password"
+                placeholder="Parolni kiriting"
                 iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
               />
             </Form.Item>
@@ -148,7 +149,7 @@ c20 28 41 50 45 50 3 0 23 -17 42 -37z"
                 block
                 disabled={loading}
               >
-                Login
+                Kirish
               </Button>
             </div>
           </Form>

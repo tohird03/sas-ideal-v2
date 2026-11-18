@@ -1,12 +1,11 @@
 import React from 'react';
 import {ColumnType} from 'antd/es/table';
+import {ISupplierDebtFilter, ISupplierInfo} from '@/api/supplier/types';
+import {SupplierNameLink} from '@/pages/ActionComponents/SupplierNameLink';
+import {getFullDateFormat} from '@/utils/getDateFormat';
+import {formatPhoneNumber} from '@/utils/phoneFormat';
+import {priceFormat} from '@/utils/priceFormat';
 import {Action} from './Action';
-import { formatPhoneNumber } from '@/utils/phoneFormat';
-import { priceFormat } from '@/utils/priceFormat';
-import { dateFormatterWithStringMonth } from '@/utils/dateFormat';
-import { SupplierNameLink } from '@/pages/ActionComponents/SupplierNameLink';
-import { getFullDateFormat } from '@/utils/getDateFormat';
-import { ISupplierDebtFilter, ISupplierInfo } from '@/api/supplier/types';
 
 export const supplierColumns: ColumnType<ISupplierInfo>[] = [
   {
@@ -48,7 +47,7 @@ export const supplierColumns: ColumnType<ISupplierInfo>[] = [
   {
     key: 'action',
     dataIndex: 'action',
-    title: 'Action',
+    title: 'Amallar',
     align: 'center',
     render: (value, record) => <Action supplier={record} />,
   },

@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
-import { observer } from 'mobx-react';
-import { Button, DatePicker, DatePickerProps, Table, Typography } from 'antd';
+import React, {useState} from 'react';
+import {useParams} from 'react-router-dom';
+import {observer} from 'mobx-react';
+import {DownloadOutlined} from '@ant-design/icons';
+import {Button, DatePicker, DatePickerProps, Table, Typography} from 'antd';
 import classNames from 'classnames';
-import { useMediaQuery } from '@/utils/mediaQuery';
-import { deedColumns } from './constants';
-import { useParams } from 'react-router-dom';
-import styles from './deed.scss';
-import { singleSupplierStore} from '@/stores/supplier';
-import { DownloadOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
-import { addNotification } from '@/utils';
-import { priceFormat } from '@/utils/priceFormat';
-import { supplierInfoApi } from '@/api/supplier/supplier';
+import {supplierInfoApi} from '@/api/supplier/supplier';
+import {singleSupplierStore} from '@/stores/supplier';
+import {addNotification} from '@/utils';
+import {priceFormat} from '@/utils/priceFormat';
+import {deedColumns} from './constants';
+import styles from './deed.scss';
 
 const cn = classNames.bind(styles);
 
 export const Deed = observer(() => {
-  const { supplierId } = useParams();
+  const {supplierId} = useParams();
   const [downloadLoadingDeed, setDownLoadLoadingDeed] = useState(false);
   const [downloadLoadingDeedProduct, setDownLoadLoadingDeedProduct] = useState(false);
 
@@ -103,7 +102,7 @@ export const Deed = observer(() => {
             icon={<DownloadOutlined />}
             loading={downloadLoadingDeed}
           >
-            Exelda Yuklash
+            Excelga yuklash
           </Button>
           <Button
             onClick={handleDownloadExcelDeedProducts}
@@ -120,19 +119,19 @@ export const Deed = observer(() => {
         columns={deedColumns}
         dataSource={singleSupplierStore?.activeSupplier?.deedInfo?.deeds || []}
         bordered
-        summary={(pageData) => (
+        summary={() => (
           <>
             <Table.Summary.Row>
               <Table.Summary.Cell colSpan={3} index={0}>
                 Jami
               </Table.Summary.Cell>
               <Table.Summary.Cell index={2}>
-                <div style={{ textAlign: 'center' }}>
+                <div style={{textAlign: 'center'}}>
                   {priceFormat(singleSupplierStore?.activeSupplier?.deedInfo?.totalDebit)}
                 </div>
               </Table.Summary.Cell>
               <Table.Summary.Cell index={2}>
-                <div style={{ textAlign: 'center' }}>
+                <div style={{textAlign: 'center'}}>
                   {priceFormat(singleSupplierStore?.activeSupplier?.deedInfo?.totalCredit)}
                 </div>
               </Table.Summary.Cell>
@@ -142,7 +141,7 @@ export const Deed = observer(() => {
                 Umumiy farq
               </Table.Summary.Cell>
               <Table.Summary.Cell colSpan={2} index={2}>
-                <div style={{ textAlign: 'center' }}>
+                <div style={{textAlign: 'center'}}>
                   {priceFormat(singleSupplierStore?.activeSupplier?.deedInfo?.debt)}
                 </div>
               </Table.Summary.Cell>

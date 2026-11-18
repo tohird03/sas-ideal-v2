@@ -1,5 +1,5 @@
-import { ISeller } from "../clients";
-import { IPagination } from "../types";
+import {ISeller} from '../clients';
+import {IPagination} from '../types';
 
 export interface IGetStaffsPaymentsParams extends IPagination {
   userId?: string;
@@ -19,5 +19,5 @@ export interface IAddEditStaffsPayment {
   id?: string;
   sum: number;
   description: string;
-  userId: string
+  userId: string;
 }

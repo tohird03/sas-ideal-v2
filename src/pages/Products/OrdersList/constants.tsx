@@ -1,12 +1,12 @@
 import React from 'react';
-import { ColumnType } from 'antd/es/table';
-import { Action } from './Action';
-import { IOrder, IOrderProducts, IOrderStatus, ITotalOrderPaymentCalc } from '@/api/order/types';
-import { Tag } from 'antd';
-import { getFullDateFormat } from '@/utils/getDateFormat';
-import { priceFormat } from '@/utils/priceFormat';
-import { ClientNameLink } from '@/pages/ActionComponents/ClientNameLink';
-import { PaymentStatus } from './PaymentStatus';
+import {Tag} from 'antd';
+import {ColumnType} from 'antd/es/table';
+import {IOrder, IOrderProducts, IOrderStatus, ITotalOrderPaymentCalc} from '@/api/order/types';
+import {ClientNameLink} from '@/pages/ActionComponents/ClientNameLink';
+import {getFullDateFormat} from '@/utils/getDateFormat';
+import {priceFormat} from '@/utils/priceFormat';
+import {Action} from './Action';
+import {PaymentStatus} from './PaymentStatus';
 
 export const ordersColumns: ColumnType<IOrder>[] = [
   {
@@ -49,7 +49,7 @@ export const ordersColumns: ColumnType<IOrder>[] = [
     dataIndex: 'seller',
     title: 'Sotuvchi',
     align: 'center',
-    render: (value, record) => <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.staff?.fullname}</p>,
+    render: (value, record) => <p style={{margin: 0, fontWeight: 'bold'}}>{record?.staff?.fullname}</p>,
   },
   {
     key: 'totalPrice',
@@ -120,7 +120,7 @@ export const ordersColumns: ColumnType<IOrder>[] = [
   {
     key: 'action',
     dataIndex: 'action',
-    title: 'Action',
+    title: 'Amallar',
     align: 'center',
     render: (value, record) => <Action orders={record} />,
   },
@@ -152,8 +152,8 @@ export const ordersInfoColumns: ColumnType<IOrder>[] = [
     title: 'Mijoz',
     align: 'center',
     render: (value, record) => (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '5px 0' }}>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.client?.fullname}</p>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '5px 0'}}>
+        <p style={{margin: 0, fontWeight: 'bold'}}>{record?.client?.fullname}</p>
         <i>+{record?.client?.phone}</i>
       </div>
     ),
@@ -164,8 +164,8 @@ export const ordersInfoColumns: ColumnType<IOrder>[] = [
     title: 'Sotuvchi',
     align: 'center',
     render: (value, record) => (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '5px 0' }}>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{record?.staff?.fullname}</p>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '5px 0'}}>
+        <p style={{margin: 0, fontWeight: 'bold'}}>{record?.staff?.fullname}</p>
         <i>+{record?.staff?.phone}</i>
       </div>
     ),

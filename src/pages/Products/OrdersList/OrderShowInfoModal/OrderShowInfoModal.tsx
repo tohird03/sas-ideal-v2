@@ -1,18 +1,16 @@
-import React, { useEffect } from 'react';
-import { Button, Modal, Table, notification } from 'antd';
-import { observer } from 'mobx-react';
-import { ordersStore } from '@/stores/products';
-import { DataTable } from '@/components/Datatable/datatable';
-import { ordersInfoColumns, ordersInfoPaymentColumns, ordersInfoProductsColumns } from '../constants';
-import styles from '../orders.scss';
+import React, {useEffect} from 'react';
+import {observer} from 'mobx-react';
+import {CloseOutlined} from '@ant-design/icons';
+import {Button, Modal, notification, Table} from 'antd';
 import classNames from 'classnames';
-import { useMediaQuery } from '@/utils/mediaQuery';
+import {DataTable} from '@/components/Datatable/datatable';
+import {ordersStore} from '@/stores/products';
+import {ordersInfoColumns, ordersInfoPaymentColumns, ordersInfoProductsColumns} from '../constants';
+import styles from '../orders.scss';
 
 const cn = classNames.bind(styles);
 
 export const OrderShowInfoModal = observer(() => {
-  const isMobile = useMediaQuery('(max-width: 800px)');
-
   const handleModalClose = () => {
     ordersStore.setSingleOrder(null);
     ordersStore.setIsOpenShowOrderModal(false);
@@ -34,15 +32,16 @@ export const OrderShowInfoModal = observer(() => {
       title={'Sotuv'}
       onCancel={handleModalClose}
       cancelText="Bekor qilish"
+      cancelButtonProps={{icon: <CloseOutlined />}}
       centered
-      style={{ top: 0, padding: 0 }}
+      style={{top: 0, padding: 0}}
       bodyStyle={{
         height: '85vh',
         overflow: 'auto',
       }}
       width="100vw"
       footer={
-        <Button onClick={handleModalClose}>
+        <Button onClick={handleModalClose} icon={<CloseOutlined />}>
           Yopish
         </Button>
       }

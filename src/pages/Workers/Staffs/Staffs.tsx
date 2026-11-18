@@ -52,7 +52,7 @@ export const Staffs = observer(() => {
   return (
     <main>
       <div className={cn('staffs__head')}>
-        <Typography.Title level={3}>Xodimlar</Typography.Title>
+        <Typography.Title level={3}>Xodimlar ro&apos;yxati</Typography.Title>
         <div className={cn('staffs__filter')}>
           <Input
             placeholder="Xodimlarni qidirish"

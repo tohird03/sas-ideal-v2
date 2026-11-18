@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {observer} from 'mobx-react';
+import {CloseOutlined, EditOutlined, PlusOutlined} from '@ant-design/icons';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {Form, Input, InputNumber, Modal} from 'antd';
+import {clientsInfoApi, IAddEditClientInfo} from '@/api/clients';
 import {clientsInfoStore} from '@/stores/clients';
 import {addNotification} from '@/utils';
 import {regexPhoneNumber} from '@/utils/phoneFormat';
-import { IAddEditClientInfo, IUpdateUser, clientsInfoApi } from '@/api/clients';
 
 export const AddEditModal = observer(() => {
   const [form] = Form.useForm();
@@ -84,7 +85,9 @@ export const AddEditModal = observer(() => {
       onCancel={handleModalClose}
       onOk={handleModalOk}
       okText={clientsInfoStore.singleClientInfo ? 'Mijozni tahrirlash' : 'Mijozni qo\'shish'}
+      okButtonProps={{icon: clientsInfoStore.singleClientInfo ? <EditOutlined /> : <PlusOutlined />}}
       cancelText="Bekor qilish"
+      cancelButtonProps={{icon: <CloseOutlined />}}
       centered
       confirmLoading={loading}
     >
@@ -99,7 +102,7 @@ export const AddEditModal = observer(() => {
           label="Mijoz"
           rules={[{required: true}]}
         >
-          <Input placeholder="F.I.O" />
+          <Input placeholder="F.I.Sh." />
         </Form.Item>
         <Form.Item
           name="phone"

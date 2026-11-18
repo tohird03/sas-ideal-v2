@@ -1,20 +1,21 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {observer} from 'mobx-react';
+import {CloseOutlined, EditOutlined, PlusOutlined} from '@ant-design/icons';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {Form, Input, InputNumber, Modal, Select} from 'antd';
+import {staffsApi} from '@/api/staffs';
+import {staffsPaymentsApi} from '@/api/staffs-payments/staffs-payments';
+import {IAddEditStaffsPayment} from '@/api/staffs-payments/types';
+import {staffsPaymentStore} from '@/stores/workers/staffs-payments';
 import {addNotification} from '@/utils';
-import { priceFormat } from '@/utils/priceFormat';
-import { staffsApi } from '@/api/staffs';
-import { staffsPaymentStore } from '@/stores/workers/staffs-payments';
-import { IAddEditStaffsPayment } from '@/api/staffs-payments/types';
-import { staffsPaymentsApi } from '@/api/staffs-payments/staffs-payments';
+import {priceFormat} from '@/utils/priceFormat';
 
 export const AddEditModal = observer(() => {
   const [form] = Form.useForm();
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
 
-  const { data: sellerData, isLoading: loadingSeller } = useQuery({
+  const {data: sellerData, isLoading: loadingSeller} = useQuery({
     queryKey: ['getSellers'],
     queryFn: () =>
       staffsApi.getStaffs({
@@ -99,7 +100,9 @@ export const AddEditModal = observer(() => {
       onCancel={handleModalClose}
       onOk={handleModalOk}
       okText={staffsPaymentStore.singleStaffPayments ? 'Xodim hisobotini tahrirlash' : 'Xodim hisobotini qo\'shish'}
+      okButtonProps={{icon: staffsPaymentStore.singleStaffPayments ? <EditOutlined /> : <PlusOutlined />}}
       cancelText="Bekor qilish"
+      cancelButtonProps={{icon: <CloseOutlined />}}
       centered
       confirmLoading={loading}
     >
@@ -116,7 +119,7 @@ export const AddEditModal = observer(() => {
         >
           <Select
             options={sellerOptions}
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             placeholder="Xodim"
             loading={loadingSeller}
             allowClear
@@ -131,7 +134,7 @@ export const AddEditModal = observer(() => {
           <InputNumber
             placeholder="To'lov qiymati"
             defaultValue={0}
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             formatter={(value) => priceFormat(value!)}
           />
         </Form.Item>
@@ -142,11 +145,11 @@ export const AddEditModal = observer(() => {
         >
           <Input.TextArea
             placeholder="To'lov haqida ma'lumot"
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             rows={4}
             maxLength={100}
             showCount
-            autoSize={{ minRows: 2, maxRows: 6 }}
+            autoSize={{minRows: 2, maxRows: 6}}
           />
         </Form.Item>
       </Form>

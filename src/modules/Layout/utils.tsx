@@ -1,7 +1,7 @@
 import React from 'react';
-import { MenuProps } from 'antd';
-import { IMenuItems } from './types';
-import { IStaff } from '@/stores/profile/types';
+import {MenuProps} from 'antd';
+import {IStaff} from '@/stores/profile/types';
+import {IMenuItems} from './types';
 
 export type MenuItem = Required<MenuProps>['items'][number];
 
@@ -46,4 +46,3 @@ export const generateAllMenuItems = (list: IMenuItems[] | undefined, staff: ISta
       return null;
     })
     .filter(item => item !== null) as MenuItem[];
-

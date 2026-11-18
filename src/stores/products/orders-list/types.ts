@@ -1,5 +1,5 @@
-import { IClientsInfo } from "@/api/clients";
-import { IPayment } from "@/api/types";
+import {IClientsInfo} from '@/api/clients';
+import {IPayment} from '@/api/types';
 
 export interface IOrderPayment {
   client?: IClientsInfo;

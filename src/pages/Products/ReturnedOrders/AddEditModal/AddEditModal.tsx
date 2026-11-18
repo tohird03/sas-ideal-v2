@@ -1,32 +1,32 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { observer } from 'mobx-react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Button, DatePicker, Form, InputNumber, Modal, Popconfirm, Select, Spin } from 'antd';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {observer} from 'mobx-react';
+import {CheckOutlined, CloseOutlined, DeleteOutlined, EditOutlined, PlusOutlined, SaveOutlined} from '@ant-design/icons';
+import {useQuery, useQueryClient} from '@tanstack/react-query';
+import {Button, DatePicker, Form, InputNumber, Modal, Popconfirm, Select, Spin} from 'antd';
+import {ColumnType} from 'antd/es/table';
 import classNames from 'classnames';
-import { addNotification } from '@/utils';
-import { productsListStore, returnedOrdersStore } from '@/stores/products';
-import { priceFormat } from '@/utils/priceFormat';
-import { CheckOutlined, DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { DataTable } from '@/components/Datatable/datatable';
-import { useMediaQuery } from '@/utils/mediaQuery';
 import dayjs from 'dayjs';
-import { clientsInfoStore } from '@/stores/clients';
-import styles from '../returned-orders.scss';
 import {
   IAddOrderModalForm,
   IOrderProducts,
 } from '@/api/order/types';
-import { ColumnType } from 'antd/es/table';
-import { IAddProductsToReturnedOrder, IAddReturnedOrderProducts, IAddReturnedOrders } from '@/api/returned-order/types';
-import { returnedOrderApi } from '@/api/returned-order/returned-order';
+import {returnedOrderApi} from '@/api/returned-order/returned-order';
+import {IAddProductsToReturnedOrder, IAddReturnedOrderProducts, IAddReturnedOrders} from '@/api/returned-order/types';
+import {DataTable} from '@/components/Datatable/datatable';
+import {clientsInfoStore} from '@/stores/clients';
+import {productsListStore, returnedOrdersStore} from '@/stores/products';
+import {addNotification} from '@/utils';
+import {useMediaQuery} from '@/utils/mediaQuery';
+import {priceFormat} from '@/utils/priceFormat';
+import styles from '../returned-orders.scss';
 
 const cn = classNames.bind(styles);
 
-const filterOption = (input: string, option?: { label: string, value: string }) =>
+const filterOption = (input: string, option?: {label: string, value: string}) =>
   (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
-const countColor = (count: number, min_amount: number): string =>
-  count < 0 ? 'red' : count < min_amount ? 'orange' : 'green';
+const countColor = (count: number, minAmount: number): string =>
+  count < 0 ? 'red' : count < minAmount ? 'orange' : 'green';
 
 export const AddEditModal = observer(() => {
   const [form] = Form.useForm();
@@ -40,7 +40,7 @@ export const AddEditModal = observer(() => {
   const countInputRef = useRef<HTMLInputElement>(null);
 
   // GET DATAS
-  const { data: clientsData, isLoading: loadingClients } = useQuery({
+  const {data: clientsData, isLoading: loadingClients} = useQuery({
     queryKey: ['getClients', searchClients],
     queryFn: () =>
       clientsInfoStore.getClients({
@@ -50,7 +50,7 @@ export const AddEditModal = observer(() => {
       }),
   });
 
-  const { data: productsData, isLoading: loadingProducts } = useQuery({
+  const {data: productsData, isLoading: loadingProducts} = useQuery({
     queryKey: ['getProducts', searchProducts],
     queryFn: () =>
       productsListStore.getProducts({
@@ -102,7 +102,7 @@ export const AddEditModal = observer(() => {
         .then(() => {
           form.resetFields(['productId', 'price', 'count']);
           returnedOrdersStore.getSingleOrder(returnedOrdersStore?.singleReturnedOrder?.id!);
-          queryClient.invalidateQueries({ queryKey: ['getReturnedOrders'] });
+          queryClient.invalidateQueries({queryKey: ['getReturnedOrders']});
         })
         .catch(addNotification)
         .finally(() => {
@@ -124,7 +124,7 @@ export const AddEditModal = observer(() => {
         if (res?.data?.id) {
           returnedOrdersStore.getSingleOrder(res?.data?.id!);
         }
-        queryClient.invalidateQueries({ queryKey: ['getReturnedOrders'] });
+        queryClient.invalidateQueries({queryKey: ['getReturnedOrders']});
       })
       .catch(addNotification)
       .finally(() => {
@@ -180,17 +180,17 @@ export const AddEditModal = observer(() => {
             setLoading(false);
           });
 
-        queryClient.invalidateQueries({ queryKey: ['getReturnedOrders'] });
+        queryClient.invalidateQueries({queryKey: ['getReturnedOrders']});
       })
       .catch(addNotification);
   };
 
   const handleChangePrice = (value: number | null) => {
-    setIsUpdatingProduct({ ...isUpdatingProduct!, price: value || 0 });
+    setIsUpdatingProduct({...isUpdatingProduct!, price: value || 0});
   };
 
   const handleChangeCount = (value: number | null) => {
-    setIsUpdatingProduct({ ...isUpdatingProduct!, count: value || 0 });
+    setIsUpdatingProduct({...isUpdatingProduct!, count: value || 0});
   };
 
   const handleSaveAndUpdateOrderProduct = () => {
@@ -210,7 +210,7 @@ export const AddEditModal = observer(() => {
                 setLoading(false);
               });
 
-            queryClient.invalidateQueries({ queryKey: ['getReturnedOrders'] });
+            queryClient.invalidateQueries({queryKey: ['getReturnedOrders']});
             addNotification('Mahsulot muvaffaqiyatli o\'zgartildi!');
           }
         })
@@ -275,23 +275,25 @@ export const AddEditModal = observer(() => {
     {
       key: 'action',
       dataIndex: 'action',
-      title: 'Action',
+      title: 'Amallar',
       align: 'center',
       render: (value, record) => (
-        <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center'}}>
           {isUpdatingProduct?.id === record?.id ? (
             <Button
               onClick={handleSaveAndUpdateOrderProduct}
               type="primary"
-              style={{ backgroundColor: 'green' }}
+              style={{backgroundColor: 'green'}}
               icon={<CheckOutlined />}
-            />
+            >Saqlash
+            </Button>
           ) : (
             <Button
               onClick={handleEditProduct.bind(null, record)}
               type="primary"
               icon={<EditOutlined />}
-            />
+            >Tahrirlash
+            </Button>
           )
           }
           <Popconfirm
@@ -299,10 +301,11 @@ export const AddEditModal = observer(() => {
             description="Rostdan ham bu mahsulotni o'chirishni xohlaysizmi?"
             onConfirm={handleDeleteProduct.bind(null, record?.id)}
             okText="Ha"
-            okButtonProps={{ style: { background: 'red' } }}
+            okButtonProps={{icon: <CheckOutlined />, style: {background: 'red'}}}
             cancelText="Yo'q"
+            cancelButtonProps={{icon: <CloseOutlined />}}
           >
-            <Button type="primary" icon={<DeleteOutlined />} danger />
+            <Button type="primary" icon={<DeleteOutlined />} danger >{'O\'chirish'}</Button>
           </Popconfirm>
         </div>
       ),
@@ -422,7 +425,7 @@ export const AddEditModal = observer(() => {
       keyboard
       title={(
         <div className={cn('order__add-products-header')}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <div style={{display: 'flex', alignItems: 'center', gap: '20px'}}>
             {returnedOrdersStore?.singleReturnedOrder?.id ? 'Qaytarishni tahrirlash' : 'Yangi qaytarish'}
           </div>
           <div>
@@ -430,6 +433,7 @@ export const AddEditModal = observer(() => {
               type="primary"
               onClick={handleOpenPaymentModal}
               disabled={!returnedOrdersStore?.singleReturnedOrder?.id}
+              icon={<SaveOutlined />}
             >
               Qaytuvni saqlash
             </Button>
@@ -438,8 +442,9 @@ export const AddEditModal = observer(() => {
       )}
       onCancel={handleModalClose}
       cancelText="Bekor qilish"
+      cancelButtonProps={{icon: <CloseOutlined />}}
       centered
-      style={{ top: 0, padding: 0 }}
+      style={{top: 0, padding: 0}}
       bodyStyle={{
         height: '85vh',
         overflow: 'auto',
@@ -457,7 +462,7 @@ export const AddEditModal = observer(() => {
       >
         <Form.Item
           label="Mijoz"
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
           name="clientId"
         >
           <Select
@@ -465,7 +470,7 @@ export const AddEditModal = observer(() => {
             placeholder="Mijoz"
             loading={loadingClients}
             optionFilterProp="children"
-            notFoundContent={loadingClients ? <Spin style={{ margin: '10px' }} /> : null}
+            notFoundContent={loadingClients ? <Spin style={{margin: '10px'}} /> : null}
             filterOption={filterOption}
             onSearch={handleSearchClients}
             onClear={handleClearClient}
@@ -477,19 +482,19 @@ export const AddEditModal = observer(() => {
         </Form.Item>
         <Form.Item
           label="Qaytaruv sanasi"
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
           name="date"
           initialValue={dayjs()}
         >
           <DatePicker
             defaultValue={dayjs()}
             format="DD.MM.YYYY"
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
           />
         </Form.Item>
         <Form.Item
           label="Mahsulot"
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
           name="productId"
         >
           <Select
@@ -497,7 +502,7 @@ export const AddEditModal = observer(() => {
             placeholder="Mahsulot"
             loading={loadingProducts}
             optionFilterProp="children"
-            notFoundContent={loadingProducts ? <Spin style={{ margin: '10px' }} /> : null}
+            notFoundContent={loadingProducts ? <Spin style={{margin: '10px'}} /> : null}
             filterOption={false}
             onSearch={handleSearchProducts}
             onChange={handleChangeProduct}
@@ -522,7 +527,7 @@ export const AddEditModal = observer(() => {
                       {product?.price}
                     </p>
                     <p
-                      style={{ backgroundColor: `${countColor(product?.count, product?.minAmount)}` }}
+                      style={{backgroundColor: `${countColor(product?.count, product?.minAmount)}`}}
                       className={cn('income-order__add-product-count')}
                     >
                       {product?.count} dona
@@ -535,25 +540,25 @@ export const AddEditModal = observer(() => {
         </Form.Item>
         <Form.Item
           label="Narxi"
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
           name="price"
           initialValue={0}
         >
           <InputNumber
-            placeholder="Sotib olingan narxi"
-            style={{ width: '100%' }}
+            placeholder="Narxi"
+            style={{width: '100%'}}
             formatter={(value) => priceFormat(value!)}
             onKeyUp={handleChangePriceForm}
           />
         </Form.Item>
         <Form.Item
           label="Mahsulot soni"
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
           name="count"
         >
           <InputNumber
             placeholder="Mahsulot sonini kiriting"
-            style={{ width: '100%' }}
+            style={{width: '100%'}}
             ref={countInputRef}
             formatter={(value) => priceFormat(value!)}
           />
@@ -574,12 +579,12 @@ export const AddEditModal = observer(() => {
         data={returnedOrdersStore?.singleReturnedOrder?.products || []}
         isMobile={isMobile}
         pagination={false}
-        scroll={{ y: 300 }}
+        scroll={{y: 300}}
         rowClassName={rowClassName}
       />
 
       <div>
-        <p style={{ textAlign: 'end', fontSize: '24px', fontWeight: 'bold' }}>Umumiy qiymati: {
+        <p style={{textAlign: 'end', fontSize: '24px', fontWeight: 'bold'}}>Umumiy qiymati: {
           priceFormat(returnedOrdersStore?.singleReturnedOrder?.products?.reduce((prev, current) => prev + (current?.price * current?.count), 0))
         }
         </p>

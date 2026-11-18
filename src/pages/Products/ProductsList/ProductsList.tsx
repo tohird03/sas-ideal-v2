@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { observer } from 'mobx-react';
-import { DownloadOutlined, PlusCircleOutlined } from '@ant-design/icons';
-import { useQuery } from '@tanstack/react-query';
-import { Button, Input, Table, Tooltip, Typography } from 'antd';
+import React, {useEffect, useState} from 'react';
+import {observer} from 'mobx-react';
+import {DownloadOutlined, PlusCircleOutlined} from '@ant-design/icons';
+import {useQuery} from '@tanstack/react-query';
+import {Button, Input, Table, Tooltip, Typography} from 'antd';
 import classNames from 'classnames';
-import { getPaginationParams } from '@/utils/getPaginationParams';
-import { AddEditModal } from './AddEditModal';
+import {productsApi} from '@/api/product/product';
+import {IProducts} from '@/api/product/types';
+import {authStore} from '@/stores/auth';
+import {productsListStore} from '@/stores/products';
+import {addNotification} from '@/utils';
+import {getPaginationParams} from '@/utils/getPaginationParams';
+import {priceFormat} from '@/utils/priceFormat';
+import {AddEditModal} from './AddEditModal';
+import {productsListColumn} from './constants';
 import styles from './product-list.scss';
-import { productsListColumn } from './constants';
-import { productsListStore } from '@/stores/products';
-import { IProducts } from '@/api/product/types';
-import { priceFormat } from '@/utils/priceFormat';
-import { authStore } from '@/stores/auth';
-import { productsApi } from '@/api/product/product';
-import { addNotification } from '@/utils';
 
 const cn = classNames.bind(styles);
 
 export const ProductsList = observer(() => {
   const [downloadLoading, setDownLoadLoading] = useState(false);
 
-  const { data: productsData, isLoading: loading } = useQuery({
+  const {data: productsData, isLoading: loading} = useQuery({
     queryKey: [
       'getProducts',
       productsListStore.pageNumber,
@@ -82,7 +82,7 @@ export const ProductsList = observer(() => {
   return (
     <main>
       <div className={cn('product-list__head')}>
-        <Typography.Title level={3}>Mahsulotlar</Typography.Title>
+        <Typography.Title level={3}>Mahsulotlar ro&apos;yxati</Typography.Title>
         <div className={cn('product-list__filter')}>
           <Input
             placeholder="Mahsulotni qidirish"
@@ -90,14 +90,14 @@ export const ProductsList = observer(() => {
             onChange={handleSearch}
             className={cn('product-list__search')}
           />
-          <Tooltip placement="top" title="Excelda yuklash">
+          <Tooltip placement="top" title="Excelga yuklash">
             <Button
               onClick={handleDownloadExcel}
               type="primary"
               icon={<DownloadOutlined />}
               loading={downloadLoading}
             >
-              Exelda Yuklash
+              Excelga yuklash
             </Button>
           </Tooltip>
           <Button
@@ -128,28 +128,28 @@ export const ProductsList = observer(() => {
           <Table.Summary.Row>
             <Table.Summary.Cell colSpan={2} index={1} />
             <Table.Summary.Cell index={2}>
-              <div style={{ textAlign: 'center', fontWeight: 'bold' }}>
+              <div style={{textAlign: 'center', fontWeight: 'bold'}}>
                 Umumiy:
-                <p style={{ margin: '0', fontWeight: 'bold' }}>{productsData?.data?.calc?.calcTotal?.totalCount}</p>
+                <p style={{margin: '0', fontWeight: 'bold'}}>{productsData?.data?.calc?.calcTotal?.totalCount}</p>
               </div>
             </Table.Summary.Cell>
             <Table.Summary.Cell index={2}>
-              <div style={{ textAlign: 'center', fontWeight: 'bold', maxWidth: '150px', margin: '0 auto' }}>
+              <div style={{textAlign: 'center', fontWeight: 'bold', maxWidth: '150px', margin: '0 auto'}}>
                 Umumiy sotib olingan narxi:
-                <p style={{ margin: '0', fontWeight: 'bold' }}>{priceFormat(productsData?.data?.calc?.calcTotal?.totalCost)}</p>
+                <p style={{margin: '0', fontWeight: 'bold'}}>{priceFormat(productsData?.data?.calc?.calcTotal?.totalCost)}</p>
               </div>
             </Table.Summary.Cell>
             <Table.Summary.Cell index={3}>
-              <div style={{ textAlign: 'center', fontWeight: 'bold', maxWidth: '150px', margin: '0 auto' }}>
+              <div style={{textAlign: 'center', fontWeight: 'bold', maxWidth: '150px', margin: '0 auto'}}>
                 Umumiy sotilish narxi:
-                <p style={{ margin: '0', fontWeight: 'bold' }}>{priceFormat(productsData?.data?.calc?.calcTotal?.totalPrice)}</p>
+                <p style={{margin: '0', fontWeight: 'bold'}}>{priceFormat(productsData?.data?.calc?.calcTotal?.totalPrice)}</p>
               </div>
             </Table.Summary.Cell>
             {authStore?.staffInfo?.role === 'super_admin' && (
               <Table.Summary.Cell index={3}>
-                <div style={{ textAlign: 'center', fontWeight: 'bold', maxWidth: '150px', margin: '0 auto' }}>
+                <div style={{textAlign: 'center', fontWeight: 'bold', maxWidth: '150px', margin: '0 auto'}}>
                   Umumiy qiymati:
-                  <p style={{ margin: '0', fontWeight: 'bold' }}>
+                  <p style={{margin: '0', fontWeight: 'bold'}}>
                     {priceFormat(productsData?.data?.data?.reduce((cur, prev) => cur + prev?.cost * prev?.count, 0))}
                   </p>
                 </div>

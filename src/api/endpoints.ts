@@ -1,4 +1,4 @@
-import { TStage } from './types';
+import {TStage} from './types';
 export const stage = process.env.REACT_APP_STAGE || 'dev';
 
 export enum Endpoints {
@@ -53,6 +53,7 @@ export enum Endpoints {
 
   OrderStatistic = '/selling/total-stats',
   OrderGraphStatistic = '/selling/period-stats',
+  ProductRank = '/selling/product-rank',
 
   OrderAllExcel = '/selling/excel-download/many',
   OrderOneExcel = '/selling/excel-download/one',
@@ -95,27 +96,27 @@ export enum Endpoints {
   Supplier = '/user/supplier',
 
   // PRODUCTS
-  products = '/product',
-  productsIncomeOrder = '/incomingOrder',
-  productsIncomeOrderProduct = '/incomingProduct',
-  productsOrder = '/Order',
-  productsOrderStatistic = '/Order/statistica',
-  productsOrderProduct = '/orderProduct',
-  productsOrderExel = '/Order/upload',
-  productsIncomeOrderExel = '/incomingOrder/upload',
-  productsReturnedOrderExel = '/returned-order/upload',
+  Products = '/product',
+  ProductsIncomeOrder = '/incomingOrder',
+  ProductsIncomeOrderProduct = '/incomingProduct',
+  ProductsOrder = '/Order',
+  ProductsOrderStatistic = '/Order/statistica',
+  ProductsOrderProduct = '/orderProduct',
+  ProductsOrderExel = '/Order/upload',
+  ProductsIncomeOrderExel = '/incomingOrder/upload',
+  ProductsReturnedOrderExel = '/returned-order/upload',
 
   // PAYMENT
-  payment = '/client-payment/many',
-  paymentUpload = '/payment/upload',
-  incomePayment = '/incomingOrderPayment',
+  Payment = '/client-payment/many',
+  PaymentUpload = '/payment/upload',
+  IncomePayment = '/incomingOrderPayment',
 
   // ROLES
-  role = '/role',
+  Role = '/role',
 
   // RETURNED ORDER
-  returnedOrder = '/returned-order',
-  returnedProduct = '/returned-product',
+  ReturnedOrder = '/returned-order',
+  ReturnedProduct = '/returned-product',
 }
 
 const config: Record<string, TStage> = {

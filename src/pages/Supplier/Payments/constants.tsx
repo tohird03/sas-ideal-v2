@@ -1,10 +1,10 @@
 import React from 'react';
 import {ColumnType} from 'antd/es/table';
+import {ISupplierPayments} from '@/api/payment-income/types';
+import {SupplierNameLink} from '@/pages/ActionComponents/SupplierNameLink';
+import {getFullDateFormat} from '@/utils/getDateFormat';
+import {priceFormat} from '@/utils/priceFormat';
 import {Action} from './Action';
-import { priceFormat } from '@/utils/priceFormat';
-import { getFullDateFormat } from '@/utils/getDateFormat';
-import { ISupplierPayments } from '@/api/payment-income/types';
-import { SupplierNameLink } from '@/pages/ActionComponents/SupplierNameLink';
 
 export const paymentsColumns: ColumnType<ISupplierPayments>[] = [
   {
@@ -63,7 +63,7 @@ export const paymentsColumns: ColumnType<ISupplierPayments>[] = [
   {
     key: 'action',
     dataIndex: 'action',
-    title: 'Action',
+    title: 'Amallar',
     align: 'center',
     render: (value, record) => <Action supplierPayment={record} />,
   },

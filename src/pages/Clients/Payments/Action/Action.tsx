@@ -1,29 +1,29 @@
-import React, { FC } from 'react';
-import { observer } from 'mobx-react';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Button, Popconfirm } from 'antd';
-import { addNotification } from '@/utils';
-import { IClientsPayments } from '@/api/payment/types';
-import { paymentsStore } from '@/stores/clients';
-import { clientsPaymentApi } from '@/api/payment';
-import { authStore } from '@/stores/auth';
-import { isShowEditPayments } from '@/utils/isShowEdit';
+import React, {FC} from 'react';
+import {observer} from 'mobx-react';
+import {CheckOutlined, CloseOutlined, DeleteOutlined, EditOutlined} from '@ant-design/icons';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {Button, Popconfirm} from 'antd';
+import {clientsPaymentApi} from '@/api/payment';
+import {IClientsPayments} from '@/api/payment/types';
+import {authStore} from '@/stores/auth';
+import {paymentsStore} from '@/stores/clients';
+import {addNotification} from '@/utils';
+import {isShowEditPayments} from '@/utils/isShowEdit';
 
 type Props = {
   clientPayment: IClientsPayments;
 };
 
-export const Action: FC<Props> = observer(({ clientPayment }) => {
+export const Action: FC<Props> = observer(({clientPayment}) => {
   const queryClient = useQueryClient();
 
-  const { mutate: deletePayment } =
+  const {mutate: deletePayment} =
     useMutation({
       mutationKey: ['deletePayment'],
       mutationFn: (id: string) => clientsPaymentApi.deletePayment(id!),
       onSuccess: () => {
         addNotification('To\'lov o\'chirildi');
-        queryClient.invalidateQueries({ queryKey: ['getPayments'] });
+        queryClient.invalidateQueries({queryKey: ['getPayments']});
       },
       onError: addNotification,
     });
@@ -40,7 +40,7 @@ export const Action: FC<Props> = observer(({ clientPayment }) => {
   const isShowEdit = isShowEditPayments(clientPayment?.createdAt, authStore.isCloseDay);
 
   return (
-    <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
+    <div style={{display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center'}}>
       {isShowEdit && (
         <>
           <Button onClick={handleEditPayment} type="primary" icon={<EditOutlined />} />
@@ -49,8 +49,9 @@ export const Action: FC<Props> = observer(({ clientPayment }) => {
             description="Rostdan ham bu to'lovni o'chirishni xohlaysizmi?"
             onConfirm={handleDeletePayment}
             okText="Ha"
-            okButtonProps={{ style: { background: 'red' } }}
+            okButtonProps={{icon: <CheckOutlined />, style: {background: 'red'}}}
             cancelText="Yo'q"
+            cancelButtonProps={{icon: <CloseOutlined />}}
           >
             <Button type="primary" icon={<DeleteOutlined />} danger />
           </Popconfirm>

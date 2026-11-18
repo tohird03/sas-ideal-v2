@@ -1,6 +1,6 @@
-import { ColumnsType } from 'antd/es/table';
-import { getFullDateFormat } from '@/utils/getDateFormat';
-import { ISingleProductStory } from '@/api/product/types';
+import {ColumnsType} from 'antd/es/table';
+import {ISingleProductStory} from '@/api/product/types';
+import {getFullDateFormat} from '@/utils/getDateFormat';
 
 export const singleProductColumns: ColumnsType<ISingleProductStory> = [
   {

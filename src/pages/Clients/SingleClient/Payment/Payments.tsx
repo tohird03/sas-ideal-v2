@@ -1,18 +1,18 @@
 import React from 'react';
+import {useParams} from 'react-router-dom';
 import {observer} from 'mobx-react';
 import {PlusCircleOutlined} from '@ant-design/icons';
 import {useQuery} from '@tanstack/react-query';
 import {Button, DatePicker, DatePickerProps, Input, Typography} from 'antd';
 import classNames from 'classnames';
+import dayjs from 'dayjs';
 import {DataTable} from '@/components/Datatable/datatable';
+import {singleClientStore} from '@/stores/clients';
 import {getPaginationParams} from '@/utils/getPaginationParams';
 import {useMediaQuery} from '@/utils/mediaQuery';
 import {AddEditModal} from './AddEditModal';
-import styles from './payments.scss';
 import {paymentsColumns} from './constants';
-import { singleClientStore } from '@/stores/clients';
-import { useParams } from 'react-router-dom';
-import dayjs from 'dayjs';
+import styles from './payments.scss';
 
 const cn = classNames.bind(styles);
 

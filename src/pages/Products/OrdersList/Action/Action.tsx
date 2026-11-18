@@ -1,37 +1,44 @@
-import React, { FC, useState } from 'react';
-import { observer } from 'mobx-react';
-import { DeleteOutlined, DownloadOutlined, EditOutlined, EyeOutlined, MoreOutlined, PrinterOutlined } from '@ant-design/icons';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Button, Dropdown, Menu, Popconfirm, Tooltip } from 'antd';
-import { addNotification } from '@/utils';
-import { IOrder} from '@/api/order/types';
-import { ordersStore } from '@/stores/products';
-import { ordersApi } from '@/api/order';
+import React, {FC, useState} from 'react';
+import {observer} from 'mobx-react';
+import {
+  CheckOutlined,
+  CloseOutlined,
+  DeleteOutlined,
+  DownloadOutlined,
+  EditOutlined,
+  EyeOutlined,
+  MoreOutlined,
+  PrinterOutlined,
+} from '@ant-design/icons';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {Button, Dropdown, Menu, Popconfirm, Tooltip} from 'antd';
 import Item from 'antd/es/list/Item';
+import {ordersApi} from '@/api/order';
+import {IOrder} from '@/api/order/types';
+import {ordersStore} from '@/stores/products';
+import {addNotification} from '@/utils';
 
 type Props = {
   orders: IOrder;
 };
 
-import { MyDocument } from './Pdf-save';
-import { PDFDownloadLink, pdf } from '@react-pdf/renderer';
-import { getFullDateFormat } from '@/utils/getDateFormat';
-import { useParams } from 'react-router-dom';
-import { singleClientStore } from '@/stores/clients';
-import { isShowEdit } from '@/utils/isShowEdit';
-import { authStore } from '@/stores/auth';
+import {useParams} from 'react-router-dom';
+import {pdf, PDFDownloadLink} from '@react-pdf/renderer';
+import {singleClientStore} from '@/stores/clients';
+import {getFullDateFormat} from '@/utils/getDateFormat';
+import {MyDocument} from './Pdf-save';
 
-export const Action: FC<Props> = observer(({ orders }) => {
+export const Action: FC<Props> = observer(({orders}) => {
   const queryClient = useQueryClient();
-  const { clientId } = useParams();
+  const {clientId} = useParams();
   const [downloadLoading, setDownLoadLoading] = useState(false);
 
-  const { mutate: deleteOrder } =
+  const {mutate: deleteOrder} =
     useMutation({
       mutationKey: ['deleteOrder'],
       mutationFn: (id: string) => ordersApi.deleteOrder(id!),
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['getOrders'] });
+        queryClient.invalidateQueries({queryKey: ['getOrders']});
 
         if (clientId) {
           singleClientStore.getSingleClient({id: clientId});
@@ -93,17 +100,15 @@ export const Action: FC<Props> = observer(({ orders }) => {
     deleteOrder(orders?.id);
   };
 
-  const showEdit = isShowEdit(orders.status, orders.date, authStore.isCloseDay);
-
   const menuSaveOptions = (
-    <Menu style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+    <Menu style={{padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px'}}>
       <Item key="excel">
         <Button
           onClick={handleDownloadExcel}
           icon={<DownloadOutlined />}
           loading={downloadLoading}
         >
-          Excelda yuklash
+          Excelga yuklash
         </Button>
       </Item>
       <Item key="check">
@@ -129,14 +134,14 @@ export const Action: FC<Props> = observer(({ orders }) => {
           document={<MyDocument order={orders} />}
           fileName={orders?.client?.fullname}
         >
-          <DownloadOutlined style={{ marginRight: '10px' }} /> Pdfda yuklash
+          <DownloadOutlined style={{marginRight: '10px'}} /> PDF yuklab olish
         </PDFDownloadLink>
       </Item>
     </Menu>
   );
 
   const menuOrderOptions = (
-    <Menu style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+    <Menu style={{padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px'}}>
       <Item key="edit">
         <Button onClick={handleEditOrder} icon={<EditOutlined />} >
           Sotuvni tahrirlash
@@ -148,8 +153,9 @@ export const Action: FC<Props> = observer(({ orders }) => {
           description="Rostdan ham bu sotuvni o'chirishni xohlaysizmi?"
           onConfirm={handleDelete}
           okText="Ha"
-          okButtonProps={{ style: { background: 'red' } }}
+          okButtonProps={{icon: <CheckOutlined />, style: {background: 'red'}}}
           cancelText="Yo'q"
+          cancelButtonProps={{icon: <CloseOutlined />}}
         >
           <Button icon={<DeleteOutlined />} danger >
             Sotuvni o&lsquo;chirish
@@ -160,19 +166,19 @@ export const Action: FC<Props> = observer(({ orders }) => {
   );
 
   return (
-    <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
+    <div style={{display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center'}}>
       <Tooltip placement="top" title="Sotuvni ko'rish">
         <Button onClick={handleShowOrder} icon={<EyeOutlined />} />
       </Tooltip>
       <Dropdown placement="bottomRight" overlay={menuSaveOptions} trigger={['click']}>
         <Button icon={<DownloadOutlined />} />
       </Dropdown>
-      
-        <Dropdown placement="bottomRight" overlay={menuOrderOptions} trigger={['click']}>
-          <Button icon={<MoreOutlined />} />
-        </Dropdown>
-    
-    
+
+      <Dropdown placement="bottomRight" overlay={menuOrderOptions} trigger={['click']}>
+        <Button icon={<MoreOutlined />} />
+      </Dropdown>
+
+
     </div>
   );
 });
