@@ -1,6 +1,6 @@
 import './chat.scss';
 
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 import {ArrowLeftOutlined, DeleteOutlined, SendOutlined} from '@ant-design/icons';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import {Button, Empty, Input, notification, Popconfirm, Spin, Tag, Typography} from 'antd';
@@ -52,6 +52,7 @@ export const ChatPage = () => {
   const queryClient = useQueryClient();
   const isMobile = useMediaQuery('(max-width: 800px)');
   const threadRef = useRef<HTMLDivElement>(null);
+  const pinToLatest = useRef(true);
   const [search, setSearch] = useState('');
   const [client, setClient] = useState<ChatListClient | null>(null);
   const [text, setText] = useState('');
@@ -90,11 +91,26 @@ export const ChatPage = () => {
     }).catch(() => undefined);
   }, [client?.id, messages.length, queryClient]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    pinToLatest.current = true;
+  }, [client?.id]);
+
+  useLayoutEffect(() => {
     const node = threadRef.current;
 
-    if (node) node.scrollTop = node.scrollHeight;
-  }, [messages.length, client?.id]);
+    if (!node) return undefined;
+
+    const pin = () => {
+      if (pinToLatest.current) node.scrollTop = node.scrollHeight;
+    };
+
+    pin();
+    const observer = new ResizeObserver(pin);
+
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, [messages, client?.id]);
 
   const handleSend = async () => {
     const value = text.trim();
@@ -140,7 +156,9 @@ export const ChatPage = () => {
     <main className={`chat-page${client && isMobile ? ' chat-page--open' : ''}`}>
       <div className="chat-page__head">
         <Typography.Title level={3}>Chat</Typography.Title>
-        <div className="chat-page__filter">
+      </div>
+      <div className="chat-page__body">
+        <aside className="chat-page__clients">
           <Input
             className="chat-page__search"
             placeholder="Mijozlarni qidirish"
@@ -148,10 +166,6 @@ export const ChatPage = () => {
             value={search}
             onChange={(event) => setSearch(event.target.value)}
           />
-        </div>
-      </div>
-      <div className="chat-page__body">
-        <aside className="chat-page__clients">
           <div className="chat-page__client-list">
             {(inboxLoading || clientsLoading) && <Spin style={{margin: 16}} />}
             {!inboxLoading && conversations.length === 0 && directory.length === 0 && (
@@ -205,7 +219,15 @@ export const ChatPage = () => {
                 </span>
                 {client.telegram?.isActive ? <Tag color="green">telegram</Tag> : <Tag>telegram yo&apos;q</Tag>}
               </div>
-              <div className="chat-page__thread" ref={threadRef}>
+              <div
+                className="chat-page__thread"
+                ref={threadRef}
+                onScroll={(event) => {
+                  const node = event.currentTarget;
+
+                  pinToLatest.current = node.scrollHeight - node.scrollTop - node.clientHeight < 48;
+                }}
+              >
                 {messagesLoading && <Spin />}
                 {messagesError && <div className="chat-page__empty">Chat yuklanmadi</div>}
                 {!messagesLoading && !messagesError && messages.length === 0 && <div className="chat-page__empty">Xabarlar yo&apos;q</div>}
