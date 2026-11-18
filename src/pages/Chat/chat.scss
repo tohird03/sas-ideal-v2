@@ -37,11 +37,12 @@
   border-right: 1px solid #f0f0f0;
 }
 
-.chat-page__search {
-  width: auto;
+.chat-page__clients .ant-input-affix-wrapper.chat-page__search {
+  width: calc(100% - 24px);
   max-width: calc(100% - 24px);
   margin: 12px;
   flex: 0 0 auto;
+  box-sizing: border-box;
 }
 
 .chat-page__client-list {
@@ -212,7 +213,8 @@
 }
 
 @media only screen and (max-width: 800px) {
-  .chat-page__search {
+  .chat-page__clients .ant-input-affix-wrapper.chat-page__search {
+    width: calc(100% - 24px);
     max-width: calc(100% - 24px);
   }
 
