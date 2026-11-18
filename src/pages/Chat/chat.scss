@@ -37,12 +37,14 @@
   border-right: 1px solid #f0f0f0;
 }
 
-.chat-page__clients .ant-input-affix-wrapper.chat-page__search {
-  width: calc(100% - 24px);
-  max-width: calc(100% - 24px);
-  margin: 12px;
+.chat-page__search-bar {
   flex: 0 0 auto;
-  box-sizing: border-box;
+  padding: 12px;
+}
+
+.chat-page__search-bar .chat-page__search {
+  width: 100%;
+  max-width: 100%;
 }
 
 .chat-page__client-list {
@@ -213,11 +215,6 @@
 }
 
 @media only screen and (max-width: 800px) {
-  .chat-page__clients .ant-input-affix-wrapper.chat-page__search {
-    width: calc(100% - 24px);
-    max-width: calc(100% - 24px);
-  }
-
   .chat-page__clients {
     width: 100%;
     max-width: none;

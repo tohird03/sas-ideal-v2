@@ -56,8 +56,8 @@ const config: webpack.Configuration = {
     new CleanWebpackPlugin(),
     new Dotenv({systemvars: true}),
     new MiniCssExtractPlugin({
-      filename: "static/styles/[name].css",
-      chunkFilename: "static/styles/[id].css",
+      filename: "static/styles/[name].[contenthash].css",
+      chunkFilename: "static/styles/[id].[contenthash].css",
     }),
   ],
   stats: 'errors-warnings',

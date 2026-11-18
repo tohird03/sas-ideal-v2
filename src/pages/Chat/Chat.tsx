@@ -159,13 +159,15 @@ export const ChatPage = () => {
       </div>
       <div className="chat-page__body">
         <aside className="chat-page__clients">
-          <Input
-            className="chat-page__search"
-            placeholder="Mijozlarni qidirish"
-            allowClear
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-          />
+          <div className="chat-page__search-bar">
+            <Input
+              className="chat-page__search"
+              placeholder="Mijozlarni qidirish"
+              allowClear
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+            />
+          </div>
           <div className="chat-page__client-list">
             {(inboxLoading || clientsLoading) && <Spin style={{margin: 16}} />}
             {!inboxLoading && conversations.length === 0 && directory.length === 0 && (
