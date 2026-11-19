@@ -82,6 +82,64 @@ export interface IGetClientDeedExcelParams {
   deedEndDate?: Date;
 }
 
+export enum ClientActivityBucket {
+  Month1 = 'month1',
+  Month2 = 'month2',
+  Month3 = 'month3',
+  Inactive = 'inactive',
+}
+
+export interface IClientActivityRow {
+  id: string;
+  fullname: string;
+  phone: string;
+  lastPurchaseDate: string;
+}
+
+export interface IClientActivityResponse {
+  totalCount: number;
+  pagesCount: number;
+  pageSize: number;
+  data: IClientActivityRow[];
+}
+
+export interface IGetClientActivityParams {
+  bucket: ClientActivityBucket;
+  pageNumber: number;
+  pageSize: number;
+}
+
+export interface IClientProfitSummary {
+  clientCount: number;
+  saleCount: number;
+  revenue: number;
+  profit: number;
+}
+
+export interface IClientProfitRow {
+  id: string;
+  fullname: string;
+  phone: string;
+  saleCount: number;
+  revenue: number;
+  profit: number;
+}
+
+export interface IClientProfitResponse {
+  totalCount: number;
+  pagesCount: number;
+  pageSize: number;
+  summary: IClientProfitSummary;
+  data: IClientProfitRow[];
+}
+
+export interface IGetClientProfitParams {
+  startDate: Date;
+  endDate: Date;
+  pageNumber: number;
+  pageSize: number;
+}
+
 export interface IGetClientsStatisticParams extends IPagination{
   startDate?: Date;
   endDate?: Date;

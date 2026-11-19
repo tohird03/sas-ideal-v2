@@ -4,9 +4,13 @@ import {INetworkConfig, Instance} from '../instance';
 import {IResponse} from '../types';
 import {
   IAddEditClientInfo,
+  IClientActivityResponse,
+  IClientProfitResponse,
   IClientsInfo,
   IClientStatistic,
+  IGetClientActivityParams,
   IGetClientDeedExcelParams,
+  IGetClientProfitParams,
   IGetClientsInfoParams,
   IGetClientsStatisticParams,
   IGetSingleClientParams,
@@ -39,6 +43,12 @@ class ClientsInfoApi extends Instance {
 
   getClientsStatistic = (params: IGetClientsStatisticParams): Promise<IResponse<IClientStatistic[]>> =>
     this.get(Endpoints.ClientsStatistic, {params: {...params, debtType: 'gt'}});
+
+  getClientActivity = (params: IGetClientActivityParams): Promise<{data: IClientActivityResponse}> =>
+    this.get(Endpoints.ClientActivity, {params});
+
+  getClientProfitRank = (params: IGetClientProfitParams): Promise<{data: IClientProfitResponse}> =>
+    this.get(Endpoints.ClientProfitRank, {params});
 
   getUploadClients = (params: IGetClientsInfoParams): Promise<any> =>
     this.get(Endpoints.UploadClient, {

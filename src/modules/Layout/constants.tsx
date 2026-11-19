@@ -16,6 +16,7 @@ import {
   ShoppingCartOutlined,
   ShoppingOutlined,
   SolutionOutlined,
+  TeamOutlined,
   UnorderedListOutlined,
   WalletOutlined,
 } from '@ant-design/icons';
@@ -37,6 +38,11 @@ export const mainMenuList: IMenuItems[] = [
       {
         label: <><RiseOutlined /> Mahsulotlar tahlili</>,
         key: ROUTES.productAnalytics,
+        roleKey: EPageAccess.STAT,
+      },
+      {
+        label: <><TeamOutlined /> Mijozlar tahlili</>,
+        key: ROUTES.clientAnalytics,
         roleKey: EPageAccess.STAT,
       },
     ],

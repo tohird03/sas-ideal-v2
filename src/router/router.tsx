@@ -7,6 +7,7 @@ import {Layout} from '@/modules/Layout';
 import {ClientStatistic} from '@/pages/Clients';
 import {
   ChatPage,
+  ClientAnalytics,
   ClientsInfo,
   ClientsPayments,
   IncomeProducts,
@@ -50,6 +51,10 @@ export const Router = ({isAuth}: Props) => useRoutes([
           {
             element: <Suspense fallback={<Loading />}><ProductAnalytics /></Suspense>,
             path: ROUTES.productAnalytics,
+          },
+          {
+            element: <Suspense fallback={<Loading />}><ClientAnalytics /></Suspense>,
+            path: ROUTES.clientAnalytics,
           },
           // STAFFS
           {

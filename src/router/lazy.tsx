@@ -14,6 +14,9 @@ export const Statistic = lazy(() =>
 export const ProductAnalytics = lazy(() =>
   import('@/pages/Home/ProductAnalytics').then(({ProductAnalytics}) => ({default: ProductAnalytics})).catch(handleCatchChunkError));
 
+export const ClientAnalytics = lazy(() =>
+  import('@/pages/Home/ClientAnalytics').then(({ClientAnalytics}) => ({default: ClientAnalytics})).catch(handleCatchChunkError));
+
 export const Login = lazy(() =>
   import('@/pages/Login').then(({Login}) => ({default: Login})).catch(handleCatchChunkError));
 
