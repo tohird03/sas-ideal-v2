@@ -41,7 +41,7 @@ export const activityColumns: ColumnsType<IClientActivityRow> = [
     title: 'Oxirgi xarid',
     width: 118,
     align: 'center',
-    render: (value: string) => dayjs(value).format('YYYY-MM-DD'),
+    render: (value: string | null) => (value ? dayjs(value).format('YYYY-MM-DD') : '—'),
   },
 ];
 

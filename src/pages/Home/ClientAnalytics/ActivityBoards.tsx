@@ -98,7 +98,7 @@ const ClientBucket = ({bucket, title, hint}: BucketProps) => {
 
 export const ActivityBoards = () => (
   <div className={cn('client-analytics__boards')}>
-    <Card className={cn('client-analytics__board')} title="Faol">
+    <Card className={cn('client-analytics__board', 'client-analytics__board--active')} title="Faol">
       <div className={cn('client-analytics__periods')}>
         <ClientBucket
           bucket={ClientActivityBucket.Month1}
@@ -117,11 +117,11 @@ export const ActivityBoards = () => (
         />
       </div>
     </Card>
-    <Card className={cn('client-analytics__board')} title="Faol emas">
+    <Card className={cn('client-analytics__board', 'client-analytics__board--inactive')} title="Faol emas">
       <ClientBucket
         bucket={ClientActivityBucket.Inactive}
         title="90 kundan ko‘p"
-        hint="Oxirgi xarid 90 kundan eski"
+        hint="90 kundan eski yoki umuman xarid qilmagan"
       />
     </Card>
   </div>

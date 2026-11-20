@@ -93,7 +93,7 @@ export interface IClientActivityRow {
   id: string;
   fullname: string;
   phone: string;
-  lastPurchaseDate: string;
+  lastPurchaseDate: string | null;
 }
 
 export interface IClientActivityResponse {

@@ -21,12 +21,36 @@
 }
 
 .client-analytics__board {
-  .ant-card-head {
-    border-bottom-color: #f18024;
-  }
-
   .ant-card-head-title {
     font-weight: 700;
+  }
+}
+
+.client-analytics__board--active {
+  background: #f3faf4;
+  border-color: #b7e4c7;
+
+  .ant-card-head {
+    background: #e5f6ea;
+    border-bottom-color: #8fceaa;
+  }
+
+  .ant-card-body {
+    background: #f3faf4;
+  }
+}
+
+.client-analytics__board--inactive {
+  background: #fff6f5;
+  border-color: #f3c1bb;
+
+  .ant-card-head {
+    background: #fdecea;
+    border-bottom-color: #e8a598;
+  }
+
+  .ant-card-body {
+    background: #fff6f5;
   }
 }
 
