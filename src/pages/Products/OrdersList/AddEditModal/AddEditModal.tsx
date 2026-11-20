@@ -59,6 +59,7 @@ export const AddEditModal = observer(() => {
   const {clientId} = useParams();
   const changeCostRef = useRef<any>(null);
   const changeCountRef = useRef<any>(null);
+  const pendingChannelSyncRef = useRef(false);
   const [selectedClient, setSelectedClient] = useState<IClientsInfo | null>(null);
 
   // GET DATAS
@@ -104,6 +105,7 @@ export const AddEditModal = observer(() => {
       clientId: form.getFieldValue('clientId'),
     })
       .then(() => {
+        pendingChannelSyncRef.current = false;
         queryClient.invalidateQueries({queryKey: ['getOrders']});
         if (clientId) {
           singleClientStore.getSingleClient({id: clientId});
@@ -211,18 +213,34 @@ export const AddEditModal = observer(() => {
   };
 
   const handleModalClose = () => {
-    if (clientId) {
-      singleClientStore.getSingleClient({
-        id: clientId,
-        deedEndDate: singleClientStore.endDate!,
-        deedStartDate: singleClientStore.startDate!,
-      });
+    const sellingId = ordersStore.order?.id;
+    const shouldNotify = pendingChannelSyncRef.current && !!sellingId;
+    pendingChannelSyncRef.current = false;
+
+    const finish = () => {
+      if (clientId) {
+        singleClientStore.getSingleClient({
+          id: clientId,
+          deedEndDate: singleClientStore.endDate!,
+          deedStartDate: singleClientStore.startDate!,
+        });
+      }
+      queryClient.invalidateQueries({queryKey: ['getOrders']});
+      ordersStore.setSingleOrder(null);
+      ordersStore.setOrder(null);
+      ordersStore.setIsSendUser(false);
+      ordersStore.setIsOpenAddEditNewOrderModal(false);
+    };
+
+    if (!shouldNotify || !sellingId) {
+      finish();
+      return;
     }
-    queryClient.invalidateQueries({queryKey: ['getOrders']});
-    ordersStore.setSingleOrder(null);
-    ordersStore.setOrder(null);
-    ordersStore.setIsSendUser(false);
-    ordersStore.setIsOpenAddEditNewOrderModal(false);
+
+    ordersApi.updateOrder({
+      id: sellingId,
+      send: ordersStore.isSendUser,
+    }).catch(addNotification).finally(finish);
   };
 
   // SEARCH OPTIONS
@@ -297,9 +315,14 @@ export const AddEditModal = observer(() => {
   };
 
   const handleDeleteProduct = (orderId: string) => {
+    const sellingId = ordersStore.order?.id;
+    const shouldNotifyChannel = ordersStore.order?.status === IOrderStatus.ACCEPTED;
+
     ordersApi.deleteOrderProduct(orderId)
       .then(() => {
-        ordersStore.getSingleOrder(ordersStore.order?.id!)
+        if (shouldNotifyChannel) pendingChannelSyncRef.current = true;
+        if (!sellingId) return;
+        ordersStore.getSingleOrder(sellingId)
           .finally(() => {
             setLoading(false);
             if (clientId) {
@@ -477,6 +500,7 @@ export const AddEditModal = observer(() => {
         send: ordersStore?.isSendUser,
       })
         .then(() => {
+          pendingChannelSyncRef.current = false;
           queryClient.invalidateQueries({queryKey: ['getOrders']});
           if (clientId) {
             singleClientStore.getSingleClient({id: clientId});
