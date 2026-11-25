@@ -1,0 +1,36 @@
+export const EXAMPLES = [
+  "Qarzi eng ko'p 10 ta mijoz",
+  "Shu oy sotuvlar kunlar bo'yicha grafikda",
+  "Eng ko'p foyda keltirgan 10 ta mahsulot",
+  "Xodimlarga shu yil qancha oylik berilgan?",
+  "Shu oy yetkazib beruvchilardan nima tushgan?",
+  "Eng ko'p qaytarilgan mahsulotlar",
+  "Umumiy qarzlar qancha?",
+  "Tugayotgan mahsulotlar",
+];
+
+// Backend asbobi nomi -> foydalanuvchiga ko'rinadigan holat
+export const TOOL_LABELS: Record<string, string> = {
+  get_clients: "Mijozlar o'qilmoqda...",
+  get_clients_report: 'Mijozlar hisoboti tayyorlanmoqda...',
+  get_client_activity: 'Mijozlar faolligi tekshirilmoqda...',
+  get_client_profit_rank: 'Mijozlar foydasi hisoblanmoqda...',
+  get_client_deed: 'Hisob-kitob tarixi olinmoqda...',
+  get_suppliers: "Yetkazib beruvchilar o'qilmoqda...",
+  get_supplier_deed: 'Hisob-kitob tarixi olinmoqda...',
+  get_products: "Mahsulotlar o'qilmoqda...",
+  get_product_rank: 'Mahsulotlar reytingi hisoblanmoqda...',
+  get_product_history: 'Mahsulot harakati olinmoqda...',
+  get_staffs: "Xodimlar o'qilmoqda...",
+  get_staff_payments: "Oyliklar o'qilmoqda...",
+  get_sales: "Sotuvlar o'qilmoqda...",
+  get_sale_items: "Sotilgan mahsulotlar o'qilmoqda...",
+  get_arrivals: "Kirimlar o'qilmoqda...",
+  get_arrival_items: "Tushirilgan mahsulotlar o'qilmoqda...",
+  get_returns: "Qaytarishlar o'qilmoqda...",
+  get_return_items: "Qaytarilgan mahsulotlar o'qilmoqda...",
+  get_client_payments: "Mijoz to'lovlari o'qilmoqda...",
+  get_supplier_payments: "Yetkazib beruvchi to'lovlari o'qilmoqda...",
+  get_reminders: "Eslatmalar o'qilmoqda...",
+  get_dashboard_stats: "Umumiy ko'rsatkichlar olinmoqda...",
+};

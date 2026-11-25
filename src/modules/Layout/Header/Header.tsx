@@ -1,12 +1,15 @@
 import './header.scss';
 
-import React from 'react';
-import {observer} from 'mobx-react';
-import {MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined} from '@ant-design/icons';
-import {Avatar, Button, Dropdown, Layout as AntdLayout, MenuProps, Typography} from 'antd';
-import {useStores} from '@/stores';
-import {CloseDay} from '../CloseDay';
-import {LogOut} from '../LogOut/LogOut';
+import React, { useState } from 'react';
+import { observer } from 'mobx-react';
+import { CloseOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons';
+import { Avatar, Button, Dropdown, Layout as AntdLayout, MenuProps, Typography, Modal } from 'antd';
+import { useStores } from '@/stores';
+import { CloseDay } from '../CloseDay';
+import { LogOut } from '../LogOut/LogOut';
+import { staffsStore } from '@/stores/workers';
+import { SparkIcon } from '@/pages/Ai/icons';
+import { AiChat } from '@/pages/Ai';
 
 type Props = {
   collapsed: boolean;
@@ -14,8 +17,17 @@ type Props = {
   isMobile?: boolean;
 };
 
-export const Header = observer(({collapsed, onCollapsedClick, isMobile}: Props) => {
-  const {authStore} = useStores();
+export const Header = observer(({ collapsed, onCollapsedClick, isMobile }: Props) => {
+  const { authStore } = useStores();
+  const [openAi, setOpenAi] = useState(false);
+
+  const handleOpenAiModal = () => {
+    setOpenAi(true);
+  }
+
+  const handleModalClose = () => {
+    setOpenAi(false);
+  }
 
   const items: MenuProps['items'] = [
     ...(isMobile
@@ -23,10 +35,10 @@ export const Header = observer(({collapsed, onCollapsedClick, isMobile}: Props) 
         key: '2',
         label: (
           <>
-            <Typography.Title level={5} style={{margin: '0'}}>
+            <Typography.Title level={5} style={{ margin: '0' }}>
               {authStore.staffInfo?.fullname}
             </Typography.Title>
-            <Typography.Title level={5} style={{margin: '0'}}>
+            <Typography.Title level={5} style={{ margin: '0' }}>
               +{authStore.staffInfo?.phone}
             </Typography.Title>
           </>
@@ -58,21 +70,49 @@ export const Header = observer(({collapsed, onCollapsedClick, isMobile}: Props) 
         }
 
         <div className="header__profile">
+          {authStore.staffInfo?.phone === '998981157574' && (
+            <div style={{ display: 'flex', cursor: 'pointer' }} onClick={handleOpenAiModal}>
+              <SparkIcon
+                color='orange'
+                width={30}
+                height={30}
+              />
+            </div>
+          )}
           {!isMobile && (
             <>
-              <Typography.Title level={5} style={{color: 'white', margin: '0'}}>
+              <Typography.Title level={5} style={{ color: 'white', margin: '0' }}>
                 {authStore.staffInfo?.fullname}
               </Typography.Title>
-              <Typography.Title level={5} style={{color: 'white', margin: '0'}}>
+              <Typography.Title level={5} style={{ color: 'white', margin: '0' }}>
                 +{authStore.staffInfo?.phone}
               </Typography.Title>
             </>
           )}
-          <Dropdown menu={{items}} placement="bottomRight">
-            <Avatar style={{backgroundColor: '#1677FF'}} icon={<UserOutlined />} />
+          <Dropdown menu={{ items }} placement="bottomRight">
+            <Avatar style={{ backgroundColor: '#1677FF' }} icon={<UserOutlined />} />
           </Dropdown>
         </div>
       </div>
+
+      <Modal
+        open={openAi}
+        onCancel={handleModalClose}
+        // onOk={handleModalOk}
+        // okText={paymentsStore.singlePayment ? 'To\'lovni tahrirlash' : 'To\'lov qo\'shish'}
+        cancelText="Bekor qilish"
+        cancelButtonProps={{ icon: <CloseOutlined /> }}
+        centered
+        style={{ top: 0, padding: 0 }}
+        bodyStyle={{
+          overflow: 'auto',
+          height: '95dvh',
+        }}
+        width="100vw"
+        footer={false}
+      >
+        <AiChat />
+      </Modal>
     </AntdLayout.Header>
   );
 });
