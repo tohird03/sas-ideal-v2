@@ -100,7 +100,7 @@ export const AiChat = () => {
               <SparkIcon />
             </div>
             <div>
-              <div className="aic-title">ORDIX yordamchi</div>
+              <div className="aic-title">SAS IDEAL yordamchi</div>
               <div className="aic-subtitle">
                 <span className={`aic-dot ${streaming ? 'busy' : ''}`} />
                 {streaming ? status || 'Javob yozmoqda...' : 'Tayyor'}
@@ -189,7 +189,17 @@ export const AiChat = () => {
               placeholder="Masalan: shu oy eng ko'p sotilgan mahsulotlar"
               disabled={streaming}
             />
-            {streaming ? (
+                          <Button
+                size="large"
+                className="aic-btn"
+                type="primary"
+                icon={<SendIcon />}
+                onClick={send}
+                disabled={!text.trim()}
+              >
+                <span className="aic-btn-text">Yuborish</span>
+              </Button>
+            {/* {streaming ? (
               <Button size="large" className="aic-btn" danger type="primary" icon={<StopIcon />} onClick={stop}>
                 <span className="aic-btn-text">To'xtatish</span>
               </Button>
@@ -204,7 +214,7 @@ export const AiChat = () => {
               >
                 <span className="aic-btn-text">Yuborish</span>
               </Button>
-            )}
+            )} */}
           </div>
         </div>
       </div>

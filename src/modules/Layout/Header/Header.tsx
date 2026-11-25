@@ -71,13 +71,18 @@ export const Header = observer(({ collapsed, onCollapsedClick, isMobile }: Props
 
         <div className="header__profile">
           {authStore.staffInfo?.phone === '998981157574' && (
-            <div style={{ display: 'flex', cursor: 'pointer' }} onClick={handleOpenAiModal}>
-              <SparkIcon
-                color='orange'
-                width={30}
-                height={30}
-              />
-            </div>
+            <button className="ai-trigger" onClick={handleOpenAiModal}>
+              <span className="ai-trigger__icon">
+                <SparkIcon color="#fff" width={23} height={23} />
+              </span>
+
+              <span className="ai-trigger__text">
+                <strong>SAS-IDEAL AI</strong>
+                <small>Sun’iy intellekt</small>
+              </span>
+
+              <span className="ai-trigger__arrow">↗</span>
+            </button>
           )}
           {!isMobile && (
             <>

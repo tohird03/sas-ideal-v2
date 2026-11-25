@@ -18,7 +18,7 @@ export class AiHttpError extends Error {
   }
 }
 
-const AI_URL: string = (import.meta.env.VITE_API_URL as string) || 'http://localhost:3000';
+const AI_URL: string = process.env.REACT_APP_AI_URL as string;
 
 // SAS tokeni. Loyihangizda token qayerda saqlansa, shu yerni moslang
 // (masalan: stores.authStore.token?.accessToken).
