@@ -55,7 +55,8 @@ export async function aiChatStream(
   const decoder = new TextDecoder();
   let buf = '';
 
-  for (;;) {
+  for (; ;) {
+    // eslint-disable-next-line no-await-in-loop
     const { value, done } = await reader.read();
     if (done) break;
     buf += decoder.decode(value, { stream: true }).replace(/\r\n/g, '\n');

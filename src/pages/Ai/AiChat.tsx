@@ -126,8 +126,8 @@ export const AiChat = () => {
               </div>
               <h3>Qanday yordam bera olaman?</h3>
               <p>
-                Mijozlar, yetkazib beruvchilar, mahsulotlar, sotuvlar, kirim, qaytarish, to'lovlar va xodimlar
-                oyligi haqida so'rang. Jadval va grafik ko'rinishida javob beraman.
+                Mijozlar, yetkazib beruvchilar, mahsulotlar, sotuvlar, kirim, qaytarish, to&apos;lovlar va xodimlar
+                oyligi haqida so&apos;rang. Jadval va grafik ko&apos;rinishida javob beraman.
               </p>
               <div className="aic-chips">
                 {EXAMPLES.map((s) => (
@@ -145,7 +145,7 @@ export const AiChat = () => {
             const waiting = streaming && isLast && !m.content;
 
             return (
-              <div key={i} className={`aic-row ${isUser ? 'user' : 'bot'}`}>
+              <div key={m?.role} className={`aic-row ${isUser ? 'user' : 'bot'}`}>
                 {!isUser && (
                   <div className="aic-avatar">
                     <SparkIcon />
